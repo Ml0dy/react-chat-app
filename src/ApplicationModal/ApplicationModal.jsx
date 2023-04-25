@@ -18,8 +18,11 @@ import { deepOrange } from "@mui/material/colors";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import Users from "../Components/Users";
 import { userDataBase } from "../Config/dataBase";
+import { chatList } from "../Config/dataBase";
 import { Route, Routes } from "react-router";
 import UserInfo from "../Components/UserInfo";
+import AdminPanel from "../Components/AdminPanel";
+import ChatList from "../Components/ChatList";
 
 const drawerWidth = 240;
 
@@ -93,7 +96,9 @@ const ApplicationModal = ({ username }) => {
         {/* <Routes>
           <Route path="/" element={<Users userList={userDataBase} />} />
         </Routes> */}
-        <UserInfo username="User" isAdmin={false} />
+        {/* <UserInfo username="User" isAdmin={false} /> */}
+        {/* <AdminPanel userList={userDataBase} chatList={chatList} /> */}
+        <ChatList />
       </Box>
     </Box>
   );

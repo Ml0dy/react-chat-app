@@ -1,4 +1,4 @@
-const chatList = [
+export const chatList = [
   {
     id: 1,
   },
@@ -13,6 +13,14 @@ const chatList = [
 export const userDataBase = [
   {
     id: 0,
+    username: "Admin1",
+    password: "admin",
+    isAdmin: true,
+    isLogged: false,
+    chatList: [...chatList],
+  },
+  {
+    id: 10,
     username: "Admin1",
     password: "admin",
     isAdmin: true,
