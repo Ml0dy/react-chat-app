@@ -1,30 +1,32 @@
-import React, { useState } from "react";
-import Stack from "@mui/material/Stack";
-import { ListItem } from "@mui/material";
-import Box from "@mui/material/Box";
-import Novologo from "../../Assets/Images/NovoAcademy_logo.png";
-import TextField from "@mui/material/TextField";
-import "./HomeView.css";
-import Button from "@mui/material/Button";
-import { loginValidation } from "./loginValidation";
+import React, { useState } from "react"
+import Stack from "@mui/material/Stack"
+import { ListItem } from "@mui/material"
+import Box from "@mui/material/Box"
+import Novologo from "../../Assets/Images/NovoAcademy_logo.png"
+import TextField from "@mui/material/TextField"
+import "./HomeView.css"
+import Button from "@mui/material/Button"
+import { loginValidation } from "./loginValidation"
+import { useNavigate } from "react-router"
 
 const HomeView = () => {
-  const [loginValue, setLoginValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
+  const [loginValue, setLoginValue] = useState("")
+  const [passwordValue, setPasswordValue] = useState("")
+  const [currentUserInfo, setCurrentUserInfo] = useState({})
 
-  const [currentUserInfo, setCurrentUserInfo] = useState({});
+  const navigate = useNavigate()
 
   const handleLoginValidation = () => {
     if (loginValidation(loginValue, passwordValue)) {
-      setCurrentUserInfo(loginValidation(loginValue, passwordValue));
-      setLoginValue("");
-      setPasswordValue("");
-
-      return alert("You are logged in");
+      setCurrentUserInfo(loginValidation(loginValue, passwordValue))
+      setLoginValue("")
+      setPasswordValue("")
+      navigate("/userlist")
+      return alert("You are logged in")
     }
-    setLoginValue("");
-    setPasswordValue("");
-  };
+    setLoginValue("")
+    setPasswordValue("")
+  }
 
   return (
     <Stack
@@ -68,7 +70,7 @@ const HomeView = () => {
         </Button>
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
-export default HomeView;
+export default HomeView
