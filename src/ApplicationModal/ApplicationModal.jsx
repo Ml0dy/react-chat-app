@@ -1,26 +1,27 @@
-import React from "react"
-import Box from "@mui/material/Box"
-import Drawer from "@mui/material/Drawer"
-import CssBaseline from "@mui/material/CssBaseline"
-import AppBar from "@mui/material/AppBar"
-import Toolbar from "@mui/material/Toolbar"
-import List from "@mui/material/List"
-import Typography from "@mui/material/Typography"
-import Divider from "@mui/material/Divider"
-import ListItem from "@mui/material/ListItem"
-import ListItemButton from "@mui/material/ListItemButton"
-import ListItemIcon from "@mui/material/ListItemIcon"
-import ListItemText from "@mui/material/ListItemText"
-import Novologo from "../Assets/Images/logo_pl.png"
-import Stack from "@mui/material/Stack"
-import { Avatar } from "@mui/material"
-import { deepOrange } from "@mui/material/colors"
-import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew"
-import Users from "../Components/Users"
-import { userDataBase } from "../Config/dataBase"
-import { Route, Routes } from "react-router"
+import React from "react";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import CssBaseline from "@mui/material/CssBaseline";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Novologo from "../Assets/Images/logo_pl.png";
+import Stack from "@mui/material/Stack";
+import { Avatar } from "@mui/material";
+import { deepOrange } from "@mui/material/colors";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import Users from "../Components/Users";
+import { userDataBase } from "../Config/dataBase";
+import { Route, Routes } from "react-router";
+import UserInfo from "../Components/UserInfo";
 
-const drawerWidth = 240
+const drawerWidth = 240;
 
 const ApplicationModal = ({ username }) => {
   return (
@@ -74,24 +75,28 @@ const ApplicationModal = ({ username }) => {
       </Drawer>
       <Box
         component="main"
+        alignItems="center"
+        justifyContent="center"
         sx={{
           flexGrow: 1,
           bgcolor: "background.default",
           p: 3,
-          width: "100%",
-          height: "100%",
+          width: "70vw",
+          height: "60vh",
           ml: `50px`,
           mr: `50px`,
           mt: `50px`,
           mb: `50px`,
+          display: "flex",
         }}
       >
-        <Routes>
-          <Route path="/userlist" element={<Users userList={userDataBase} />} />
-        </Routes>
+        {/* <Routes>
+          <Route path="/" element={<Users userList={userDataBase} />} />
+        </Routes> */}
+        <UserInfo username="User" isAdmin={false} />
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default ApplicationModal
+export default ApplicationModal;
