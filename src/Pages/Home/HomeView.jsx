@@ -6,10 +6,18 @@ import Novologo from "../../Assets/Images/NovoAcademy_logo.png";
 import TextField from "@mui/material/TextField";
 import "./HomeView.css";
 import Button from "@mui/material/Button";
+import { loginValidation } from "./loginValidation";
 
 const HomeView = () => {
   const [loginValue, setLoginValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
+
+  const handleLoginValidation = () => {
+    if (loginValidation(loginValue, passwordValue)) {
+      return alert("Zalogowany");
+    }
+    return alert("Niepoprawne dane");
+  };
 
   return (
     <Stack
@@ -48,12 +56,7 @@ const HomeView = () => {
           value={passwordValue}
           onChange={(e) => setPasswordValue(e.target.value)}
         />
-        <Button
-          variant="contained"
-          onClick={() =>
-            alert("User name: " + loginValue + "Password: " + passwordValue)
-          }
-        >
+        <Button variant="contained" onClick={handleLoginValidation}>
           LOG IN
         </Button>
       </Stack>
