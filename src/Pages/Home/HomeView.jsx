@@ -12,11 +12,18 @@ const HomeView = () => {
   const [loginValue, setLoginValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
 
+  const [currentUserInfo, setCurrentUserInfo] = useState({});
+
   const handleLoginValidation = () => {
     if (loginValidation(loginValue, passwordValue)) {
-      return alert("Zalogowany");
+      setCurrentUserInfo(loginValidation(loginValue, passwordValue));
+      setLoginValue("");
+      setPasswordValue("");
+
+      return alert("You are logged in");
     }
-    return alert("Niepoprawne dane");
+    setLoginValue("");
+    setPasswordValue("");
   };
 
   return (

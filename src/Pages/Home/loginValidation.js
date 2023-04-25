@@ -1,14 +1,16 @@
 import { userDataBase } from "../../Config/dataBase";
 
 export const loginValidation = (usernameInput, passwordInput) => {
-  const existUserDataBase = userDataBase.filter((user) => {
+  const [existUserDataBase] = userDataBase.filter((user) => {
     if (user.username === usernameInput) {
       return user;
     }
   });
   console.log(existUserDataBase);
-  if (existUserDataBase[0].password === passwordInput) {
-    return true;
+  if (existUserDataBase === undefined) {
+    return alert("No user with this username");
+  } else if (existUserDataBase.password === passwordInput) {
+    return existUserDataBase;
   }
-  return false;
+  return alert("Wrong login/password");
 };
