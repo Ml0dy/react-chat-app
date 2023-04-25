@@ -36,7 +36,7 @@ const HomeView = () => {
       alignItems={"center"}
       gap={7}
     >
-      <img src={Novologo} width="200px" />
+      <img src={Novologo} alt="novologo" width="200px" />
       <Stack
         className="home-input-container"
         spacing={2}
