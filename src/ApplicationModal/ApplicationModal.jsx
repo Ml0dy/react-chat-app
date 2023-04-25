@@ -1,30 +1,30 @@
-import React from "react";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Novologo from "../Assets/Images/logo_pl.png";
-import Stack from "@mui/material/Stack";
-import { Avatar } from "@mui/material";
-import { deepOrange } from "@mui/material/colors";
-import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
-import Users from "../Components/Users";
-import { userDataBase } from "../Config/dataBase";
-import { chatList } from "../Config/dataBase";
-import { Route, Routes } from "react-router";
-import UserInfo from "../Components/UserInfo";
-import AdminPanel from "../Components/AdminPanel";
-import ChatList from "../Components/ChatList";
+import React from "react"
+import Box from "@mui/material/Box"
+import Drawer from "@mui/material/Drawer"
+import CssBaseline from "@mui/material/CssBaseline"
+import AppBar from "@mui/material/AppBar"
+import Toolbar from "@mui/material/Toolbar"
+import List from "@mui/material/List"
+import Typography from "@mui/material/Typography"
+import Divider from "@mui/material/Divider"
+import ListItem from "@mui/material/ListItem"
+import ListItemButton from "@mui/material/ListItemButton"
+import ListItemIcon from "@mui/material/ListItemIcon"
+import ListItemText from "@mui/material/ListItemText"
+import Novologo from "../Assets/Images/logo_pl.png"
+import Stack from "@mui/material/Stack"
+import { Avatar } from "@mui/material"
+import { deepOrange } from "@mui/material/colors"
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew"
+import Users from "../Components/Users"
+import { userDataBase } from "../Config/dataBase"
+import { chatList } from "../Config/dataBase"
+import { Route, Routes } from "react-router"
+import UserInfo from "../Components/UserInfo"
+import AdminPanel from "../Components/AdminPanel"
+import ChatList from "../Components/ChatList"
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
 const ApplicationModal = ({ username }) => {
   return (
@@ -62,7 +62,7 @@ const ApplicationModal = ({ username }) => {
         variant="permanent"
         anchor="left"
       >
-        <img src={Novologo} width="100%" />
+        <img src={Novologo} alt="novologo" width="100%" />
         <Divider />
         <List>
           {["Admin panel", "Chats", "Users List"].map((text, index) => (
@@ -101,7 +101,7 @@ const ApplicationModal = ({ username }) => {
         <ChatList />
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default ApplicationModal;
+export default ApplicationModal
