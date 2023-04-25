@@ -43,4 +43,28 @@ export const userDataBase = [
     isLogged: false,
     chatList: chatList[1],
   },
+  {
+    id: 3,
+    username: "User3",
+    password: "user3",
+    isAdmin: false,
+    isLogged: false,
+    chatList: chatList[1],
+  },
+  {
+    id: 3,
+    username: "User3",
+    password: "user3",
+    isAdmin: false,
+    isLogged: false,
+    chatList: chatList[1],
+  },
+  {
+    id: 3,
+    username: "User3",
+    password: "user3",
+    isAdmin: false,
+    isLogged: false,
+    chatList: chatList[1],
+  },
 ];
