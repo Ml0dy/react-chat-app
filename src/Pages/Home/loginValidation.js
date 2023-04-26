@@ -8,9 +8,9 @@ export const loginValidation = (usernameInput, passwordInput) => {
   });
   console.log(existUserDataBase);
   if (existUserDataBase === undefined) {
-    return alert("No user with this username");
+    return false;
   } else if (existUserDataBase.password === passwordInput) {
     return existUserDataBase;
   }
-  return alert("Wrong login/password");
+  return false;
 };

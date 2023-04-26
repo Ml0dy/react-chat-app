@@ -1,32 +1,50 @@
-import React, { useState } from "react"
-import Stack from "@mui/material/Stack"
-import { ListItem } from "@mui/material"
-import Box from "@mui/material/Box"
-import Novologo from "../../Assets/Images/NovoAcademy_logo.png"
-import TextField from "@mui/material/TextField"
-import "./HomeView.css"
-import Button from "@mui/material/Button"
-import { loginValidation } from "./loginValidation"
-import { useNavigate } from "react-router"
+import React, { useEffect, useState } from "react";
+import Stack from "@mui/material/Stack";
+import { ListItem } from "@mui/material";
+import Box from "@mui/material/Box";
+import Novologo from "../../Assets/Images/NovoAcademy_logo.png";
+import TextField from "@mui/material/TextField";
+import "./HomeView.css";
+import Button from "@mui/material/Button";
+import { loginValidation } from "./loginValidation";
+import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { loggedUserAction } from "../../Redux/Actions/loggedUserAction";
 
 const HomeView = () => {
-  const [loginValue, setLoginValue] = useState("")
-  const [passwordValue, setPasswordValue] = useState("")
-  const [currentUserInfo, setCurrentUserInfo] = useState({})
+  const [loginValue, setLoginValue] = useState("");
+  const [passwordValue, setPasswordValue] = useState("");
+  const [currentUserInfo, setCurrentUserInfo] = useState();
+  const [inProcess, setInProcess] = useState(false);
 
-  const navigate = useNavigate()
+  const currentUser = useSelector((state) => state.currentUser);
+
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const handleLoginValidation = () => {
-    if (loginValidation(loginValue, passwordValue)) {
-      setCurrentUserInfo(loginValidation(loginValue, passwordValue))
-      setLoginValue("")
-      setPasswordValue("")
-      navigate("/userlist")
-      return alert("You are logged in")
+    const validation = loginValidation(loginValue, passwordValue);
+    if (!validation) {
+      setLoginValue("");
+      setPasswordValue("");
+      return alert("validation error");
     }
-    setLoginValue("")
-    setPasswordValue("")
-  }
+    setCurrentUserInfo(validation);
+    console.log(currentUserInfo);
+    // dispatch(() => loggedUserAction(currentUserInfo));
+    setLoginValue("");
+    setPasswordValue("");
+    setInProcess(true);
+    // navigate("/userlist");
+  };
+
+  useEffect(() => {
+    console.log("use effect:", currentUserInfo);
+    if (inProcess) {
+      dispatch(() => loggedUserAction(currentUserInfo.id));
+    }
+  }, [currentUserInfo]);
 
   return (
     <Stack
@@ -70,7 +88,7 @@ const HomeView = () => {
         </Button>
       </Stack>
     </Stack>
-  )
-}
+  );
+};
 
-export default HomeView
+export default HomeView;
