@@ -5,9 +5,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useSelector } from "react-redux";
 
-const UserInfo = ({ username, isAdmin }) => {
-  const userInfo = useSelector((state) => state.id);
-  console.log(userInfo);
+const UserInfo = () => {
+  const { id, username, isAdmin } = useSelector((state) => state.id);
 
   return (
     <>
@@ -47,7 +46,7 @@ const UserInfo = ({ username, isAdmin }) => {
                     bgcolor: deepOrange[500],
                   }}
                 >
-                  N
+                  {username.charAt(0).toUpperCase()}
                 </Avatar>
                 <Typography variant="h6" alignContent="center">
                   {username}

@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import { useSelector } from "react-redux";
 
 const AdminPanel = ({ userList, chatList }) => {
   let adminNumber = 0;
@@ -21,8 +22,11 @@ const AdminPanel = ({ userList, chatList }) => {
     if (user.isAdmin) adminNumber++;
   });
 
+  const { id, username, isAdmin } = useSelector((state) => state.id);
+
   return (
     <div>
+      <Toolbar />
       <Box
         component="main"
         sx={{
@@ -38,7 +42,34 @@ const AdminPanel = ({ userList, chatList }) => {
       >
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           <Grid container spacing={3}>
-            <UserInfo username="Admin" isAdmin={true} />
+            <Grid item xs={12} md={8} lg={9}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                  height: 240,
+                }}
+              >
+                <Avatar
+                  sx={{
+                    height: "100px",
+                    width: "100px",
+                    fontSize: "50px",
+                    bgcolor: deepOrange[500],
+                  }}
+                >
+                  {username.charAt(0).toUpperCase()}
+                </Avatar>
+                <Typography variant="h6" alignContent="center">
+                  {username}
+                </Typography>
+
+                <Typography variant="h6" alignContent="center">
+                  Role: {isAdmin ? "Admin" : "User"}
+                </Typography>
+              </Paper>
+            </Grid>
 
             <Grid item xs={12} md={4} lg={3}>
               <Paper

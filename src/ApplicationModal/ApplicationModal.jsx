@@ -24,12 +24,14 @@ import UserInfo from "../Components/UserInfo";
 import AdminPanel from "../Components/AdminPanel";
 import ChatList from "../Components/ChatList";
 import { Link, matchRoutes, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const drawerWidth = 240;
 
-const ApplicationModal = ({ username }) => {
+const ApplicationModal = () => {
+  const { id, username, isAdmin } = useSelector((state) => state.id);
+
   const location = useLocation();
-  console.log(location.pathname);
 
   let currentComponent = <></>;
   if (location.pathname === "/adminpanel") {
@@ -61,7 +63,9 @@ const ApplicationModal = ({ username }) => {
           gap={3}
           alignItems={"center"}
         >
-          <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
+          <Avatar sx={{ bgcolor: deepOrange[500] }}>
+            {username.charAt(0).toUpperCase()}
+          </Avatar>
 
           <Typography variant="h6">{username}</Typography>
           <PowerSettingsNewIcon />
