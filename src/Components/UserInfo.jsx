@@ -3,8 +3,12 @@ import { Avatar, Container, Grid, Paper, Toolbar } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { useSelector } from "react-redux";
 
 const UserInfo = ({ username, isAdmin }) => {
+  const userInfo = useSelector((state) => state.id);
+  console.log(userInfo);
+
   return (
     <>
       <Toolbar />

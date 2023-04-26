@@ -1,7 +1,7 @@
-import "./App.css"
-import ApplicationModal from "./ApplicationModal/ApplicationModal"
-import HomeView from "./Pages/Home/HomeView"
-import { Route, Routes } from "react-router-dom"
+import "./App.css";
+import ApplicationModal from "./ApplicationModal/ApplicationModal";
+import HomeView from "./Pages/Home/HomeView";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
@@ -9,14 +9,26 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeView />} />
         <Route
+          path="/adminpanel"
+          element={<ApplicationModal username="username" />}
+        />
+        <Route
+          path="/userprofile"
+          element={<ApplicationModal username="username" />}
+        />
+        <Route
           path="/userlist"
+          element={<ApplicationModal username="username" />}
+        />
+        <Route
+          path="/chatlist"
           element={<ApplicationModal username="username" />}
         />
       </Routes>
 
       {/* <ApplicationModal username="username" /> */}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

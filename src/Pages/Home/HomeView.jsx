@@ -14,10 +14,6 @@ import { loggedUserAction } from "../../Redux/Actions/loggedUserAction";
 const HomeView = () => {
   const [loginValue, setLoginValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-  const [currentUserInfo, setCurrentUserInfo] = useState();
-  const [inProcess, setInProcess] = useState(false);
-
-  const currentUser = useSelector((state) => state.currentUser);
 
   const dispatch = useDispatch();
 
@@ -30,21 +26,11 @@ const HomeView = () => {
       setPasswordValue("");
       return alert("validation error");
     }
-    setCurrentUserInfo(validation);
-    console.log(currentUserInfo);
-    // dispatch(() => loggedUserAction(currentUserInfo));
+    dispatch(loggedUserAction(validation));
     setLoginValue("");
     setPasswordValue("");
-    setInProcess(true);
-    // navigate("/userlist");
+    navigate("/adminpanel");
   };
-
-  useEffect(() => {
-    console.log("use effect:", currentUserInfo);
-    if (inProcess) {
-      dispatch(() => loggedUserAction(currentUserInfo.id));
-    }
-  }, [currentUserInfo]);
 
   return (
     <Stack

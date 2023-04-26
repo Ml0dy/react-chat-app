@@ -23,10 +23,27 @@ import { Route, Routes } from "react-router";
 import UserInfo from "../Components/UserInfo";
 import AdminPanel from "../Components/AdminPanel";
 import ChatList from "../Components/ChatList";
+import { Link, matchRoutes, useLocation } from "react-router-dom";
 
 const drawerWidth = 240;
 
 const ApplicationModal = ({ username }) => {
+  const location = useLocation();
+  console.log(location.pathname);
+
+  let currentComponent = <></>;
+  if (location.pathname === "/adminpanel") {
+    currentComponent = (
+      <AdminPanel userList={userDataBase} chatList={chatList} />
+    );
+  } else if (location.pathname === "/userprofile") {
+    currentComponent = <UserInfo username="User" isAdmin={false} />;
+  } else if (location.pathname === "/userlist") {
+    currentComponent = <Users userList={userDataBase} />;
+  } else if (location.pathname === "/chatlist") {
+    currentComponent = <ChatList />;
+  }
+
   return (
     <Box sx={{ display: "flex" }}>
       <AppBar
@@ -65,26 +82,22 @@ const ApplicationModal = ({ username }) => {
         <img src={Novologo} alt="novologo" width="100%" />
         <Divider />
         <List>
-          {["Admin panel", "Chats", "Users List"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon></ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          {["Admin panel", "Chat List", "User List", "User Profile"].map(
+            (text, index) => (
+              <ListItem key={text} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon></ListItemIcon>
+                  <Link to={`/${text.replace(" ", "").toLowerCase()}`}>
+                    <ListItemText primary={text} />
+                  </Link>
+                </ListItemButton>
+              </ListItem>
+            )
+          )}
         </List>
         <Divider />
       </Drawer>
-      <Box>
-        {/* <Routes>
-          <Route path="/" element={<Users userList={userDataBase} />} />
-        </Routes> */}
-        {/* <UserInfo username="User" isAdmin={false} /> */}
-        {/* <AdminPanel userList={userDataBase} chatList={chatList} /> */}
-        <ChatList />
-        {/* <Users userList={userDataBase} /> */}
-      </Box>
+      <Box>{currentComponent}</Box>
     </Box>
   );
 };
