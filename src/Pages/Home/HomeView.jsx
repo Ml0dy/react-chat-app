@@ -15,7 +15,7 @@ const HomeView = () => {
   const [loginValue, setLoginValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
 
-  const userInfo = useSelector((state) => state.user);
+  const userInfo = useSelector((state) => state.loggedUserReducer.user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

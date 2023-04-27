@@ -1,9 +1,28 @@
-import { Button, Divider, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/material";
 import React from "react";
 import SendIcon from "@mui/icons-material/Send";
+import { useSelector } from "react-redux";
 
 const ChatList = () => {
+  const userLogged = useSelector((state) => state.loggedUserReducer.user);
+  const { id } = userLogged;
+  const chatList = [userLogged.chatList];
+  const usersList = useSelector((state) => state.userDatabaseReducer);
+  console.log(chatList);
+  console.log(chatList[0].users);
+  console.log(usersList);
+
   return (
     <Box
       component="main"
@@ -53,6 +72,30 @@ const ChatList = () => {
             Chat List
           </Typography>
         </Box>
+        <List>
+          {chatList.map((chat, index) => (
+            <ListItem key={chat.id + index} disablePadding>
+              <ListItemButton>
+                <ListItemIcon></ListItemIcon>
+                <ListItemText
+                  primary={
+                    chat.users.filter((userId) => {
+                      if (userId.id === id) {
+                        return false;
+                      } else
+                        return usersList.filter((userData) => {
+                          if (userId.id === userData.id)
+                            return userData.username;
+                          else return false;
+                        });
+                    })[0]
+                  }
+                />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
       </Box>
       <Box
         sx={{

@@ -22,7 +22,9 @@ const AdminPanel = ({ userList, chatList }) => {
     if (user.isAdmin) adminNumber++;
   });
 
-  const { id, username, isAdmin } = useSelector((state) => state.user);
+  const { id, username, isAdmin } = useSelector(
+    (state) => state.loggedUserReducer.user
+  );
 
   return (
     <div>

@@ -6,7 +6,9 @@ import Box from "@mui/material/Box";
 import { useSelector } from "react-redux";
 
 const UserInfo = () => {
-  const { id, username, isAdmin } = useSelector((state) => state.user);
+  const { id, username, isAdmin } = useSelector(
+    (state) => state.loggedUserReducer.user
+  );
 
   return (
     <>

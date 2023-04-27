@@ -31,7 +31,9 @@ import { useNavigate } from "react-router";
 const drawerWidth = 240;
 
 const ApplicationModal = () => {
-  const { id, username, isAdmin } = useSelector((state) => state.user);
+  const { id, username, isAdmin } = useSelector(
+    (state) => state.loggedUserReducer.user
+  );
 
   const location = useLocation();
   const dispatch = useDispatch();
