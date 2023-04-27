@@ -8,20 +8,36 @@ import {
   ListItemText,
   TextField,
   Typography,
-} from "@mui/material";
-import { Box } from "@mui/material";
-import React from "react";
-import SendIcon from "@mui/icons-material/Send";
-import { useSelector } from "react-redux";
+} from "@mui/material"
+import { Box } from "@mui/material"
+import React from "react"
+import SendIcon from "@mui/icons-material/Send"
+import { useSelector } from "react-redux"
+import { userDataBase } from "../Config/dataBase"
 
 const ChatList = () => {
-  const userLogged = useSelector((state) => state.loggedUserReducer.user);
-  const { id } = userLogged;
-  const chatList = [userLogged.chatList];
-  const usersList = useSelector((state) => state.userDatabaseReducer);
-  console.log(chatList);
-  console.log(chatList[0].users);
-  console.log(usersList);
+  const userLogged = useSelector((state) => state.loggedUserReducer.user)
+  const { chatList, id } = userLogged
+
+  const usersList = useSelector((state) => state.userDatabaseReducer)
+
+  const getSecondUser = (id, usersDatabase) => {
+    const [secondUser] = usersList.filter((user) => {
+      if (user.id === id) {
+        return { user }
+      }
+    })
+    return secondUser
+  }
+
+  const userChatList = chatList.map((chat, index) => {
+    if (chat.users[0].id === id) {
+      return getSecondUser(chat.users[1].id, userDataBase)
+    }
+    return getSecondUser(chat.users[0].id, userDataBase)
+  })
+
+  console.log(userChatList)
 
   return (
     <Box
@@ -73,24 +89,11 @@ const ChatList = () => {
           </Typography>
         </Box>
         <List>
-          {chatList.map((chat, index) => (
-            <ListItem key={chat.id + index} disablePadding>
+          {userChatList.map((secondUser, index) => (
+            <ListItem key={index} disablePadding>
               <ListItemButton>
                 <ListItemIcon></ListItemIcon>
-                <ListItemText
-                  primary={
-                    chat.users.filter((userId) => {
-                      if (userId.id === id) {
-                        return false;
-                      } else
-                        return usersList.filter((userData) => {
-                          if (userId.id === userData.id)
-                            return userData.username;
-                          else return false;
-                        });
-                    })[0]
-                  }
-                />
+                <ListItemText primary={secondUser.username} />
               </ListItemButton>
             </ListItem>
           ))}
@@ -184,7 +187,7 @@ const ChatList = () => {
         </Box>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default ChatList;
+export default ChatList

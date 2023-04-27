@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from "react";
-import Stack from "@mui/material/Stack";
-import { ListItem } from "@mui/material";
-import Box from "@mui/material/Box";
-import Novologo from "../../Assets/Images/NovoAcademy_logo.png";
-import TextField from "@mui/material/TextField";
-import "./HomeView.css";
-import Button from "@mui/material/Button";
-import { loginValidation } from "./loginValidation";
-import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { loggedUserAction } from "../../Redux/Actions/loggedUserAction";
+import React, { useEffect, useState } from "react"
+import Stack from "@mui/material/Stack"
+import { ListItem } from "@mui/material"
+import Box from "@mui/material/Box"
+import Novologo from "../../Assets/Images/NovoAcademy_logo.png"
+import TextField from "@mui/material/TextField"
+import "./HomeView.css"
+import Button from "@mui/material/Button"
+import { loginValidation } from "./loginValidation"
+import { useNavigate } from "react-router"
+import { useDispatch, useSelector } from "react-redux"
+import { loggedUserAction } from "../../Redux/Actions/loggedUserAction"
 
 const HomeView = () => {
-  const [loginValue, setLoginValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
+  const [loginValue, setLoginValue] = useState("User1")
+  const [passwordValue, setPasswordValue] = useState("user")
 
-  const userInfo = useSelector((state) => state.loggedUserReducer.user);
+  const userInfo = useSelector((state) => state.loggedUserReducer.user)
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleLoginValidation = () => {
-    const validation = loginValidation(loginValue, passwordValue);
+    const validation = loginValidation(loginValue, passwordValue)
     if (!validation) {
-      setLoginValue("");
-      setPasswordValue("");
-      return alert("validation error");
+      setLoginValue("")
+      setPasswordValue("")
+      return alert("validation error")
     }
-    dispatch(loggedUserAction(validation));
-    setLoginValue("");
-    setPasswordValue("");
-    console.log(validation);
-    if (validation.isAdmin) navigate("/adminpanel");
-    else navigate("/userprofile");
-  };
+    dispatch(loggedUserAction(validation))
+    setLoginValue("")
+    setPasswordValue("")
+    console.log(validation)
+    if (validation.isAdmin) navigate("/adminpanel")
+    else navigate("/userprofile")
+  }
 
   return (
     <Stack
@@ -77,7 +77,7 @@ const HomeView = () => {
         </Button>
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
-export default HomeView;
+export default HomeView

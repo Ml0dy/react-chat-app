@@ -48,7 +48,7 @@ export const chatList = [
   {
     id: 3,
   },
-];
+]
 
 export const userDataBase = [
   {
@@ -73,7 +73,7 @@ export const userDataBase = [
     password: "user",
     isAdmin: false,
     isLogged: false,
-    chatList: chatList[0],
+    chatList: [chatList[0], chatList[1]],
   },
   {
     id: 2,
@@ -81,7 +81,7 @@ export const userDataBase = [
     password: "user2",
     isAdmin: false,
     isLogged: false,
-    chatList: chatList[0],
+    chatList: [chatList[0]],
   },
   {
     id: 3,
@@ -89,7 +89,7 @@ export const userDataBase = [
     password: "user3",
     isAdmin: false,
     isLogged: false,
-    chatList: chatList[1],
+    chatList: [chatList[1]],
   },
   {
     id: 4,
@@ -97,7 +97,7 @@ export const userDataBase = [
     password: "user3",
     isAdmin: false,
     isLogged: false,
-    chatList: chatList[1],
+    chatList: [chatList[1]],
   },
   {
     id: 5,
@@ -105,7 +105,7 @@ export const userDataBase = [
     password: "user3",
     isAdmin: false,
     isLogged: false,
-    chatList: chatList[1],
+    chatList: [chatList[1]],
   },
   {
     id: 6,
@@ -113,6 +113,6 @@ export const userDataBase = [
     password: "user3",
     isAdmin: false,
     isLogged: false,
-    chatList: chatList[1],
+    chatList: [chatList[1]],
   },
-];
+]
