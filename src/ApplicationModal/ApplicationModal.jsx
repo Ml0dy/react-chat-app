@@ -13,7 +13,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Novologo from "../Assets/Images/logo_pl.png";
 import Stack from "@mui/material/Stack";
-import { Avatar } from "@mui/material";
+import { Avatar, IconButton } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import Users from "../Components/Users";
@@ -24,7 +24,9 @@ import UserInfo from "../Components/UserInfo";
 import AdminPanel from "../Components/AdminPanel";
 import ChatList from "../Components/ChatList";
 import { Link, matchRoutes, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUserAction } from "../Redux/Actions/loggedUserAction";
+import { useNavigate } from "react-router";
 
 const drawerWidth = 240;
 
@@ -32,6 +34,8 @@ const ApplicationModal = () => {
   const { id, username, isAdmin } = useSelector((state) => state.id);
 
   const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   let currentComponent = <></>;
   if (location.pathname === "/adminpanel") {
@@ -45,6 +49,11 @@ const ApplicationModal = () => {
   } else if (location.pathname === "/chatlist") {
     currentComponent = <ChatList />;
   }
+
+  const handleLogout = () => {
+    navigate("/");
+    dispatch(logoutUserAction());
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -68,7 +77,13 @@ const ApplicationModal = () => {
           </Avatar>
 
           <Typography variant="h6">{username}</Typography>
-          <PowerSettingsNewIcon />
+          <IconButton
+            color="primary"
+            aria-label="logout"
+            onClick={handleLogout}
+          >
+            <PowerSettingsNewIcon />
+          </IconButton>
         </Stack>
       </AppBar>
       <Drawer

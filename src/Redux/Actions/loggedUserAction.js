@@ -4,3 +4,9 @@ export const loggedUserAction = (currentUser) => {
     payload: { id: currentUser },
   };
 };
+
+export const logoutUserAction = () => {
+  return {
+    type: "LOGOUT",
+  };
+};

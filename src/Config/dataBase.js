@@ -53,7 +53,7 @@ export const userDataBase = [
   },
   {
     id: 3,
-    username: "User3",
+    username: "User4",
     password: "user3",
     isAdmin: false,
     isLogged: false,
@@ -61,7 +61,7 @@ export const userDataBase = [
   },
   {
     id: 3,
-    username: "User3",
+    username: "User5",
     password: "user3",
     isAdmin: false,
     isLogged: false,
@@ -69,7 +69,7 @@ export const userDataBase = [
   },
   {
     id: 3,
-    username: "User3",
+    username: "User6",
     password: "user3",
     isAdmin: false,
     isLogged: false,
