@@ -78,18 +78,15 @@ const ChatList = () => {
               <ListItemButton>
                 <ListItemIcon></ListItemIcon>
                 <ListItemText
-                  primary={
-                    chat.users.filter((userId) => {
-                      if (userId.id === id) {
-                        return false;
-                      } else
-                        return usersList.filter((userData) => {
-                          if (userId.id === userData.id)
-                            return userData.username;
-                          else return false;
-                        });
-                    })[0]
-                  }
+                  primary={chat.users.filter((userId) => {
+                    if (userId.id === id) {
+                      return false;
+                    } else
+                      return usersList.filter((userData) => {
+                        if (userId.id === userData.id) return userData.username;
+                        else return false;
+                      });
+                  })}
                 />
               </ListItemButton>
             </ListItem>
