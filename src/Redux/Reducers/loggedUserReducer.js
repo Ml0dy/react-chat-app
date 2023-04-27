@@ -1,9 +1,9 @@
-const loggedUserReducer = (state = { id: -1 }, action) => {
+const loggedUserReducer = (state = { user: {} }, action) => {
   switch (action.type) {
     case "GET_USER":
-      return (state.id = action.payload);
+      return (state.user = action.payload);
     case "LOGOUT":
-      return (state.id = {});
+      return (state.user = {});
     default:
       return state;
   }

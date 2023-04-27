@@ -8,25 +8,11 @@ function App() {
     <div className="app">
       <Routes>
         <Route path="/" element={<HomeView />} />
-        <Route
-          path="/adminpanel"
-          element={<ApplicationModal username="username" />}
-        />
-        <Route
-          path="/userprofile"
-          element={<ApplicationModal username="username" />}
-        />
-        <Route
-          path="/userlist"
-          element={<ApplicationModal username="username" />}
-        />
-        <Route
-          path="/chatlist"
-          element={<ApplicationModal username="username" />}
-        />
+        <Route path="/adminpanel" element={<ApplicationModal />} />
+        <Route path="/userprofile" element={<ApplicationModal />} />
+        <Route path="/userlist" element={<ApplicationModal />} />
+        <Route path="/chatlist" element={<ApplicationModal />} />
       </Routes>
-
-      {/* <ApplicationModal username="username" /> */}
     </div>
   );
 }

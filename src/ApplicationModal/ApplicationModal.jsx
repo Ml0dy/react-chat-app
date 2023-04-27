@@ -31,7 +31,7 @@ import { useNavigate } from "react-router";
 const drawerWidth = 240;
 
 const ApplicationModal = () => {
-  const { id, username, isAdmin } = useSelector((state) => state.id);
+  const { id, username, isAdmin } = useSelector((state) => state.user);
 
   const location = useLocation();
   const dispatch = useDispatch();
@@ -54,6 +54,10 @@ const ApplicationModal = () => {
     navigate("/");
     dispatch(logoutUserAction());
   };
+
+  const userMenu = isAdmin
+    ? ["Admin panel", "Chat List", "User List"]
+    : ["User Profile", "Chat List", "User List"];
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -101,18 +105,16 @@ const ApplicationModal = () => {
         <img src={Novologo} alt="novologo" width="100%" />
         <Divider />
         <List>
-          {["Admin panel", "Chat List", "User List", "User Profile"].map(
-            (text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon></ListItemIcon>
-                  <Link to={`/${text.replace(" ", "").toLowerCase()}`}>
-                    <ListItemText primary={text} />
-                  </Link>
-                </ListItemButton>
-              </ListItem>
-            )
-          )}
+          {userMenu.map((text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon></ListItemIcon>
+                <Link to={`/${text.replace(" ", "").toLowerCase()}`}>
+                  <ListItemText primary={text} />
+                </Link>
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
         <Divider />
       </Drawer>

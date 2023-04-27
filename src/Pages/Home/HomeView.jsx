@@ -15,8 +15,9 @@ const HomeView = () => {
   const [loginValue, setLoginValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
 
-  const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.user);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLoginValidation = () => {
@@ -29,7 +30,9 @@ const HomeView = () => {
     dispatch(loggedUserAction(validation));
     setLoginValue("");
     setPasswordValue("");
-    navigate("/adminpanel");
+    console.log(validation);
+    if (validation.isAdmin) navigate("/adminpanel");
+    else navigate("/userprofile");
   };
 
   return (
