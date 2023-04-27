@@ -31,13 +31,19 @@ import { useNavigate } from "react-router";
 const drawerWidth = 240;
 
 const ApplicationModal = () => {
-  const { id, username, isAdmin } = useSelector(
-    (state) => state.loggedUserReducer.user
-  );
+  const loggedUserStore = useSelector((state) => state.loggedUserReducer.user);
+
+  const { id, username, isAdmin } = loggedUserStore;
 
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // console.log(loggedUserStore);
+  // if (loggedUserStore === {}) {
+  //   navigate("/");
+  //   dispatch(logoutUserAction());
+  // }
 
   let currentComponent = <></>;
   if (location.pathname === "/adminpanel") {
