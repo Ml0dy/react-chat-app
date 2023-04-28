@@ -73,7 +73,7 @@ export const chatList = [
       {
         id_message: 3,
         user_message: { id: 1 },
-        text: "jytuytu",
+        text: "jytuytutuytutuytutuytutuytutuytutuytutuytutuytutuytutuytutuytutuytutuytutuytutuytutuytu",
       },
       {
         id_message: 4,

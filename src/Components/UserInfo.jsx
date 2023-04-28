@@ -14,20 +14,20 @@ const UserInfo = () => {
     <>
       <Toolbar />
       <Box
+        className="chats-container"
         component="main"
         sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === "light"
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
           flexGrow: 1,
-          height: "80%",
+          height: "90%",
           overflow: "auto",
-          mt: 8,
+          borderRadius: 3,
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
         }}
       >
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <Grid container spacing={3}>
+          <Grid container spacing={4}>
             <Grid item xs={12} md={8} lg={9}>
               <Paper
                 sx={{
@@ -46,11 +46,12 @@ const UserInfo = () => {
                     width: "100px",
                     fontSize: "50px",
                     bgcolor: deepOrange[500],
+                    boxShadow: 2,
                   }}
                 >
                   {username.charAt(0).toUpperCase()}
                 </Avatar>
-                <Typography variant="h6" alignContent="center">
+                <Typography variant="h6" alignContent="center" mt="15px">
                   {username}
                 </Typography>
 

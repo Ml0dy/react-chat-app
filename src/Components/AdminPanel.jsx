@@ -30,16 +30,16 @@ const AdminPanel = ({ userList, chatList }) => {
     <div>
       <Toolbar />
       <Box
-        component="main"
+        className="chats-container"
         sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === "light"
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
           flexGrow: 1,
-          height: "100%",
+          height: 680,
+          width: 1200,
           overflow: "auto",
           mt: 8,
+          display: "flex",
+          flexDirection: "row",
+          borderRadius: 4,
         }}
       >
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -59,11 +59,12 @@ const AdminPanel = ({ userList, chatList }) => {
                     width: "100px",
                     fontSize: "50px",
                     bgcolor: deepOrange[500],
+                    boxShadow: 2,
                   }}
                 >
                   {username.charAt(0).toUpperCase()}
                 </Avatar>
-                <Typography variant="h6" alignContent="center">
+                <Typography variant="h6" alignContent="center" mt="15px">
                   {username}
                 </Typography>
 

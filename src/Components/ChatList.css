@@ -1,0 +1,13 @@
+.chats-container {
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(5.5px);
+  -webkit-backdrop-filter: blur(5.5px);
+}
+
+.box_list {
+  background: rgba(255, 255, 255, 0.767);
+  box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.438);
+  backdrop-filter: blur(2.5px);
+  -webkit-backdrop-filter: blur(2.5px);
+}

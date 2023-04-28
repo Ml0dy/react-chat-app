@@ -10,6 +10,8 @@ import {
   TextField,
   ThemeProvider,
   Typography,
+  createMuiTheme,
+  createTheme,
 } from "@mui/material";
 import { Box } from "@mui/material";
 import React from "react";
@@ -19,6 +21,7 @@ import { userDataBase } from "../Config/dataBase";
 import { deepOrange } from "@mui/material/colors";
 import ChatView from "./ChatView";
 import { light } from "@mui/material/styles/createPalette";
+import "./ChatList.css";
 
 const ChatList = () => {
   const userLogged = useSelector((state) => state.loggedUserReducer.user);
@@ -44,54 +47,59 @@ const ChatList = () => {
 
   console.log(userChatList);
 
+  // const theme = createMuiTheme({
+  //   palette: {
+  //     primary: {
+  //       main: "#1a237e",
+  //     },
+  //     secondary: {
+  //       main: "#ff9800",
+  //     },
+  //   },
+  // });
+
   return (
     <Box
-      component="main"
+      className="chats-container"
       sx={{
-        backgroundColor: (theme) =>
-          theme.palette.mode === "light"
-            ? theme.palette.grey[100]
-            : theme.palette.grey[900],
         flexGrow: 1,
-        height: 650,
+        height: 680,
         width: 1200,
         overflow: "auto",
         mt: 8,
         display: "flex",
         flexDirection: "row",
-        boxShadow: 10,
+
+        borderRadius: 4,
       }}
     >
       <Box
+        className="box_list"
         sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === "light"
-              ? theme.palette.grey[400]
-              : theme.palette.grey[900],
           flexGrow: 1,
-          height: "100%",
+          height: "93%",
           width: "30%",
           overflow: "auto",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          margin: 3,
+          borderRadius: 4,
         }}
       >
         <Box
           sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.grey[200]
-                : theme.palette.grey[900],
-            height: "10%",
+            backgroundColor: "#212766",
+            height: "12%",
             width: "100%",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            boxShadow: 5,
+            justifyContent: "center",
+            boxShadow: 2,
           }}
         >
-          <Typography variant="h4" alignContent="center" mt={2}>
+          <Typography variant="h5" alignContent="center" mt={2} color="white">
             Chat List
           </Typography>
         </Box>
@@ -100,7 +108,7 @@ const ChatList = () => {
             <ListItem key={index} disablePadding>
               <ListItemButton onClick={() => console.log(chatList[index])}>
                 <ListItemIcon>
-                  <Avatar sx={{ bgcolor: deepOrange[500] }}>
+                  <Avatar sx={{ bgcolor: deepOrange[500], boxShadow: 2 }}>
                     {username.charAt(0).toUpperCase()}
                   </Avatar>
                 </ListItemIcon>
@@ -118,28 +126,27 @@ const ChatList = () => {
               ? theme.palette.grey[50]
               : theme.palette.grey[900],
           flexGrow: 1,
-          height: "100%",
-          width: "70%",
+          height: "93%",
+          width: "80%",
           overflow: "auto",
           display: "flex",
           flexDirection: "column",
+          mt: 3,
+          borderRadius: 4,
         }}
       >
         <Box
           sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.grey[200]
-                : theme.palette.grey[900],
-            height: "10%",
+            backgroundColor: "#212766",
+            height: "13%",
             width: "100%",
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-end",
-            boxShadow: 5,
+            boxShadow: 3,
           }}
         >
-          <Typography variant="h4" alignContent="center" mt={2}>
+          <Typography variant="h5" alignContent="center" mt={2} color="white">
             Username
           </Typography>
         </Box>
@@ -148,7 +155,7 @@ const ChatList = () => {
           sx={{
             backgroundColor: (theme) =>
               theme.palette.mode === "light"
-                ? theme.palette.grey[500]
+                ? theme.palette.grey[250]
                 : theme.palette.grey[900],
             height: "80%",
             width: "100%",

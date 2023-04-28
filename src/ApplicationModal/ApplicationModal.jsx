@@ -27,6 +27,7 @@ import { Link, matchRoutes, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUserAction } from "../Redux/Actions/loggedUserAction";
 import { useNavigate } from "react-router";
+import shadows from "@mui/material/styles/shadows";
 
 const drawerWidth = 240;
 
@@ -84,11 +85,11 @@ const ApplicationModal = () => {
           gap={3}
           alignItems={"center"}
         >
-          <Avatar sx={{ bgcolor: deepOrange[500] }}>
+          <Avatar sx={{ bgcolor: deepOrange[500], boxShadow: 2 }}>
             {username.charAt(0).toUpperCase()}
           </Avatar>
 
-          <Typography variant="h6">{username}</Typography>
+          <Typography variant="h6">Nice to see you, {username}! </Typography>
           <IconButton
             color="primary"
             aria-label="logout"
