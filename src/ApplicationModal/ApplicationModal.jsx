@@ -114,14 +114,14 @@ const ApplicationModal = () => {
         <Divider />
         <List>
           {userMenu.map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon></ListItemIcon>
-                <Link to={`/${text.replace(" ", "").toLowerCase()}`}>
+            <Link to={`/${text.replace(" ", "").toLowerCase()}`}>
+              <ListItem key={text} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon></ListItemIcon>
                   <ListItemText primary={text} />
-                </Link>
-              </ListItemButton>
-            </ListItem>
+                </ListItemButton>
+              </ListItem>
+            </Link>
           ))}
         </List>
         <Divider />

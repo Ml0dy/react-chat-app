@@ -8,39 +8,41 @@ import {
   ListItemIcon,
   ListItemText,
   TextField,
+  ThemeProvider,
   Typography,
-} from "@mui/material"
-import { Box } from "@mui/material"
-import React from "react"
-import SendIcon from "@mui/icons-material/Send"
-import { useSelector } from "react-redux"
-import { userDataBase } from "../Config/dataBase"
-import { deepOrange } from "@mui/material/colors"
-import ChatView from "./ChatView"
+} from "@mui/material";
+import { Box } from "@mui/material";
+import React from "react";
+import SendIcon from "@mui/icons-material/Send";
+import { useSelector } from "react-redux";
+import { userDataBase } from "../Config/dataBase";
+import { deepOrange } from "@mui/material/colors";
+import ChatView from "./ChatView";
+import { light } from "@mui/material/styles/createPalette";
 
 const ChatList = () => {
-  const userLogged = useSelector((state) => state.loggedUserReducer.user)
-  const { chatList, id } = userLogged
+  const userLogged = useSelector((state) => state.loggedUserReducer.user);
+  const { chatList, id } = userLogged;
 
-  const usersList = useSelector((state) => state.userDatabaseReducer)
+  const usersList = useSelector((state) => state.userDatabaseReducer);
 
   const getSecondUser = (id, usersDatabase) => {
     const [secondUser] = usersList.filter((user) => {
       if (user.id === id) {
-        return { user }
+        return { user };
       }
-    })
-    return secondUser
-  }
+    });
+    return secondUser;
+  };
 
   const userChatList = chatList.map((chat, index) => {
     if (chat.users[0].id === id) {
-      return getSecondUser(chat.users[1].id, userDataBase)
+      return getSecondUser(chat.users[1].id, userDataBase);
     }
-    return getSecondUser(chat.users[0].id, userDataBase)
-  })
+    return getSecondUser(chat.users[0].id, userDataBase);
+  });
 
-  console.log(userChatList)
+  console.log(userChatList);
 
   return (
     <Box
@@ -57,6 +59,7 @@ const ChatList = () => {
         mt: 8,
         display: "flex",
         flexDirection: "row",
+        boxShadow: 10,
       }}
     >
       <Box
@@ -85,6 +88,7 @@ const ChatList = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            boxShadow: 5,
           }}
         >
           <Typography variant="h4" alignContent="center" mt={2}>
@@ -132,6 +136,7 @@ const ChatList = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-end",
+            boxShadow: 5,
           }}
         >
           <Typography variant="h4" alignContent="center" mt={2}>
@@ -192,7 +197,7 @@ const ChatList = () => {
         </Box>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default ChatList
+export default ChatList;
