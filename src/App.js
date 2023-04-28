@@ -1,7 +1,7 @@
-import "./App.css";
-import ApplicationModal from "./ApplicationModal/ApplicationModal";
-import HomeView from "./Pages/Home/HomeView";
-import { Route, Routes } from "react-router-dom";
+import "./App.css"
+import ApplicationModal from "./ApplicationModal/ApplicationModal"
+import HomeView from "./Pages/Home/HomeView"
+import { Route, Routes } from "react-router-dom"
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         <Route path="/chatlist" element={<ApplicationModal />} />
       </Routes>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

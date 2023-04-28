@@ -1,14 +1,17 @@
-import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { red } from "@mui/material/colors";
-import { Box } from "@mui/material";
+import * as React from "react"
+import { styled } from "@mui/material/styles"
+import Table from "@mui/material/Table"
+import TableBody from "@mui/material/TableBody"
+import TableCell, { tableCellClasses } from "@mui/material/TableCell"
+import TableContainer from "@mui/material/TableContainer"
+import TableHead from "@mui/material/TableHead"
+import TableRow from "@mui/material/TableRow"
+import Paper from "@mui/material/Paper"
+import { red } from "@mui/material/colors"
+import { Box } from "@mui/material"
+import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+import "./ChatList.css"
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -18,7 +21,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
   },
-}));
+}))
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
@@ -28,9 +31,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:last-child td, &:last-child th": {
     border: 0,
   },
-}));
+}))
 
 const Users = ({ userList }) => {
+  const loggedUser = useSelector((state) => state.loggedUserReducer.user)
+
+  const navigate = useNavigate()
+  if (loggedUser === {}) {
+    navigate("/")
+  }
+
   return (
     <Box
       className="chats-container"
@@ -72,7 +82,7 @@ const Users = ({ userList }) => {
         </Table>
       </TableContainer>
     </Box>
-  );
-};
+  )
+}
 
-export default Users;
+export default Users
