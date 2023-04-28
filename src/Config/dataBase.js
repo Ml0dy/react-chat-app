@@ -20,6 +20,71 @@ export const chatList = [
         user_message: { id: 2 },
         text: "hi",
       },
+      {
+        id_message: 2,
+        user_message: { id: 1 },
+        text: "fsfsfsdfs",
+      },
+      {
+        id_message: 3,
+        user_message: { id: 1 },
+        text: "jytuytu",
+      },
+      {
+        id_message: 4,
+        user_message: { id: 2 },
+        text: "helbcgcfgcflo",
+      },
+      {
+        id_message: 5,
+        user_message: { id: 2 },
+        text: "helgfdgdgdgdfglo",
+      },
+      {
+        id_message: 3,
+        user_message: { id: 1 },
+        text: "jytuytu",
+      },
+      {
+        id_message: 4,
+        user_message: { id: 2 },
+        text: "helbcgcfgcflo",
+      },
+      {
+        id_message: 5,
+        user_message: { id: 2 },
+        text: "helgfdgdgdgdfglo",
+      },
+      {
+        id_message: 3,
+        user_message: { id: 1 },
+        text: "jytuytu",
+      },
+      {
+        id_message: 4,
+        user_message: { id: 2 },
+        text: "helbcgcfgcflo",
+      },
+      {
+        id_message: 5,
+        user_message: { id: 2 },
+        text: "helgfdgdgdgdfglo",
+      },
+      {
+        id_message: 3,
+        user_message: { id: 1 },
+        text: "jytuytu",
+      },
+      {
+        id_message: 4,
+        user_message: { id: 2 },
+        text: "helbcgcfgcflo",
+      },
+      {
+        id_message: 5,
+        user_message: { id: 2 },
+        text: "helgfdgdgdgdfglo",
+      },
     ],
   },
   {
@@ -48,7 +113,7 @@ export const chatList = [
   {
     id: 3,
   },
-]
+];
 
 export const userDataBase = [
   {
@@ -115,4 +180,4 @@ export const userDataBase = [
     isLogged: false,
     chatList: [chatList[1]],
   },
-]
+];

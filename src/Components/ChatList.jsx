@@ -26,7 +26,7 @@ const ChatList = () => {
 
   const usersList = useSelector((state) => state.userDatabaseReducer);
 
-  const getSecondUser = (id, usersDatabase) => {
+  const getSecondUser = (id) => {
     const [secondUser] = usersList.filter((user) => {
       if (user.id === id) {
         return { user };
@@ -35,11 +35,11 @@ const ChatList = () => {
     return secondUser;
   };
 
-  const userChatList = chatList.map((chat, index) => {
+  const userChatList = chatList.map((chat) => {
     if (chat.users[0].id === id) {
-      return getSecondUser(chat.users[1].id, userDataBase);
+      return getSecondUser(chat.users[1].id);
     }
-    return getSecondUser(chat.users[0].id, userDataBase);
+    return getSecondUser(chat.users[0].id);
   });
 
   console.log(userChatList);
@@ -157,7 +157,7 @@ const ChatList = () => {
           }}
         >
           <Typography variant="h8" alignContent="center" mt={2}>
-            <ChatView />
+            <ChatView chatMessages={chatList[0]} />
           </Typography>
         </Box>
 
