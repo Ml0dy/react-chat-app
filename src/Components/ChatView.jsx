@@ -1,12 +1,12 @@
 import { Box, Typography } from "@mui/material"
 import React from "react"
 import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
 const ChatView = ({ chatMessages }) => {
   const { chatList } = useSelector((state) => state.loggedUserReducer)
-  const { id, username } = useSelector((state) => state.loggedUserReducer.user)
-
-  console.log(chatMessages)
+  const loggedUser = useSelector((state) => state.loggedUserReducer.user)
+  const { id, username } = loggedUser
 
   return (
     <div>

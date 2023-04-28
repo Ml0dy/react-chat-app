@@ -112,8 +112,28 @@ export const chatList = [
   },
   {
     id: 3,
+    users: [
+      {
+        id: 1,
+      },
+      {
+        id: 4,
+      },
+    ],
+    messages: [
+      {
+        id_message: 0,
+        user_message: { id: 1 },
+        text: "W polskiej myśli geopolitycznej można wyróżnić trzy główne metakoncepcje: krainy przejściowej, krainy pomostowej oraz przedmurza. Autorem pierwszej z nich jest Wacław Nałkowski (1851-1911), warszawski geograf, który uważał, że terytorium Polski charakteryzuje się nieokreślonością, brakiem stałości i charakteru. Ta przejściowość ma być dla nas zagrożeniem, szczególnie ze strony wrogich sąsiadów (Niemiec i Rosji). Koncepcja ta sugeruje, że dla wzmocnienia pozycji Polski warto szukać silnych sojuszy międzynarodowych, a jednocześnie budować sprawne państwo. Wyrazem tej wizji zdaje się być uczestnictwo Polski w wielkich projektach politycznych, wojskowych i gospodarczych, szczególnie w NATO i UE, ale też sojusz z USA.",
+      },
+      {
+        id_message: 1,
+        user_message: { id: 4 },
+        text: "siemka",
+      },
+    ],
   },
-];
+]
 
 export const userDataBase = [
   {
@@ -138,7 +158,7 @@ export const userDataBase = [
     password: "user",
     isAdmin: false,
     isLogged: false,
-    chatList: [chatList[0], chatList[1]],
+    chatList: [chatList[0], chatList[1], chatList[2]],
   },
   {
     id: 2,
@@ -180,4 +200,4 @@ export const userDataBase = [
     isLogged: false,
     chatList: [chatList[1]],
   },
-];
+]

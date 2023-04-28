@@ -1,27 +1,28 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import Stack from "@mui/material/Stack"
-import { ListItem } from "@mui/material"
-import Box from "@mui/material/Box"
+
 import Novologo from "../../Assets/Images/NovoAcademy_logo.png"
 import TextField from "@mui/material/TextField"
 import "./HomeView.css"
 import Button from "@mui/material/Button"
 import { loginValidation } from "./loginValidation"
 import { useNavigate } from "react-router"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { loggedUserAction } from "../../Redux/Actions/loggedUserAction"
 
 const HomeView = () => {
   const [loginValue, setLoginValue] = useState("User1")
   const [passwordValue, setPasswordValue] = useState("user")
 
-  const userInfo = useSelector((state) => state.loggedUserReducer.user)
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleLoginValidation = () => {
     const validation = loginValidation(loginValue, passwordValue)
+
+    if (loginValue === "" || passwordValue === "") {
+      return alert("You must fill all fields (login and password) ")
+    }
     if (!validation) {
       setLoginValue("")
       setPasswordValue("")
@@ -63,6 +64,7 @@ const HomeView = () => {
           margin="normal"
           value={loginValue}
           onChange={(e) => setLoginValue(e.target.value)}
+          onKeyUp={(e) => (e.key === "Enter" ? handleLoginValidation() : "")}
         />
         <TextField
           id="outlined-basic"
@@ -71,6 +73,7 @@ const HomeView = () => {
           type="password"
           value={passwordValue}
           onChange={(e) => setPasswordValue(e.target.value)}
+          onKeyUp={(e) => (e.key === "Enter" ? handleLoginValidation() : "")}
         />
         <Button variant="contained" onClick={handleLoginValidation}>
           LOG IN

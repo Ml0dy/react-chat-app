@@ -8,41 +8,36 @@ import {
   ListItemIcon,
   ListItemText,
   TextField,
-  ThemeProvider,
   Typography,
-} from "@mui/material";
-import { Box } from "@mui/material";
-import React from "react";
-import SendIcon from "@mui/icons-material/Send";
-import { useSelector } from "react-redux";
-import { userDataBase } from "../Config/dataBase";
-import { deepOrange } from "@mui/material/colors";
-import ChatView from "./ChatView";
-import { light } from "@mui/material/styles/createPalette";
+} from "@mui/material"
+import { Box } from "@mui/material"
+import React, { useState } from "react"
+import SendIcon from "@mui/icons-material/Send"
+import { useSelector } from "react-redux"
+import { deepOrange } from "@mui/material/colors"
+import ChatView from "./ChatView"
+import { useNavigate } from "react-router-dom"
 
 const ChatList = () => {
-  const userLogged = useSelector((state) => state.loggedUserReducer.user);
-  const { chatList, id } = userLogged;
+  const [currentChat, setCurrentChat] = useState(0)
 
-  const usersList = useSelector((state) => state.userDatabaseReducer);
+  const loggedUser = useSelector((state) => state.loggedUserReducer.user)
+  const { chatList, id } = loggedUser
+  const usersList = useSelector((state) => state.userDatabaseReducer)
 
   const getSecondUser = (id) => {
     const [secondUser] = usersList.filter((user) => {
-      if (user.id === id) {
-        return { user };
-      }
-    });
-    return secondUser;
-  };
+      if (user.id === id) return { user }
+    })
+    return secondUser
+  }
 
   const userChatList = chatList.map((chat) => {
     if (chat.users[0].id === id) {
-      return getSecondUser(chat.users[1].id);
+      return getSecondUser(chat.users[1].id)
     }
-    return getSecondUser(chat.users[0].id);
-  });
-
-  console.log(userChatList);
+    return getSecondUser(chat.users[0].id)
+  })
 
   return (
     <Box
@@ -98,7 +93,7 @@ const ChatList = () => {
         <List>
           {userChatList.map(({ username, id }, index) => (
             <ListItem key={index} disablePadding>
-              <ListItemButton onClick={() => console.log(chatList[index])}>
+              <ListItemButton onClick={() => setCurrentChat(index)}>
                 <ListItemIcon>
                   <Avatar sx={{ bgcolor: deepOrange[500] }}>
                     {username.charAt(0).toUpperCase()}
@@ -157,7 +152,7 @@ const ChatList = () => {
           }}
         >
           <Typography variant="h8" alignContent="center" mt={2}>
-            <ChatView chatMessages={chatList[0]} />
+            <ChatView chatMessages={chatList[currentChat]} />
           </Typography>
         </Box>
 
@@ -197,7 +192,7 @@ const ChatList = () => {
         </Box>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default ChatList;
+export default ChatList

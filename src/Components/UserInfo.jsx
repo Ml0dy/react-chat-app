@@ -1,14 +1,15 @@
-import React from "react";
-import { Avatar, Container, Grid, Paper, Toolbar } from "@mui/material";
-import { deepOrange } from "@mui/material/colors";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import { useSelector } from "react-redux";
+import React from "react"
+import { Avatar, Container, Grid, Paper, Toolbar } from "@mui/material"
+import { deepOrange } from "@mui/material/colors"
+import Typography from "@mui/material/Typography"
+import Box from "@mui/material/Box"
+import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
 const UserInfo = () => {
-  const { id, username, isAdmin } = useSelector(
-    (state) => state.loggedUserReducer.user
-  );
+  const loggedUser = useSelector((state) => state.loggedUserReducer.user)
+
+  const { id, username, isAdmin } = loggedUser
 
   return (
     <>
@@ -63,7 +64,7 @@ const UserInfo = () => {
         </Container>
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default UserInfo;
+export default UserInfo
