@@ -1,12 +1,12 @@
-import { chatList } from "../../Config/dataBase";
+import { chatList } from "../../Config/dataBase"
 
-const initialState = chatList;
+const initialState = chatList
 
-export const chatsDatabaseReducer = (state = initialState, action) => {
+export const chatsDatabaseReducer = (state = initialState, action, chatId) => {
   switch (action.type) {
     case "GET_CHATSDATABASE":
-      return state;
+      return state
     default:
-      return state;
+      return state
   }
-};
+}

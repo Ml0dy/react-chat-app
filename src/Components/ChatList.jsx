@@ -13,17 +13,20 @@ import {
 import { Box } from "@mui/material"
 import React, { useState } from "react"
 import SendIcon from "@mui/icons-material/Send"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { deepOrange } from "@mui/material/colors"
 import ChatView from "./ChatView"
-import { useNavigate } from "react-router-dom"
+import { currentChatAction } from "../Redux/Actions/currentChatAction"
 
 const ChatList = () => {
   const [currentChat, setCurrentChat] = useState(0)
 
   const loggedUser = useSelector((state) => state.loggedUserReducer.user)
-  const { chatList, id } = loggedUser
   const usersList = useSelector((state) => state.userDatabaseReducer)
+  const reducerCurrentChat = useSelector((state) => state.currenChatReducer)
+
+  const { chatList, id } = loggedUser
+  const dispatch = useDispatch()
 
   const getSecondUser = (id) => {
     const [secondUser] = usersList.filter((user) => {
@@ -38,6 +41,11 @@ const ChatList = () => {
     }
     return getSecondUser(chat.users[0].id)
   })
+
+  const handlePickChat = (index) => {
+    setCurrentChat(index)
+    dispatch(currentChatAction(chatList[currentChat]))
+  }
 
   // const theme = createMuiTheme({
   //   palette: {
@@ -98,7 +106,7 @@ const ChatList = () => {
         <List>
           {userChatList.map(({ username, id }, index) => (
             <ListItem key={index} disablePadding>
-              <ListItemButton onClick={() => setCurrentChat(index)}>
+              <ListItemButton onClick={() => handlePickChat(index)}>
                 <ListItemIcon>
                   <Avatar sx={{ bgcolor: deepOrange[500], boxShadow: 2 }}>
                     {username.charAt(0).toUpperCase()}
