@@ -1,19 +1,20 @@
-import { Box, Typography } from "@mui/material";
-import React from "react";
-import { useSelector } from "react-redux";
+import { Box, Typography } from "@mui/material"
+import React from "react"
+import { useSelector } from "react-redux"
 
 const ChatView = ({ chatMessages }) => {
-  const { chatList } = useSelector((state) => state.loggedUserReducer);
-  const { id, username } = useSelector((state) => state.loggedUserReducer.user);
+  const { chatList } = useSelector((state) => state.loggedUserReducer)
+  const { id, username } = useSelector((state) => state.loggedUserReducer.user)
 
-  console.log(chatMessages);
+  console.log(chatMessages)
 
   return (
     <div>
-      {chatMessages.messages.map(({ user_message, text }) => {
+      {chatMessages.messages.map(({ user_message, text }, index) => {
         if (user_message.id === id) {
           return (
             <Box
+              key={index}
               sx={{
                 backgroundColor: (theme) =>
                   theme.palette.mode === "light"
@@ -36,10 +37,11 @@ const ChatView = ({ chatMessages }) => {
                 {text}
               </Typography>
             </Box>
-          );
+          )
         }
         return (
           <Box
+            key={index}
             sx={{
               backgroundColor: (theme) =>
                 theme.palette.mode === "light"
@@ -62,7 +64,7 @@ const ChatView = ({ chatMessages }) => {
               {text}
             </Typography>
           </Box>
-        );
+        )
       })}
     </div>
 
@@ -112,7 +114,7 @@ const ChatView = ({ chatMessages }) => {
     //     </Typography>
     //   </Box>
     // </div>
-  );
-};
+  )
+}
 
-export default ChatView;
+export default ChatView
