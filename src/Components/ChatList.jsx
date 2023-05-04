@@ -51,10 +51,9 @@ const ChatList = () => {
   }
 
   const handleSendMessage = () => {
-    let [newMessageId] = reducerCurrentChat.chat.messages.slice(-1)
-    let currentMessageId = (newMessageId.id_message += 1)
-    console.log(currentMessageId)
-    console.log(messageValue, "Message Send")
+    const [newMessageId] = reducerCurrentChat.chat.messages.slice(-1)
+    const currentMessageId = (newMessageId.id_message += 1)
+
     dispatch(
       sendMessageAction(
         reducerCurrentChat.chat.id,
