@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material"
 import { Box } from "@mui/material"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import SendIcon from "@mui/icons-material/Send"
 import { useDispatch, useSelector } from "react-redux"
 import { deepOrange } from "@mui/material/colors"
@@ -23,10 +23,12 @@ const ChatList = () => {
 
   const loggedUser = useSelector((state) => state.loggedUserReducer.user)
   const usersList = useSelector((state) => state.userDatabaseReducer)
-  const reducerCurrentChat = useSelector((state) => state.currenChatReducer)
+  const reducerCurrentChat = useSelector((state) => state.currentChatReducer)
 
   const { chatList, id } = loggedUser
   const dispatch = useDispatch()
+
+  console.log(reducerCurrentChat)
 
   const getSecondUser = (id) => {
     const [secondUser] = usersList.filter((user) => {
@@ -44,19 +46,11 @@ const ChatList = () => {
 
   const handlePickChat = (index) => {
     setCurrentChat(index)
-    dispatch(currentChatAction(chatList[currentChat]))
   }
 
-  // const theme = createMuiTheme({
-  //   palette: {
-  //     primary: {
-  //       main: "#1a237e",
-  //     },
-  //     secondary: {
-  //       main: "#ff9800",
-  //     },
-  //   },
-  // });
+  useEffect(() => {
+    dispatch(currentChatAction(chatList[currentChat]))
+  }, [currentChat])
 
   return (
     <Box
