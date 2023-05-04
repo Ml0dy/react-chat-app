@@ -17,6 +17,8 @@ const HomeView = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  const goToRegister = () => navigate("/registration")
+
   const handleLoginValidation = () => {
     const validation = loginValidation(loginValue, passwordValue)
 
@@ -76,9 +78,14 @@ const HomeView = () => {
           onChange={(e) => setPasswordValue(e.target.value)}
           onKeyUp={(e) => (e.key === "Enter" ? handleLoginValidation() : "")}
         />
-        <Button variant="contained" onClick={handleLoginValidation}>
-          LOG IN
-        </Button>
+        <Stack flex flexDirection={"row"} justifyContent={"space-between"}>
+          <Button variant="contained" onClick={handleLoginValidation}>
+            LOG IN
+          </Button>
+          <Button variant="contained" onClick={goToRegister}>
+            REGISTER
+          </Button>
+        </Stack>
       </Stack>
     </Stack>
   )
