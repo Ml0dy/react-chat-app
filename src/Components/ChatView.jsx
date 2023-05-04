@@ -4,9 +4,9 @@ import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 const ChatView = ({ chatMessages }) => {
-  const { chatList } = useSelector((state) => state.loggedUserReducer)
+  // const { chatList } = useSelector((state) => state.loggedUserReducer)
   const loggedUser = useSelector((state) => state.loggedUserReducer.user)
-  const { id, username } = loggedUser
+  const { id } = loggedUser
 
   return (
     <div>

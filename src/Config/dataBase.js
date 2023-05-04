@@ -30,61 +30,6 @@ export const chatList = [
         user_message: { id: 1 },
         text: "jytuytu",
       },
-      {
-        id_message: 4,
-        user_message: { id: 2 },
-        text: "helbcgcfgcflo",
-      },
-      {
-        id_message: 5,
-        user_message: { id: 2 },
-        text: "helgfdgdgdgdfglo",
-      },
-      {
-        id_message: 6,
-        user_message: { id: 1 },
-        text: "jytuytu",
-      },
-      {
-        id_message: 7,
-        user_message: { id: 2 },
-        text: "helbcgcfgcflo",
-      },
-      {
-        id_message: 8,
-        user_message: { id: 2 },
-        text: "helgfdgdgdgdfglo",
-      },
-      {
-        id_message: 9,
-        user_message: { id: 1 },
-        text: "jytuytu",
-      },
-      {
-        id_message: 10,
-        user_message: { id: 2 },
-        text: "helbcgcfgcflo",
-      },
-      {
-        id_message: 11,
-        user_message: { id: 2 },
-        text: "helgfdgdgdgdfglo",
-      },
-      {
-        id_message: 12,
-        user_message: { id: 1 },
-        text: "jytuytutuytutuytutuytutuytutuytutuytutuytutuytutuytutuytutuytutuytutuytutuytutuytutuytu",
-      },
-      {
-        id_message: 13,
-        user_message: { id: 2 },
-        text: "helbcgcfgcflo",
-      },
-      {
-        id_message: 14,
-        user_message: { id: 2 },
-        text: "helgfdgdgdgdfglo",
-      },
     ],
   },
   {
