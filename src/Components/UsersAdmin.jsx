@@ -44,20 +44,24 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }))
 
-const Users = () => {
+const UsersAdmin = () => {
   const dispatch = useDispatch()
   const loggedUser = useSelector((state) => state.loggedUserReducer.user)
   const userList = useSelector((state) => state.userDatabaseReducer)
 
-  const deleteUser = (id) => {
-    console.log(id)
-    dispatch(deleteUserAction(id))
+  const deleteUser = (id, isAdmin) => {
+    if (loggedUser.id === id || isAdmin === true) {
+      alert("Can't delete this user")
+    } else {
+      dispatch(deleteUserAction(id))
+    }
   }
 
   const navigate = useNavigate()
   if (loggedUser === {}) {
     navigate("/")
   }
+
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
@@ -106,7 +110,7 @@ const Users = () => {
                 </StyledTableCell>
                 <StyledTableCell component="th" scope="row" align="center">
                   <DeleteForeverIcon
-                    onClick={() => deleteUser(id)}
+                    onClick={() => deleteUser(id, isAdmin)}
                     sx={{
                       color: deepOrange[500],
                       cursor: "pointer",
@@ -155,4 +159,4 @@ const Users = () => {
   )
 }
 
-export default Users
+export default UsersAdmin
