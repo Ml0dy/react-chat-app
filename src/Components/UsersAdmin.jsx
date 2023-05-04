@@ -88,10 +88,12 @@ const Users = () => {
             <TableRow>
               <StyledTableCell align="center">User Name </StyledTableCell>
               <StyledTableCell align="center">Id</StyledTableCell>
+              <StyledTableCell align="center">isAdmin</StyledTableCell>
+              <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {userList.map(({ username, id }) => (
+            {userList.map(({ username, id, isAdmin }) => (
               <StyledTableRow key={id}>
                 <StyledTableCell component="th" scope="row" align="center">
                   {username}
@@ -99,8 +101,19 @@ const Users = () => {
                 <StyledTableCell component="th" scope="row" align="center">
                   {id}
                 </StyledTableCell>
+                <StyledTableCell align="center">
+                  {isAdmin ? "Admin" : "-"}
+                </StyledTableCell>
+                <StyledTableCell component="th" scope="row" align="center">
+                  <DeleteForeverIcon
+                    onClick={() => deleteUser(id)}
+                    sx={{
+                      color: deepOrange[500],
+                      cursor: "pointer",
+                    }}
+                  />
 
-                {/* dlug technologiczny <Dialog
+                  {/* dlug technologiczny <Dialog
                     open={open}
                     onClose={handleClose}
                     sx={{
@@ -132,6 +145,7 @@ const Users = () => {
                       </Dialog>
                     </DialogContent>
                   </Dialog> */}
+                </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>

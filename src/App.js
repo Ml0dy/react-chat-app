@@ -10,8 +10,9 @@ function App() {
         <Route path="/" element={<HomeView />} />
         <Route path="/adminpanel" element={<ApplicationModal />} />
         <Route path="/userprofile" element={<ApplicationModal />} />
-        <Route path="/userlist" element={<ApplicationModal />} />
+        <Route path="/users" element={<ApplicationModal />} />
         <Route path="/chatlist" element={<ApplicationModal />} />
+        <Route path="/userlist" element={<ApplicationModal />} />
       </Routes>
     </div>
   )

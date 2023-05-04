@@ -24,6 +24,7 @@ import {
 import { deepOrange, red } from "@mui/material/colors"
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew"
 import Users from "../Components/Users"
+import UsersAdmin from "../Components/UsersAdmin"
 import { userDataBase } from "../Config/dataBase"
 import { chatList } from "../Config/dataBase"
 import UserInfo from "../Components/UserInfo"
@@ -77,10 +78,12 @@ const ApplicationModal = () => {
     )
   } else if (location.pathname === "/userprofile") {
     currentComponent = <UserInfo username="User" isAdmin={false} />
-  } else if (location.pathname === "/userlist") {
+  } else if (location.pathname === "/users") {
     currentComponent = <Users />
   } else if (location.pathname === "/chatlist") {
     currentComponent = <ChatList />
+  } else if (location.pathname === "/userlist") {
+    currentComponent = <UsersAdmin />
   }
 
   const handleLogout = () => {
@@ -90,7 +93,7 @@ const ApplicationModal = () => {
 
   const userMenu = isAdmin
     ? ["Admin panel", "Chat List", "User List"]
-    : ["User Profile", "Chat List", "User List"]
+    : ["User Profile", "Chat List", "Users"]
 
   useEffect(() => {
     getRerenderActivity(id)
@@ -195,6 +198,13 @@ const ApplicationModal = () => {
                       " "
                     )}
                     {text === "User List" ? (
+                      <SupervisedUserCircleIcon
+                        sx={{ color: deepOrange[500] }}
+                      />
+                    ) : (
+                      " "
+                    )}
+                    {text === "Users" ? (
                       <SupervisedUserCircleIcon
                         sx={{ color: deepOrange[500] }}
                       />
