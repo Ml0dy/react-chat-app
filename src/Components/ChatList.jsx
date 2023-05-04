@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material"
 import { Box } from "@mui/material"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import SendIcon from "@mui/icons-material/Send"
 import { useDispatch, useSelector } from "react-redux"
 import { deepOrange } from "@mui/material/colors"
@@ -31,6 +31,12 @@ const ChatList = () => {
   const { chatList, id } = loggedUser
 
   const dispatch = useDispatch()
+  const container = useRef(null)
+
+  const handleScroll = () => {
+    const { scrollHeight } = container.current
+    container.current?.scrollTo(0, scrollHeight)
+  }
 
   const getSecondUser = (id) => {
     const [secondUser] = usersList.filter((user) => {
@@ -45,9 +51,10 @@ const ChatList = () => {
     }
     return getSecondUser(chat.users[0].id)
   })
-
+  console.log(userChatList)
   const handlePickChat = (index) => {
-    setCurrentChat(index - 2)
+    console.log(index)
+    setCurrentChat(index)
   }
 
   const handleSendMessage = () => {
@@ -68,6 +75,10 @@ const ChatList = () => {
   useEffect(() => {
     dispatch(currentChatAction(chatDatabase[currentChat]))
   }, [currentChat])
+
+  useEffect(() => {
+    handleScroll()
+  }, [chatDatabase[currentChat]])
 
   return (
     <Box
@@ -116,18 +127,23 @@ const ChatList = () => {
           </Typography>
         </Box>
         <List>
-          {userChatList.map(({ username, id }, index) => (
-            <ListItem key={index} disablePadding>
-              <ListItemButton onClick={() => handlePickChat(id)}>
-                <ListItemIcon>
-                  <Avatar sx={{ bgcolor: deepOrange[500], boxShadow: 2 }}>
-                    {username.charAt(0).toUpperCase()}
-                  </Avatar>
-                </ListItemIcon>
-                <ListItemText primary={username} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          {chatList.map((chat) => {
+            let secondUsername = ""
+            if (chat.users[0].id === id) secondUsername = chat.users[1].username
+            else secondUsername = chat.users[0].username
+            return (
+              <ListItem key={chat.id} disablePadding>
+                <ListItemButton onClick={() => handlePickChat(chat.id)}>
+                  <ListItemIcon>
+                    <Avatar sx={{ bgcolor: deepOrange[500], boxShadow: 2 }}>
+                      {secondUsername.charAt(0).toUpperCase()}
+                    </Avatar>
+                  </ListItemIcon>
+                  <ListItemText primary={secondUsername} />
+                </ListItemButton>
+              </ListItem>
+            )
+          })}
         </List>
         <Divider />
       </Box>
@@ -169,14 +185,15 @@ const ChatList = () => {
             Username
           </Typography>
         </Box>
-
         <Box
+          ref={container}
           sx={{
             backgroundColor: (theme) =>
               theme.palette.mode === "light"
                 ? theme.palette.grey[250]
                 : theme.palette.grey[900],
             height: "80%",
+            maxHeight: "100%",
             width: "100%",
             display: "flex",
             flexDirection: "column",
@@ -211,6 +228,7 @@ const ChatList = () => {
             }}
             value={messageValue}
             onChange={(e) => setMessageValue(e.target.value)}
+            onKeyUp={(e) => (e.key === "Enter" ? handleSendMessage() : "")}
           />
 
           <Button

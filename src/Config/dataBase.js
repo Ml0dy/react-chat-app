@@ -1,12 +1,14 @@
 export const chatList = [
   {
-    id: 1,
+    id: 0,
     users: [
       {
         id: 1,
+        username: "User1",
       },
       {
         id: 2,
+        username: "User2",
       },
     ],
     messages: [
@@ -33,13 +35,15 @@ export const chatList = [
     ],
   },
   {
-    id: 2,
+    id: 1,
     users: [
       {
         id: 3,
+        username: "User3",
       },
       {
         id: 4,
+        username: "User4",
       },
     ],
     messages: [
@@ -56,13 +60,15 @@ export const chatList = [
     ],
   },
   {
-    id: 3,
+    id: 2,
     users: [
       {
         id: 1,
+        username: "User1",
       },
       {
         id: 4,
+        username: "User4",
       },
     ],
     messages: [
@@ -127,7 +133,7 @@ export const userDataBase = [
     password: "user3",
     isAdmin: false,
     isLogged: false,
-    chatList: [chatList[1]],
+    chatList: [chatList[2]],
   },
   {
     id: 5,

@@ -50,7 +50,6 @@ const Users = () => {
   const userList = useSelector((state) => state.userDatabaseReducer)
 
   const deleteUser = (id) => {
-    console.log(id)
     dispatch(deleteUserAction(id))
   }
 
