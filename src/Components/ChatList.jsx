@@ -76,12 +76,13 @@ const ChatList = () => {
         flexGrow: 1,
         height: 680,
         width: 1200,
-        overflow: "auto",
+        overflow: "hidden",
         mt: 8,
         display: "flex",
         flexDirection: "row",
 
         borderRadius: 4,
+        paddingRight: 3,
       }}
     >
       <Box
@@ -144,6 +145,7 @@ const ChatList = () => {
           flexDirection: "column",
           mt: 3,
           borderRadius: 4,
+          position: "relative",
         }}
       >
         <Box
@@ -157,7 +159,13 @@ const ChatList = () => {
             boxShadow: 3,
           }}
         >
-          <Typography variant="h5" alignContent="center" mt={2} color="white">
+          <Typography
+            variant="h5"
+            alignContent="center"
+            mt={4}
+            mr={3}
+            color="white"
+          >
             Username
           </Typography>
         </Box>
@@ -172,13 +180,15 @@ const ChatList = () => {
             width: "100%",
             display: "flex",
             flexDirection: "column",
+            overflowY: "scroll",
+            scrollbarWidth: "none",
+            behavior: "smooth",
           }}
         >
           <Typography variant="h8" alignContent="center" mt={2}>
             <ChatView chatMessages={chatDatabase[currentChat]} />
           </Typography>
         </Box>
-
         <Box
           sx={{
             backgroundColor: (theme) =>

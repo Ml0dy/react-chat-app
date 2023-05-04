@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material"
+import { right } from "@popperjs/core"
 import React from "react"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
@@ -30,7 +31,7 @@ const ChatView = ({ chatMessages }) => {
                 marginTop: 2,
               }}
             >
-              <Typography variant="body1" gutterBottom>
+              <Typography variant="body1" padding={2} textAlign={"right"}>
                 {text}
               </Typography>
             </Box>
@@ -40,10 +41,7 @@ const ChatView = ({ chatMessages }) => {
           <Box
             key={index}
             sx={{
-              backgroundColor: (theme) =>
-                theme.palette.mode === "light"
-                  ? theme.palette.grey[50]
-                  : theme.palette.grey[900],
+              backgroundColor: "#d4d4d4",
               display: "flex",
               flexDirection: "column",
               width: "auto",
@@ -57,7 +55,7 @@ const ChatView = ({ chatMessages }) => {
               marginTop: 2,
             }}
           >
-            <Typography variant="body1" gutterBottom>
+            <Typography variant="body1" padding={2} textAlign={"left"}>
               {text}
             </Typography>
           </Box>
