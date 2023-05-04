@@ -7,11 +7,22 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
-import { red } from "@mui/material/colors"
-import { Box } from "@mui/material"
+import { deepOrange, red } from "@mui/material/colors"
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material"
 import { useNavigate } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import "./ChatList.css"
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
+import DialogActions from "@mui/material/DialogActions"
+import { deleteUserAction } from "../Redux/Actions/usersDatabaseAction"
+import { useState } from "react"
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -33,12 +44,28 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }))
 
-const Users = ({ userList }) => {
+const Users = () => {
+  const dispatch = useDispatch()
   const loggedUser = useSelector((state) => state.loggedUserReducer.user)
+  const userList = useSelector((state) => state.userDatabaseReducer)
+
+  const deleteUser = (id) => {
+    console.log(id)
+    dispatch(deleteUserAction(id))
+  }
 
   const navigate = useNavigate()
   if (loggedUser === {}) {
     navigate("/")
+  }
+  const [open, setOpen] = useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
   }
 
   return (
@@ -59,22 +86,65 @@ const Users = ({ userList }) => {
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>User Name </StyledTableCell>
-              <StyledTableCell align="left">Id</StyledTableCell>
-              <StyledTableCell align="right">isAdmin</StyledTableCell>
+              <StyledTableCell align="center">User Name </StyledTableCell>
+              <StyledTableCell align="center">Id</StyledTableCell>
+              <StyledTableCell align="center">isAdmin</StyledTableCell>
+              <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {userList.map(({ username, id, isAdmin }) => (
               <StyledTableRow key={id}>
-                <StyledTableCell component="th" scope="row">
+                <StyledTableCell component="th" scope="row" align="center">
                   {username}
                 </StyledTableCell>
-                <StyledTableCell component="th" scope="row">
+                <StyledTableCell component="th" scope="row" align="center">
                   {id}
                 </StyledTableCell>
-                <StyledTableCell align="right">
-                  {isAdmin ? "Admin" : "NoAdmin"}
+                <StyledTableCell align="center">
+                  {isAdmin ? "Admin" : "-"}
+                </StyledTableCell>
+                <StyledTableCell component="th" scope="row" align="center">
+                  <DeleteForeverIcon
+                    onClick={() => deleteUser(id)}
+                    sx={{
+                      color: deepOrange[500],
+                      cursor: "pointer",
+                    }}
+                  />
+
+                  {/* dlug technologiczny <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    sx={{
+                      paddingTop: 0,
+                    }}
+                  >
+                    <DialogContent
+                      sx={{
+                        bgcolor: deepOrange[500],
+                        alignItems: "center",
+                        justifyItems: "center",
+                      }}
+                    >
+                      <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                      >
+                        <DialogTitle id="alert-dialog-title">
+                          {"Are you sure to delete this user?"}
+                        </DialogTitle>
+                        <DialogContent></DialogContent>
+                        <DialogActions>
+                          <Button onClick={handleClose}>Cancel</Button>
+                          <Button onClick={() => deleteUser(id)}>
+                            Delete user
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
+                    </DialogContent>
+                  </Dialog> */}
                 </StyledTableCell>
               </StyledTableRow>
             ))}
