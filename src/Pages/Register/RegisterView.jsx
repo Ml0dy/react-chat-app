@@ -58,15 +58,13 @@ const RegisterView = () => {
 
     const nextID = userDataBase.length
 
-    {
-      dispatch(registerUserAction(username, password, parseInt(nextID)))
-      setSubmitted(true)
-      alert("Registration done!")
-      setUsername("")
-      setPassword("")
-      setConfirmPassword("")
-      navigate("/")
-    }
+    dispatch(registerUserAction(username, password, nextID))
+    setSubmitted(true)
+    alert("Registration done!")
+    setUsername("")
+    setPassword("")
+    setConfirmPassword("")
+    navigate("/")
   }
 
   return (

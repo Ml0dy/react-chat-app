@@ -1,7 +1,9 @@
-import { userDataBase } from "../../Config/dataBase"
-
-export const loginValidation = (usernameInput, passwordInput) => {
-  const [existUserDataBase] = userDataBase.filter((user) => {
+export const loginValidation = (
+  usernameInput,
+  passwordInput,
+  USER_DATABASE
+) => {
+  const [existUserDataBase] = USER_DATABASE.filter((user) => {
     if (user.username === usernameInput) {
       return user
     }

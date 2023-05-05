@@ -6,13 +6,13 @@ const ChatView = ({ chatMessages }) => {
   const loggedUser = useSelector((state) => state.loggedUserReducer.user)
   const { id } = loggedUser
   let secondSender = ""
-  if (chatMessages.users[0].id === id)
-    secondSender = chatMessages.users[1].username
-  else secondSender = chatMessages.users[0].username
 
   return (
     <div>
       {chatMessages.messages.map(({ user_message, text }, index) => {
+        if (chatMessages.users[0].id === id)
+          secondSender = chatMessages.users[1].username
+        else secondSender = chatMessages.users[0].username
         if (user_message.id === id) {
           return (
             <Box

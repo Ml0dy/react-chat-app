@@ -136,7 +136,7 @@ const ChatList = () => {
                 <ListItemButton onClick={() => handlePickChat(chat.id)}>
                   <ListItemIcon>
                     <Avatar sx={{ bgcolor: deepOrange[500], boxShadow: 2 }}>
-                      {secondUsername.charAt(0).toUpperCase()}
+                      {"BAJO JAJO".charAt(0).toUpperCase()}
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText primary={secondUsername} />

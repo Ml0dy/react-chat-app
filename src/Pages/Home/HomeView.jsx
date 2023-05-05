@@ -7,20 +7,20 @@ import "./HomeView.css"
 import Button from "@mui/material/Button"
 import { loginValidation } from "./loginValidation"
 import { useNavigate } from "react-router"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { loggedUserAction } from "../../Redux/Actions/loggedUserAction"
 
 const HomeView = () => {
   const [loginValue, setLoginValue] = useState("User1")
   const [passwordValue, setPasswordValue] = useState("user")
-
+  const userDatabase = useSelector((state) => state.userDatabaseReducer)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const goToRegister = () => navigate("/registration")
 
   const handleLoginValidation = () => {
-    const validation = loginValidation(loginValue, passwordValue)
+    const validation = loginValidation(loginValue, passwordValue, userDatabase)
 
     if (loginValue === "" || passwordValue === "") {
       return alert("You must fill all fields (login and password) ")

@@ -12,7 +12,7 @@ export const userDatabaseReducer = (state = initialState, action) => {
       return [
         ...state,
         {
-          id: action.nextID,
+          id: action.nextId,
           username: action.username,
           password: action.password,
           isAdmin: false,
