@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Avatar,
   Button,
   Divider,
@@ -18,6 +19,7 @@ import { deepOrange } from "@mui/material/colors"
 import ChatView from "./ChatView"
 import { currentChatAction } from "../Redux/Actions/currentChatAction"
 import { sendMessageAction } from "../Redux/Actions/chatsDatabaseAction"
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 
 const ChatList = () => {
   const [currentChat, setCurrentChat] = useState(0)
@@ -126,7 +128,16 @@ const ChatList = () => {
             Chat List
           </Typography>
         </Box>
-        <List>
+
+        <List
+          sx={{
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           {chatList.map((chat) => {
             let secondUsername = ""
             if (chat.users[0].id === id) secondUsername = chat.users[1].username
@@ -136,7 +147,7 @@ const ChatList = () => {
                 <ListItemButton onClick={() => handlePickChat(chat.id)}>
                   <ListItemIcon>
                     <Avatar sx={{ bgcolor: deepOrange[500], boxShadow: 2 }}>
-                      {"BAJO JAJO".charAt(0).toUpperCase()}
+                      <AccountCircleIcon />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText

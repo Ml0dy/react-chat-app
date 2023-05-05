@@ -121,7 +121,7 @@ const ApplicationModal = () => {
             onClick={handleClickOpen}
             sx={{ bgcolor: deepOrange[500], boxShadow: 2, cursor: "pointer" }}
           >
-            {username.charAt(0).toUpperCase()}
+            <AccountCircleIcon />
           </Avatar>
           <Dialog
             open={open}

@@ -4,6 +4,8 @@ import { deepOrange } from "@mui/material/colors"
 import Typography from "@mui/material/Typography"
 import Box from "@mui/material/Box"
 import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 
 const UserInfo = () => {
   const loggedUser = useSelector((state) => state.loggedUserReducer.user)
@@ -49,7 +51,12 @@ const UserInfo = () => {
                     boxShadow: 2,
                   }}
                 >
-                  {username.charAt(0).toUpperCase()}
+                  <AccountCircleIcon
+                    sx={{
+                      height: "80px",
+                      width: "80px",
+                    }}
+                  />
                 </Avatar>
                 <Typography variant="h6" alignContent="center" mt="15px">
                   {username}

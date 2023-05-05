@@ -3,12 +3,23 @@ import { Avatar } from "@mui/material"
 import { deepOrange } from "@mui/material/colors"
 import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
+import UserInfo from "./UserInfo"
+import { Avatar } from "@mui/material"
+import { deepOrange } from "@mui/material/colors"
+import { styled, createTheme, ThemeProvider } from "@mui/material/styles"
+import CssBaseline from "@mui/material/CssBaseline"
+import MuiDrawer from "@mui/material/Drawer"
+import Box from "@mui/material/Box"
+import MuiAppBar from "@mui/material/AppBar"
+import Toolbar from "@mui/material/Toolbar"
+import List from "@mui/material/List"
 import Typography from "@mui/material/Typography"
 
 import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 import { useSelector } from "react-redux"
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 
 const AdminPanel = ({ userList, chatList }) => {
   let adminNumber = 0
@@ -56,7 +67,12 @@ const AdminPanel = ({ userList, chatList }) => {
                     boxShadow: 2,
                   }}
                 >
-                  {username.charAt(0).toUpperCase()}
+                  <AccountCircleIcon
+                    sx={{
+                      height: "80px",
+                      width: "80px",
+                    }}
+                  />
                 </Avatar>
                 <Typography variant="h6" alignContent="center" mt="15px">
                   {username}
@@ -78,7 +94,7 @@ const AdminPanel = ({ userList, chatList }) => {
                 }}
               >
                 <Typography variant="h6" alignContent="center">
-                  Ilość użytkowników:
+                  Users:
                 </Typography>
                 <Typography variant="h6" alignContent="center">
                   {userList.length}
@@ -89,7 +105,7 @@ const AdminPanel = ({ userList, chatList }) => {
             <Grid item xs={12}>
               <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
                 <Typography variant="h6" alignContent="center">
-                  Ilość pokoi:
+                  Rooms:
                 </Typography>
                 <Typography variant="h6" alignContent="center">
                   {chatList.length}
@@ -101,7 +117,7 @@ const AdminPanel = ({ userList, chatList }) => {
               <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
                 {" "}
                 <Typography variant="h6" alignContent="center">
-                  Ilość adminów:
+                  Admins:
                 </Typography>
                 <Typography variant="h6" alignContent="center">
                   {adminNumber}
@@ -112,7 +128,7 @@ const AdminPanel = ({ userList, chatList }) => {
             <Grid item xs={12}>
               <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
                 <Typography variant="h6" alignContent="center">
-                  Ilość użytkowników:
+                  Users:
                 </Typography>
                 <Typography variant="h6" alignContent="center">
                   {userList.length}
