@@ -23,6 +23,18 @@ export const chatsDatabaseReducer = (state = initialState, action) => {
         }
         return { ...chat }
       })
+    case "ADD_NEW_TO_GROUP":
+      return state.map((chat) => {
+        if (chat.id === 0)
+          return {
+            ...chat,
+            users: [
+              ...chat.users,
+              { id: action.id, username: action.username },
+            ],
+          }
+        return chat
+      })
     default:
       return state
   }

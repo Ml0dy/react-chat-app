@@ -4,12 +4,11 @@ import { deepOrange } from "@mui/material/colors"
 import Typography from "@mui/material/Typography"
 import Box from "@mui/material/Box"
 import { useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
 
 const UserInfo = () => {
   const loggedUser = useSelector((state) => state.loggedUserReducer.user)
 
-  const { id, username, isAdmin } = loggedUser
+  const { username, isAdmin } = loggedUser
 
   return (
     <>

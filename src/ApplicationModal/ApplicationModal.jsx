@@ -43,6 +43,7 @@ import { AccountCircle } from "@mui/icons-material"
 import PlaylistAddCheckCircleIcon from "@mui/icons-material/PlaylistAddCheckCircle"
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle"
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings"
+import { useState } from "react"
 
 const drawerWidth = 240
 
@@ -51,7 +52,7 @@ const ApplicationModal = () => {
 
   const { id, username, isAdmin } = loggedUserStore
 
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true)

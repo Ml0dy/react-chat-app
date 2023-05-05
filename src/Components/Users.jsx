@@ -7,20 +7,10 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
-import { deepOrange, red } from "@mui/material/colors"
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@mui/material"
+import { Box } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import "./ChatList.css"
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
-import DialogActions from "@mui/material/DialogActions"
 import { deleteUserAction } from "../Redux/Actions/usersDatabaseAction"
 import { useState } from "react"
 
@@ -45,27 +35,27 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }))
 
 const Users = () => {
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const loggedUser = useSelector((state) => state.loggedUserReducer.user)
   const userList = useSelector((state) => state.userDatabaseReducer)
 
-  const deleteUser = (id) => {
-    dispatch(deleteUserAction(id))
-  }
+  // const deleteUser = (id) => {
+  //   dispatch(deleteUserAction(id))
+  // }
 
   const navigate = useNavigate()
   if (loggedUser === {}) {
     navigate("/")
   }
-  const [open, setOpen] = useState(false)
+  //const [open, setOpen] = useState(false)
 
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
+  //const handleClickOpen = () => {
+  //  setOpen(true)
+  //}
 
-  const handleClose = () => {
-    setOpen(false)
-  }
+  //const handleClose = () => {
+  //  setOpen(false)
+  //}
 
   return (
     <Box
