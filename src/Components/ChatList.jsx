@@ -28,6 +28,13 @@ import { Box } from "@mui/material"
 import { deepOrange } from "@mui/material/colors"
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import ChatView from "./ChatView"
+import { currentChatAction } from "../Redux/Actions/currentChatAction"
+import {
+  createChatWithSingleUser,
+  sendMessageAction,
+} from "../Redux/Actions/chatsDatabaseAction"
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 
 const ChatList = () => {
   const loggedUser = useSelector((state) => state.loggedUserReducer.user)
@@ -40,7 +47,7 @@ const ChatList = () => {
   const [currentChatName, setCurrentChatName] = useState("Grupa NOVOakademii")
   const [open, setOpen] = useState(false)
 
-  const { chatList, id, isAdmin } = loggedUser
+  const { chatList, id, isAdmin, username } = loggedUser
 
   const dispatch = useDispatch()
   const container = useRef(null)
@@ -77,6 +84,14 @@ const ChatList = () => {
       )
     )
     setMessageValue("")
+  }
+
+  const handleCreateNewChat = (userId, secondUsername) => {
+    const newChatsId = chatDatabase.length
+    dispatch(
+      createChatWithSingleUser(newChatsId, userId, secondUsername, id, username)
+    )
+    setCurrentChat(newChatsId)
   }
 
   useEffect(() => {
@@ -203,7 +218,11 @@ const ChatList = () => {
               if (user.id !== id)
                 return (
                   <ListItem>
-                    <ListItemButton>
+                    <ListItemButton
+                      onClick={() =>
+                        handleCreateNewChat(user.id, user.username)
+                      }
+                    >
                       <ListItemIcon>
                         <Avatar
                           sx={{

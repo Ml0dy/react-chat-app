@@ -44,6 +44,28 @@ export const chatsDatabaseReducer = (state = initialState, action) => {
           }
         return chat
       })
+
+    case "CREATE_CHAT":
+      return [
+        ...state,
+        {
+          id: action.nextChatId,
+          isGroupChat: false,
+          users: [
+            { id: action.currentUserId, username: action.currentUsername },
+            { id: action.userId, username: action.username },
+          ],
+          id_message: 0,
+          messages: [
+            {
+              id_message: 0,
+              user_message: { id: -1 },
+              text: "hello, you can start your conversation now :)",
+            },
+          ],
+        },
+      ]
+
     default:
       return state
   }

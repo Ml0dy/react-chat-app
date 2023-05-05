@@ -27,3 +27,20 @@ export const changeGroupNameActon = (newName) => {
     newName,
   }
 }
+
+export const createChatWithSingleUser = (
+  nextChatId,
+  userId,
+  username,
+  currentUserId,
+  currentUsername
+) => {
+  return {
+    type: "CREATE_CHAT",
+    nextChatId,
+    userId,
+    username,
+    currentUserId,
+    currentUsername,
+  }
+}
