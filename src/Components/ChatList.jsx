@@ -2,6 +2,7 @@ import {
   changeGroupNameActon,
   sendMessageAction,
 } from "../Redux/Actions/chatsDatabaseAction"
+import { createChatWithSingleUser } from "../Redux/Actions/chatsDatabaseAction"
 import { currentChatAction } from "../Redux/Actions/currentChatAction"
 import ChatView from "./ChatView"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
@@ -28,13 +29,6 @@ import { Box } from "@mui/material"
 import { deepOrange } from "@mui/material/colors"
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import ChatView from "./ChatView"
-import { currentChatAction } from "../Redux/Actions/currentChatAction"
-import {
-  createChatWithSingleUser,
-  sendMessageAction,
-} from "../Redux/Actions/chatsDatabaseAction"
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 
 const ChatList = () => {
   const loggedUser = useSelector((state) => state.loggedUserReducer.user)
