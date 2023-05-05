@@ -139,7 +139,9 @@ const ChatList = () => {
                       {"BAJO JAJO".charAt(0).toUpperCase()}
                     </Avatar>
                   </ListItemIcon>
-                  <ListItemText primary={secondUsername} />
+                  <ListItemText
+                    primary={chat.isGroupChat ? chat.chatName : secondUsername}
+                  />
                 </ListItemButton>
               </ListItem>
             )

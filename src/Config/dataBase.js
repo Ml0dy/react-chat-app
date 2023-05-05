@@ -1,6 +1,44 @@
 export const chatList = [
   {
     id: 0,
+    isGroupChat: true,
+    chatName: "Grupa NOVOakademii",
+    users: [
+      { id: 0, username: "Admin" },
+      { id: 1, username: "Admin" },
+      { id: 2, username: "User1" },
+      { id: 3, username: "User2" },
+      { id: 4, username: "User3" },
+      { id: 5, username: "User4" },
+      { id: 6, username: "User5" },
+      { id: 7, username: "User6" },
+    ],
+    messages: [
+      {
+        id_message: 0,
+        user_message: { id: 1 },
+        text: "hello",
+      },
+      {
+        id_message: 1,
+        user_message: { id: 2 },
+        text: "hi",
+      },
+      {
+        id_message: 2,
+        user_message: { id: 3 },
+        text: "fsfsfsdfs",
+      },
+      {
+        id_message: 3,
+        user_message: { id: 4 },
+        text: "jytuytu",
+      },
+    ],
+  },
+  {
+    id: 1,
+    isGroupChat: false,
     users: [
       {
         id: 2,
@@ -35,7 +73,8 @@ export const chatList = [
     ],
   },
   {
-    id: 1,
+    id: 2,
+    isGroupChat: false,
     users: [
       {
         id: 2,
@@ -60,7 +99,8 @@ export const chatList = [
     ],
   },
   {
-    id: 2,
+    id: 3,
+    isGroupChat: false,
     users: [
       {
         id: 2,
@@ -109,7 +149,7 @@ export const userDataBase = [
     password: "user",
     isAdmin: false,
     isLogged: false,
-    chatList: [chatList[0], chatList[1], chatList[2]],
+    chatList: [chatList[0], chatList[1], chatList[2], chatList[3]],
   },
   {
     id: 3,
@@ -117,7 +157,7 @@ export const userDataBase = [
     password: "user2",
     isAdmin: false,
     isLogged: false,
-    chatList: [chatList[0]],
+    chatList: [chatList[0], chatList[1]],
   },
   {
     id: 4,
@@ -125,7 +165,7 @@ export const userDataBase = [
     password: "user3",
     isAdmin: false,
     isLogged: false,
-    chatList: [chatList[1]],
+    chatList: [chatList[0], chatList[1]],
   },
   {
     id: 5,
@@ -133,7 +173,7 @@ export const userDataBase = [
     password: "user3",
     isAdmin: false,
     isLogged: false,
-    chatList: [chatList[2]],
+    chatList: [chatList[0], chatList[2]],
   },
   {
     id: 6,
@@ -141,7 +181,7 @@ export const userDataBase = [
     password: "user3",
     isAdmin: false,
     isLogged: false,
-    chatList: [chatList[1]],
+    chatList: [chatList[0]],
   },
   {
     id: 7,
@@ -149,6 +189,6 @@ export const userDataBase = [
     password: "user3",
     isAdmin: false,
     isLogged: false,
-    chatList: [chatList[1]],
+    chatList: [chatList[0]],
   },
 ]

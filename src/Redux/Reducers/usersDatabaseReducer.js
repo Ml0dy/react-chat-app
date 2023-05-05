@@ -1,4 +1,4 @@
-import { userDataBase } from "../../Config/dataBase"
+import { userDataBase, chatList } from "../../Config/dataBase"
 
 const initialState = userDataBase
 
@@ -17,10 +17,9 @@ export const userDatabaseReducer = (state = initialState, action) => {
           password: action.password,
           isAdmin: false,
           isLogged: false,
-          chatList: [],
+          chatList: [chatList[0]],
         },
       ]
-
     default:
       return state
   }

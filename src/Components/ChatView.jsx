@@ -10,9 +10,9 @@ const ChatView = ({ chatMessages }) => {
   return (
     <div>
       {chatMessages.messages.map(({ user_message, text }, index) => {
-        if (chatMessages.users[0].id === id)
-          secondSender = chatMessages.users[1].username
-        else secondSender = chatMessages.users[0].username
+        chatMessages.users.forEach((user) => {
+          if (user.id === user_message.id) secondSender = user.username
+        })
         if (user_message.id === id) {
           return (
             <Box

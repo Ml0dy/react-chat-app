@@ -8,12 +8,13 @@ import { Link, Navigate, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { registerValidation } from "./registerValidation"
 import { useDispatch, useSelector } from "react-redux"
-import { registerUserAction } from "../../Redux/Actions/registerUserAction"
+import { registerUserAction } from "../../Redux/Actions/usersDatabaseAction"
 import { userDataBase } from "../../Config/dataBase"
 import { loginValidation } from "../Home/loginValidation"
 import { loggedUserAction } from "../../Redux/Actions/loggedUserAction"
 import { deepOrange } from "@mui/material/colors"
 import { hover } from "@testing-library/user-event/dist/hover"
+import { addUserToGroupChatAction } from "../../Redux/Actions/chatsDatabaseAction"
 
 const RegisterView = () => {
   const [username, setUsername] = useState("")
@@ -61,6 +62,7 @@ const RegisterView = () => {
     const nextID = userDataBase.length
 
     dispatch(registerUserAction(username, password, nextID))
+    dispatch(addUserToGroupChatAction(nextID, username))
     setSubmitted(true)
     alert("Registration done! You will be directed to log in")
     setUsername("")

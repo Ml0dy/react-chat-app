@@ -1,26 +1,6 @@
-const initialState = {
-  id: 2,
-  users: [
-    {
-      id: 3,
-    },
-    {
-      id: 4,
-    },
-  ],
-  messages: [
-    {
-      id_message: 0,
-      user_message: { id: 3 },
-      text: "hejka",
-    },
-    {
-      id_message: 1,
-      user_message: { id: 4 },
-      text: "siemka",
-    },
-  ],
-}
+import { chatList, userDataBase } from "../../Config/dataBase"
+
+const initialState = { ...chatList[0], users: [...userDataBase] }
 
 export const currentChatReducer = (state = { chat: initialState }, action) => {
   switch (action.type) {

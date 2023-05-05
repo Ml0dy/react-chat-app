@@ -1,30 +1,24 @@
-import React from "react";
-import UserInfo from "./UserInfo";
-import { Avatar } from "@mui/material";
-import { deepOrange } from "@mui/material/colors";
-import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import MuiDrawer from "@mui/material/Drawer";
-import Box from "@mui/material/Box";
-import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
+import React from "react"
+import { Avatar } from "@mui/material"
+import { deepOrange } from "@mui/material/colors"
+import Box from "@mui/material/Box"
+import Toolbar from "@mui/material/Toolbar"
+import Typography from "@mui/material/Typography"
 
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import { useSelector } from "react-redux";
+import Container from "@mui/material/Container"
+import Grid from "@mui/material/Grid"
+import Paper from "@mui/material/Paper"
+import { useSelector } from "react-redux"
 
 const AdminPanel = ({ userList, chatList }) => {
-  let adminNumber = 0;
+  let adminNumber = 0
   userList.forEach((user) => {
-    if (user.isAdmin) adminNumber++;
-  });
+    if (user.isAdmin) adminNumber++
+  })
 
-  const { id, username, isAdmin } = useSelector(
+  const { username, isAdmin } = useSelector(
     (state) => state.loggedUserReducer.user
-  );
+  )
 
   return (
     <div>
@@ -129,7 +123,7 @@ const AdminPanel = ({ userList, chatList }) => {
         </Container>
       </Box>
     </div>
-  );
-};
+  )
+}
 
-export default AdminPanel;
+export default AdminPanel
