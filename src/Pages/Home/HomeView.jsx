@@ -33,7 +33,6 @@ const HomeView = () => {
     dispatch(loggedUserAction(validation))
     setLoginValue("")
     setPasswordValue("")
-    console.log(validation)
     if (validation.isAdmin) navigate("/adminpanel")
     else navigate("/userprofile")
   }

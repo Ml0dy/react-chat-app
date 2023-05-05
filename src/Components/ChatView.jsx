@@ -1,13 +1,14 @@
 import { Box, Typography } from "@mui/material"
-import { right } from "@popperjs/core"
 import React from "react"
 import { useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
 
 const ChatView = ({ chatMessages }) => {
-  // const { chatList } = useSelector((state) => state.loggedUserReducer)
   const loggedUser = useSelector((state) => state.loggedUserReducer.user)
   const { id } = loggedUser
+  let secondSender = ""
+  if (chatMessages.users[0].id === id)
+    secondSender = chatMessages.users[1].username
+  else secondSender = chatMessages.users[0].username
 
   return (
     <div>
@@ -17,22 +18,34 @@ const ChatView = ({ chatMessages }) => {
             <Box
               key={index}
               sx={{
-                backgroundColor: "#ffd699",
                 display: "flex",
-                flexDirection: "column-reverse",
-                justifyContent: "space-between",
                 alignItems: "flex-end",
-                width: "auto",
-                maxWidth: "40%",
-                marginLeft: "60%",
-                marginRight: 2,
-                paddingRight: 3,
+                flexDirection: "column",
+                justifyContent: "space-between",
+                marginRight: 1,
+                paddingRight: 1,
                 borderRadius: 3,
-                marginTop: 2,
+                marginTop: 1,
               }}
             >
-              <Typography variant="body1" padding={2} textAlign={"right"}>
-                {text}
+              <Box
+                sx={{
+                  backgroundColor: "#ffd699",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-end",
+                  width: "auto",
+                  maxWidth: "40%",
+                  marginLeft: "60%",
+                  borderRadius: 3,
+                }}
+              >
+                <Typography variant="body1" padding={2} textAlign={"right"}>
+                  {text}
+                </Typography>
+              </Box>
+              <Typography variant="caption" fontStyle={"oblique"}>
+                you
               </Typography>
             </Box>
           )
@@ -41,22 +54,37 @@ const ChatView = ({ chatMessages }) => {
           <Box
             key={index}
             sx={{
-              backgroundColor: "#d4d4d4",
               display: "flex",
-              flexDirection: "column",
-              width: "auto",
-              maxWidth: "40%",
-              marginRight: "60%",
-              justifyContent: "space-between",
               alignItems: "flex-start",
-              marginLeft: 2,
-              paddingLeft: 3,
+              flexDirection: "column",
+              justifyContent: "space-between",
+              marginLeft: 1,
+              paddingRight: 1,
               borderRadius: 3,
-              marginTop: 2,
+              marginTop: 1,
             }}
           >
-            <Typography variant="body1" padding={2} textAlign={"left"}>
-              {text}
+            <Box
+              key={index}
+              sx={{
+                backgroundColor: "#d4d4d4",
+                display: "flex",
+                flexDirection: "column",
+                width: "auto",
+                maxWidth: "40%",
+                marginRight: "60%",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                borderRadius: 3,
+              }}
+            >
+              <Typography variant="body1" padding={2} textAlign={"left"}>
+                {text}
+              </Typography>
+            </Box>
+
+            <Typography variant="caption" fontStyle={"oblique"}>
+              {secondSender}
             </Typography>
           </Box>
         )

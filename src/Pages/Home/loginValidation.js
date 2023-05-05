@@ -1,16 +1,15 @@
-import { userDataBase } from "../../Config/dataBase";
+import { userDataBase } from "../../Config/dataBase"
 
 export const loginValidation = (usernameInput, passwordInput) => {
   const [existUserDataBase] = userDataBase.filter((user) => {
     if (user.username === usernameInput) {
-      return user;
+      return user
     }
-  });
-  console.log(existUserDataBase);
+  })
   if (existUserDataBase === undefined) {
-    return false;
+    return false
   } else if (existUserDataBase.password === passwordInput) {
-    return existUserDataBase;
+    return existUserDataBase
   }
-  return false;
-};
+  return false
+}
