@@ -13,6 +13,7 @@ import { userDataBase } from "../../Config/dataBase"
 import { loginValidation } from "../Home/loginValidation"
 import { loggedUserAction } from "../../Redux/Actions/loggedUserAction"
 import { deepOrange } from "@mui/material/colors"
+import { hover } from "@testing-library/user-event/dist/hover"
 
 const RegisterView = () => {
   const [username, setUsername] = useState("")
@@ -61,7 +62,7 @@ const RegisterView = () => {
 
     dispatch(registerUserAction(username, password, nextID))
     setSubmitted(true)
-    alert("Registration done!")
+    alert("Registration done! You will be directed to log in")
     setUsername("")
     setPassword("")
     setConfirmPassword("")
@@ -90,6 +91,7 @@ const RegisterView = () => {
           margin="normal"
           value={username}
           onChange={handleUsername}
+          onKeyUp={(e) => (e.key === "Enter" ? handleSubmit() : "")}
         />
         <TextField
           id="outlined-basic"
@@ -98,6 +100,7 @@ const RegisterView = () => {
           type="password"
           value={password}
           onChange={handlePassword}
+          onKeyUp={(e) => (e.key === "Enter" ? handleSubmit() : "")}
         />
         <TextField
           id="outlined-basic"
@@ -106,15 +109,13 @@ const RegisterView = () => {
           type="password"
           value={confirmPassword}
           onChange={handleConfirmPassword}
+          onKeyUp={(e) => (e.key === "Enter" ? handleSubmit() : "")}
         />
         <Button variant="contained" onClick={handleSubmit}>
           REGISTER
         </Button>
         <p>
-          Already signed up?{" "}
-          <Link to={"/"} sx={{ color: deepOrange[500] }}>
-            LOG IN
-          </Link>
+          Already signed up? <Link to={"/"}>LOG IN</Link>
         </p>
       </Stack>
     </Stack>
