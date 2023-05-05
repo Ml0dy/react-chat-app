@@ -164,7 +164,7 @@ const ChatList = () => {
               else secondUsername = chat.users[0].username
               return (
                 <ListItem key={chat.id} disablePadding>
-                  <ListItemButton onClick={() => handlePickChat(chat.id)}>
+                  <ListItemButton onClick={() => handlePickChat(chat)}>
                     <ListItemIcon>
                       <Avatar
                         sx={{
@@ -177,7 +177,9 @@ const ChatList = () => {
                     </ListItemIcon>
                     <ListItemText
                       primary={
-                        chat.isGroupChat ? chat.chatName : secondUsername
+                        chat.isGroupChat
+                          ? chatDatabase[0].chatName
+                          : secondUsername
                       }
                     />
                   </ListItemButton>
