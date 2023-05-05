@@ -35,6 +35,15 @@ export const chatsDatabaseReducer = (state = initialState, action) => {
           }
         return chat
       })
+    case "CHANGE_GROUP_NAME":
+      return state.map((chat) => {
+        if (chat.id === 0)
+          return {
+            ...chat,
+            chatName: action.newName,
+          }
+        return chat
+      })
     default:
       return state
   }

@@ -4,8 +4,8 @@ export const chatList = [
     isGroupChat: true,
     chatName: "Grupa NOVOakademii",
     users: [
-      { id: 0, username: "Admin" },
-      { id: 1, username: "Admin" },
+      { id: 0, username: "Admin1" },
+      { id: 1, username: "Admin2" },
       { id: 2, username: "User1" },
       { id: 3, username: "User2" },
       { id: 4, username: "User3" },

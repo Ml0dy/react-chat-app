@@ -1,8 +1,21 @@
 import {
+  changeGroupNameActon,
+  sendMessageAction,
+} from "../Redux/Actions/chatsDatabaseAction"
+import { currentChatAction } from "../Redux/Actions/currentChatAction"
+import ChatView from "./ChatView"
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"
+import EditTwoToneIcon from "@mui/icons-material/EditTwoTone"
+import SendIcon from "@mui/icons-material/Send"
+import {
   Avatar,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Divider,
-  Drawer,
+  IconButton,
   List,
   ListItem,
   ListItemButton,
@@ -12,26 +25,22 @@ import {
   Typography,
 } from "@mui/material"
 import { Box } from "@mui/material"
-
-import React, { useEffect, useRef, useState } from "react"
-import SendIcon from "@mui/icons-material/Send"
-import { useDispatch, useSelector } from "react-redux"
 import { deepOrange } from "@mui/material/colors"
-import ChatView from "./ChatView"
-import { currentChatAction } from "../Redux/Actions/currentChatAction"
-import { sendMessageAction } from "../Redux/Actions/chatsDatabaseAction"
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"
+import React, { useEffect, useRef, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 const ChatList = () => {
-  const [currentChat, setCurrentChat] = useState(0)
-  const [messageValue, setMessageValue] = useState("")
-
   const loggedUser = useSelector((state) => state.loggedUserReducer.user)
-  const usersList = useSelector((state) => state.userDatabaseReducer)
   const reducerCurrentChat = useSelector((state) => state.currentChatReducer)
   const chatDatabase = useSelector((state) => state.chatsDatabaseReducer)
+  const usersList = useSelector((state) => state.userDatabaseReducer)
 
-  const { chatList, id } = loggedUser
+  const [currentChat, setCurrentChat] = useState(0)
+  const [messageValue, setMessageValue] = useState("")
+  const [currentChatName, setCurrentChatName] = useState("Grupa NOVOakademii")
+  const [open, setOpen] = useState(false)
+
+  const { chatList, id, isAdmin } = loggedUser
 
   const dispatch = useDispatch()
   const container = useRef(null)
@@ -41,26 +50,21 @@ const ChatList = () => {
     container.current?.scrollTo(0, scrollHeight)
   }
 
-  const getSecondUser = (id) => {
-    const [secondUser] = usersList.filter((user) => {
-      if (user.id === id) return { user }
-    })
-    return secondUser
+  const getSecondUser = (chat) => {
+    if (chat.isGroupChat) return
+    else if (chat.users[0].id !== id) return chat.users[0].username
+    return chat.users[1].username
   }
 
-  const userChatList = chatList.map((chat) => {
-    if (chat.users[0].id === id) {
-      return getSecondUser(chat.users[1].id)
-    }
-    return getSecondUser(chat.users[0].id)
-  })
-  console.log(userChatList)
-  const handlePickChat = (index) => {
-    console.log(index)
-    setCurrentChat(index)
+  const handlePickChat = (chat) => {
+    setCurrentChat(chat.id)
+    if (chat.isGroupChat) setCurrentChatName(chat.chatName)
+    else setCurrentChatName(getSecondUser(chat))
   }
 
   const handleSendMessage = () => {
+    if (messageValue === "") return false
+
     const [newMessageId] = reducerCurrentChat.chat.messages.slice(-1)
     const currentMessageId = (newMessageId.id_message += 1)
 
@@ -77,7 +81,7 @@ const ChatList = () => {
 
   useEffect(() => {
     dispatch(currentChatAction(chatDatabase[currentChat]))
-  }, [currentChat])
+  }, [currentChat, currentChatName])
 
   useEffect(() => {
     handleScroll()
@@ -262,8 +266,47 @@ const ChatList = () => {
             mt={3}
             mr={3}
             color="white"
+            display="flex"
           >
-            Username
+            {reducerCurrentChat.chat.isGroupChat
+              ? chatDatabase[0].chatName
+              : currentChatName}
+            {reducerCurrentChat.chat.isGroupChat && isAdmin ? (
+              <div>
+                <IconButton
+                  onClick={() => setOpen(true)}
+                  aria-label="add an alarm"
+                >
+                  <EditTwoToneIcon fontSize="small" sx={{ color: "white" }} />
+                </IconButton>
+                <Dialog open={open} onClose={() => setOpen(false)}>
+                  <DialogTitle>Subscribe</DialogTitle>
+                  <DialogContent>
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      placeholder="Change group chat name"
+                      type="text"
+                      value={currentChatName}
+                      onChange={(e) => setCurrentChatName(e.target.value)}
+                    />
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={() => {
+                        dispatch(changeGroupNameActon(currentChatName))
+                        setOpen(false)
+                      }}
+                    >
+                      Change
+                    </Button>
+                    <Button onClick={() => setOpen(false)}>Cancel</Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
+            ) : (
+              false
+            )}
           </Typography>
         </Box>
         <Box
