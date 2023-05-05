@@ -20,3 +20,10 @@ export const addUserToGroupChatAction = (id, username) => {
     username: username,
   }
 }
+
+export const changeGroupNameActon = (newName) => {
+  return {
+    type: "CHANGE_GROUP_NAME",
+    newName,
+  }
+}
