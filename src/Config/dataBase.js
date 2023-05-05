@@ -90,7 +90,7 @@ export const userDataBase = [
     chatList: [...chatList],
   },
   {
-    id: 10,
+    id: 1,
     username: "Admin2",
     password: "admin",
     isAdmin: true,
@@ -98,7 +98,7 @@ export const userDataBase = [
     chatList: [...chatList],
   },
   {
-    id: 1,
+    id: 2,
     username: "User1",
     password: "user",
     isAdmin: false,
@@ -106,7 +106,7 @@ export const userDataBase = [
     chatList: [chatList[0], chatList[1], chatList[2]],
   },
   {
-    id: 2,
+    id: 3,
     username: "User2",
     password: "user2",
     isAdmin: false,
@@ -114,7 +114,7 @@ export const userDataBase = [
     chatList: [chatList[0]],
   },
   {
-    id: 3,
+    id: 4,
     username: "User3",
     password: "user3",
     isAdmin: false,
@@ -122,7 +122,7 @@ export const userDataBase = [
     chatList: [chatList[1]],
   },
   {
-    id: 4,
+    id: 5,
     username: "User4",
     password: "user3",
     isAdmin: false,
@@ -130,7 +130,7 @@ export const userDataBase = [
     chatList: [chatList[1]],
   },
   {
-    id: 5,
+    id: 6,
     username: "User5",
     password: "user3",
     isAdmin: false,
@@ -138,7 +138,7 @@ export const userDataBase = [
     chatList: [chatList[1]],
   },
   {
-    id: 6,
+    id: 7,
     username: "User6",
     password: "user3",
     isAdmin: false,

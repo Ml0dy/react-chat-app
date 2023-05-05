@@ -78,8 +78,18 @@ const HomeView = () => {
           onChange={(e) => setPasswordValue(e.target.value)}
           onKeyUp={(e) => (e.key === "Enter" ? handleLoginValidation() : "")}
         />
-        <Stack flex flexDirection={"row"} justifyContent={"space-between"}>
-          <Button variant="contained" onClick={handleLoginValidation}>
+        <Stack
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <Button
+            variant="contained"
+            onClick={handleLoginValidation}
+            margin={2}
+          >
             LOG IN
           </Button>
           <Button variant="contained" onClick={goToRegister}>

@@ -8,6 +8,18 @@ export const userDatabaseReducer = (state = initialState, action) => {
       return state
     case "DELETE_USER":
       return state.filter((user) => (user.id !== action.payload ? user : false))
+    case "REGISTER_USER":
+      return [
+        ...state,
+        {
+          id: action.nextID,
+          username: action.username,
+          password: action.password,
+          isAdmin: false,
+          isLogged: false,
+          chatList: [],
+        },
+      ]
 
     default:
       return state
