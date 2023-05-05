@@ -87,7 +87,9 @@ const HomeView = () => {
           <Button
             variant="contained"
             onClick={handleLoginValidation}
-            margin={2}
+            sx={{
+              marginRight: 2,
+            }}
           >
             LOG IN
           </Button>

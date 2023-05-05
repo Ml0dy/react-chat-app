@@ -12,6 +12,7 @@ import { registerUserAction } from "../../Redux/Actions/registerUserAction"
 import { userDataBase } from "../../Config/dataBase"
 import { loginValidation } from "../Home/loginValidation"
 import { loggedUserAction } from "../../Redux/Actions/loggedUserAction"
+import { deepOrange } from "@mui/material/colors"
 
 const RegisterView = () => {
   const [username, setUsername] = useState("")
@@ -106,11 +107,14 @@ const RegisterView = () => {
           value={confirmPassword}
           onChange={handleConfirmPassword}
         />
-        <Button variant="contained" marginBottom={2} onClick={handleSubmit}>
+        <Button variant="contained" onClick={handleSubmit}>
           REGISTER
         </Button>
         <p>
-          Already signed up? <Link to={"/"}>LOG IN</Link>
+          Already signed up?{" "}
+          <Link to={"/"} sx={{ color: deepOrange[500] }}>
+            LOG IN
+          </Link>
         </p>
       </Stack>
     </Stack>
