@@ -37,7 +37,7 @@ const ChatView = ({ chatMessages }) => {
                   width: "auto",
                   maxWidth: "40%",
                   marginLeft: "60%",
-                  borderRadius: 3,
+                  borderRadius: 6,
                 }}
               >
                 <Typography variant="body1" padding={2} textAlign={"right"}>
@@ -75,7 +75,8 @@ const ChatView = ({ chatMessages }) => {
                 marginRight: "60%",
                 justifyContent: "space-between",
                 alignItems: "flex-start",
-                borderRadius: 3,
+                borderRadius: 6,
+                boxShadow: 2,
               }}
             >
               <Typography variant="body1" padding={2} textAlign={"left"}>
