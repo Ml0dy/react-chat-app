@@ -45,7 +45,8 @@ const ActiveChatList = ({ chatList, setCurrentChatName, setCurrentChat }) => {
         justifyContent: "center",
         display: "flex",
         flexDirection: "column",
-        marginTop: "250px",
+        marginTop: "2px",
+        backgroundColor: "#D4D4D4",
       }}
     >
       {chatList.map((chat) => {

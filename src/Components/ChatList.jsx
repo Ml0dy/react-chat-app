@@ -88,17 +88,16 @@ const ChatList = () => {
         )
       )
       setCurrentChat(newChatsId)
-      console.log(reducerCurrentChat.chat)
       setTimeout(() => {
         dispatch(addNewChatToUserAction(id, reducerCurrentChat.chat.chat))
         dispatch(addNewChatToUserAction(userId, reducerCurrentChat.chat.chat))
       }, 10)
+      setCurrentChatName(secondUsername)
     }
   }
 
   useEffect(() => {
     dispatch(currentChatAction(chatDatabase[currentChat]))
-
   }, [currentChat, currentChatName])
 
   useEffect(() => {
@@ -138,29 +137,33 @@ const ChatList = () => {
         <Box
           sx={{
             backgroundColor: "#212766",
-            height: "12%",
             width: "100%",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "center",
+            scrollbarWidth: "none",
             boxShadow: 2,
           }}
         >
-          <Typography variant="h5" alignContent="center" mt={2} color="white">
+          <Typography
+            variant="h5"
+            alignContent="center"
+            mt={2}
+            mb={2}
+            color="white"
+          >
             Chat List
           </Typography>
         </Box>
         <Box
           sx={{
-            height: "80%",
+            height: "auto",
             width: "100%",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
             boxShadow: 2,
-            overflowY: "scroll",
             scrollbarWidth: "none",
             behavior: "smooth",
           }}
@@ -170,47 +173,6 @@ const ChatList = () => {
             setCurrentChat={setCurrentChat}
             setCurrentChatName={setCurrentChatName}
           />
-          {/* <List
-            sx={{
-              width: "100%",
-              alignItems: "center",
-              justifyContent: "center",
-              display: "flex",
-              flexDirection: "column",
-              marginTop: "250px",
-            }}
-          >
-            {chatList.map((chat) => {
-              let secondUsername = ""
-              if (chat.users[0].id === id)
-                secondUsername = chat.users[1].username
-              else secondUsername = chat.users[0].username
-              return (
-                <ListItem key={chat.id} disablePadding>
-                  <ListItemButton onClick={() => handlePickChat(chat)}>
-                    <ListItemIcon>
-                      <Avatar
-                        sx={{
-                          bgcolor: deepOrange[500],
-                          boxShadow: 2,
-                        }}
-                      >
-                        <AccountCircleIcon />
-                      </Avatar>
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={
-                        chat.isGroupChat
-                          ? chatDatabase[0].chatName
-                          : secondUsername
-                      }
-                    />
-                  </ListItemButton>
-                </ListItem>
-              )
-            })}
-          </List> */}
-
           <Divider />
 
           <List
@@ -249,17 +211,6 @@ const ChatList = () => {
             })}
           </List>
         </Box>
-
-        <Box
-          sx={{
-            backgroundColor: "#212766",
-            height: "10%",
-            width: "100%",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        ></Box>
       </Box>
 
       <Box
@@ -285,15 +236,31 @@ const ChatList = () => {
             height: "12%",
             width: "100%",
             display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-end",
+            flexDirection: "row",
+            justifyContent: "end",
+            alignItems: "center",
+            gap: 1,
             boxShadow: 3,
           }}
         >
+          <Avatar
+            sx={{
+              bgcolor: deepOrange[500],
+              boxShadow: 2,
+              width: "40px",
+              height: "40px",
+            }}
+          >
+            <AccountCircleIcon
+              sx={{
+                height: "35px",
+                width: "35px",
+              }}
+            />
+          </Avatar>
           <Typography
             variant="h5"
             alignContent="center"
-            mt={3}
             mr={3}
             color="white"
             display="flex"
