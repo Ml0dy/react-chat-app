@@ -4,13 +4,20 @@ export const chatsDatabaseAction = () => {
   }
 }
 
-export const sendMessageAction = (chatId, nextId, currentUserId, value) => {
+export const sendMessageAction = (
+  chatId,
+  nextId,
+  currentUserId,
+  value,
+  dateOfMessage
+) => {
   return {
     type: "SEND_MESSAGE",
     chatId,
     nextId,
     currentUserId,
     value,
+    dateOfMessage,
   }
 }
 export const addUserToGroupChatAction = (id, username) => {
@@ -33,7 +40,8 @@ export const createChatWithSingleUserAction = (
   userId,
   username,
   currentUserId,
-  currentUsername
+  currentUsername,
+  dateOfMessage
 ) => {
   return {
     type: "CREATE_CHAT",
@@ -42,5 +50,6 @@ export const createChatWithSingleUserAction = (
     username,
     currentUserId,
     currentUsername,
+    dateOfMessage,
   }
 }

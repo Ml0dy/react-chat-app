@@ -1,3 +1,4 @@
+import { monthNames } from "../Config/GlobalVariables"
 import { isChatExist } from "../Config/isChatExist"
 import {
   changeGroupNameActon,
@@ -5,10 +6,6 @@ import {
 } from "../Redux/Actions/chatsDatabaseAction"
 import { createChatWithSingleUserAction } from "../Redux/Actions/chatsDatabaseAction"
 import { currentChatAction } from "../Redux/Actions/currentChatAction"
-import {
-  loggedUserAction,
-  updateLoggedUserAction,
-} from "../Redux/Actions/loggedUserAction"
 import { addNewChatToUserAction } from "../Redux/Actions/usersDatabaseAction"
 import ActiveChatList from "./ActiveChatList"
 import ChatView from "./ChatView"
@@ -58,6 +55,28 @@ const ChatList = () => {
     container.current?.scrollTo(0, scrollHeight)
   }
 
+  const today = new Date()
+
+  const currentTime = () => {
+    const hours = () => {
+      if (today.getHours() > 9) return today.getHours()
+      return "0" + today.getHours()
+    }
+
+    const minutes = () => {
+      if (today.getMinutes() > 9) return today.getMinutes()
+      return "0" + today.getMinutes()
+    }
+
+    const month = today.getMonth()
+
+    const day = () => {
+      if (today.getDate() <= 9) return "0" + today.getDate()
+      return today.getDate()
+    }
+    return hours() + ":" + minutes() + ", " + day() + " of " + monthNames[month]
+  }
+
   const handleSendMessage = () => {
     if (messageValue === "") return false
 
@@ -69,7 +88,8 @@ const ChatList = () => {
         reducerCurrentChat.chat.id,
         currentMessageId,
         id,
-        messageValue
+        messageValue,
+        currentTime()
       )
     )
     setMessageValue("")
@@ -84,7 +104,8 @@ const ChatList = () => {
           userId,
           secondUsername,
           id,
-          username
+          username,
+          currentTime()
         )
       )
       setCurrentChat(newChatsId)
@@ -188,7 +209,7 @@ const ChatList = () => {
               if (!isChatExist(id, user.id, chatDatabase)) return
               if (user.id !== id)
                 return (
-                  <ListItem>
+                  <ListItem key={user.id}>
                     <ListItemButton
                       onClick={() =>
                         handleCreateNewChat(user.id, user.username)
@@ -352,7 +373,6 @@ const ChatList = () => {
             onChange={(e) => setMessageValue(e.target.value)}
             onKeyUp={(e) => (e.key === "Enter" ? handleSendMessage() : "")}
           />
-
           <Button
             variant="contained"
             endIcon={<SendIcon />}

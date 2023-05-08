@@ -1,18 +1,17 @@
-import React, { useState } from "react"
-import Stack from "@mui/material/Stack"
-
 import Novologo from "../../Assets/Images/NovoAcademy_logo.png"
-import TextField from "@mui/material/TextField"
-import "./HomeView.css"
-import Button from "@mui/material/Button"
-import { loginValidation } from "./loginValidation"
-import { useNavigate } from "react-router"
-import { useDispatch, useSelector } from "react-redux"
 import { loggedUserAction } from "../../Redux/Actions/loggedUserAction"
+import "./HomeView.css"
+import { loginValidation } from "./loginValidation"
+import Button from "@mui/material/Button"
+import Stack from "@mui/material/Stack"
+import TextField from "@mui/material/TextField"
+import React, { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router"
 
 const HomeView = () => {
-  const [loginValue, setLoginValue] = useState("User1")
-  const [passwordValue, setPasswordValue] = useState("user")
+  const [loginValue, setLoginValue] = useState("Admin1")
+  const [passwordValue, setPasswordValue] = useState("admin")
   const userDatabase = useSelector((state) => state.userDatabaseReducer)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -59,17 +58,15 @@ const HomeView = () => {
         borderRadius={3}
       >
         <TextField
-          id="outlined-basic"
           label="Username"
           variant="outlined"
-          backgroundColor="white"
+          backgroundcolor="white"
           margin="normal"
           value={loginValue}
           onChange={(e) => setLoginValue(e.target.value)}
           onKeyUp={(e) => (e.key === "Enter" ? handleLoginValidation() : "")}
         />
         <TextField
-          id="outlined-basic"
           label="Password"
           variant="outlined"
           type="password"

@@ -168,16 +168,17 @@ const ApplicationModal = () => {
         <img src={Novologo} alt="novologo" width="100%" />
         <Divider />
         <List>
-          {userMenu.map((text) => (
+          {userMenu.map((text, index) => (
             <Link
               to={`/${text.replace(" ", "").toLowerCase()}`}
+              key={index}
               style={{
                 textDecoration: "none",
                 color: "#000",
                 fontWeight: "bold",
               }}
             >
-              <ListItem key={text} disablePadding>
+              <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
                     {text === "Admin panel" ? (

@@ -1,13 +1,6 @@
-import * as React from "react"
-import { styled } from "@mui/material/styles"
-import Table from "@mui/material/Table"
-import TableBody from "@mui/material/TableBody"
-import TableCell, { tableCellClasses } from "@mui/material/TableCell"
-import TableContainer from "@mui/material/TableContainer"
-import TableHead from "@mui/material/TableHead"
-import TableRow from "@mui/material/TableRow"
-import Paper from "@mui/material/Paper"
-import { deepOrange, red } from "@mui/material/colors"
+import { deleteUserAction } from "../Redux/Actions/usersDatabaseAction"
+import "./ChatList.css"
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
 import {
   Box,
   Button,
@@ -16,13 +9,20 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material"
-import { useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
-import "./ChatList.css"
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
 import DialogActions from "@mui/material/DialogActions"
-import { deleteUserAction } from "../Redux/Actions/usersDatabaseAction"
+import Paper from "@mui/material/Paper"
+import Table from "@mui/material/Table"
+import TableBody from "@mui/material/TableBody"
+import TableCell, { tableCellClasses } from "@mui/material/TableCell"
+import TableContainer from "@mui/material/TableContainer"
+import TableHead from "@mui/material/TableHead"
+import TableRow from "@mui/material/TableRow"
+import { deepOrange, red } from "@mui/material/colors"
+import { styled } from "@mui/material/styles"
+import * as React from "react"
 import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -49,13 +49,7 @@ const UsersAdmin = () => {
   const loggedUser = useSelector((state) => state.loggedUserReducer.user)
   const userList = useSelector((state) => state.userDatabaseReducer)
 
-  const deleteUser = (id, isAdmin) => {
-    if (loggedUser.id === id || isAdmin === true) {
-      alert("Can't delete this user")
-    } else {
-      dispatch(deleteUserAction(id))
-    }
-  }
+  const [userToDeleteId, setUserToDeleteId] = useState(-1)
 
   const navigate = useNavigate()
   if (loggedUser === {}) {
@@ -64,12 +58,22 @@ const UsersAdmin = () => {
 
   const [open, setOpen] = useState(false)
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (id) => {
+    setUserToDeleteId(id)
     setOpen(true)
   }
 
   const handleClose = () => {
     setOpen(false)
+  }
+
+  const deleteUser = (id, isAdmin) => {
+    if (loggedUser.id === id || isAdmin === true) {
+      alert("Can't delete this user")
+    } else {
+      dispatch(deleteUserAction(id))
+      setOpen(false)
+    }
   }
 
   return (
@@ -110,14 +114,13 @@ const UsersAdmin = () => {
                 </StyledTableCell>
                 <StyledTableCell component="th" scope="row" align="center">
                   <DeleteForeverIcon
-                    onClick={() => deleteUser(id, isAdmin)}
+                    onClick={() => handleClickOpen(id)}
                     sx={{
                       color: deepOrange[500],
                       cursor: "pointer",
                     }}
                   />
-
-                  {/* dlug technologiczny <Dialog
+                  <Dialog
                     open={open}
                     onClose={handleClose}
                     sx={{
@@ -142,13 +145,13 @@ const UsersAdmin = () => {
                         <DialogContent></DialogContent>
                         <DialogActions>
                           <Button onClick={handleClose}>Cancel</Button>
-                          <Button onClick={() => deleteUser(id)}>
+                          <Button onClick={() => deleteUser(userToDeleteId)}>
                             Delete user
                           </Button>
                         </DialogActions>
                       </Dialog>
                     </DialogContent>
-                  </Dialog> */}
+                  </Dialog>
                 </StyledTableCell>
               </StyledTableRow>
             ))}

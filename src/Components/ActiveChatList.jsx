@@ -31,8 +31,7 @@ const ActiveChatList = ({ chatList, setCurrentChatName, setCurrentChat }) => {
     if (chat.isGroupChat) setCurrentChatName(chat.chatName)
     else setCurrentChatName(getSecondUser(chat))
   }
-  console.log("FIRST RENDER")
-  console.log(chatList)
+
   useEffect(() => {
     dispatch(loggedUserAction(usersList[id]))
   }, [usersList])

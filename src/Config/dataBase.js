@@ -16,23 +16,9 @@ export const chatList = [
     messages: [
       {
         id_message: 0,
-        user_message: { id: 1 },
+        user_message: { id: 0 },
         text: "hello",
-      },
-      {
-        id_message: 1,
-        user_message: { id: 2 },
-        text: "hi",
-      },
-      {
-        id_message: 2,
-        user_message: { id: 3 },
-        text: "fsfsfsdfs",
-      },
-      {
-        id_message: 3,
-        user_message: { id: 4 },
-        text: "jytuytu",
+        message_date: "15:40, 24 of April",
       },
     ],
   },

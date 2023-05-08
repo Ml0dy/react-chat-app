@@ -17,6 +17,7 @@ export const chatsDatabaseReducer = (state = initialState, action) => {
                 id_message: action.nextId,
                 user_message: { id: action.currentUserId },
                 text: action.value,
+                message_date: action.dateOfMessage,
               },
             ],
           }
@@ -61,6 +62,7 @@ export const chatsDatabaseReducer = (state = initialState, action) => {
               id_message: 0,
               user_message: { id: -1 },
               text: "hello, you can start your conversation now :)",
+              message_date: action.dateOfMessage,
             },
           ],
         },
