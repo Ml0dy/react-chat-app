@@ -1,16 +1,21 @@
-import React, { useEffect } from "react"
-import Box from "@mui/material/Box"
-import Drawer from "@mui/material/Drawer"
-import AppBar from "@mui/material/AppBar"
-import List from "@mui/material/List"
-import Typography from "@mui/material/Typography"
-import Divider from "@mui/material/Divider"
-import ListItem from "@mui/material/ListItem"
-import ListItemButton from "@mui/material/ListItemButton"
-import ListItemIcon from "@mui/material/ListItemIcon"
-import ListItemText from "@mui/material/ListItemText"
 import Novologo from "../Assets/Images/logo_pl.png"
-import Stack from "@mui/material/Stack"
+import AdminPanel from "../Components/AdminPanel"
+import ChatList from "../Components/ChatList"
+import UserInfo from "../Components/UserInfo"
+import Users from "../Components/Users"
+import UsersAdmin from "../Components/UsersAdmin"
+import { userDataBase } from "../Config/dataBase"
+import { chatList } from "../Config/dataBase"
+import {
+  logoutUserAction,
+  pageRenderingHandler,
+} from "../Redux/Actions/loggedUserAction"
+import { AccountCircle } from "@mui/icons-material"
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings"
+import PlaylistAddCheckCircleIcon from "@mui/icons-material/PlaylistAddCheckCircle"
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew"
+import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle"
 import {
   Avatar,
   Button,
@@ -21,36 +26,30 @@ import {
   DialogTitle,
   IconButton,
 } from "@mui/material"
+import AppBar from "@mui/material/AppBar"
+import Box from "@mui/material/Box"
+import Divider from "@mui/material/Divider"
+import Drawer from "@mui/material/Drawer"
+import List from "@mui/material/List"
+import ListItem from "@mui/material/ListItem"
+import ListItemButton from "@mui/material/ListItemButton"
+import ListItemIcon from "@mui/material/ListItemIcon"
+import ListItemText from "@mui/material/ListItemText"
+import Stack from "@mui/material/Stack"
+import Typography from "@mui/material/Typography"
 import { deepOrange, red } from "@mui/material/colors"
-import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew"
-import Users from "../Components/Users"
-import UsersAdmin from "../Components/UsersAdmin"
-import { userDataBase } from "../Config/dataBase"
-import { chatList } from "../Config/dataBase"
-import UserInfo from "../Components/UserInfo"
-import AdminPanel from "../Components/AdminPanel"
-import ChatList from "../Components/ChatList"
-
-import { Link, useLocation } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
-import {
-  logoutUserAction,
-  pageRenderingHandler,
-} from "../Redux/Actions/loggedUserAction"
-import { useNavigate } from "react-router"
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"
-import { AccountCircle } from "@mui/icons-material"
-import PlaylistAddCheckCircleIcon from "@mui/icons-material/PlaylistAddCheckCircle"
-import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle"
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings"
+import React, { useEffect } from "react"
 import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router"
+import { Link, useLocation } from "react-router-dom"
 
 const drawerWidth = 240
 
 const ApplicationModal = () => {
-  const loggedUserStore = useSelector((state) => state.loggedUserReducer.user)
+  const loggedUser = useSelector((state) => state.loggedUserReducer.user)
 
-  const { id, username, isAdmin } = loggedUserStore
+  const { id, username, isAdmin } = loggedUser
 
   const [open, setOpen] = useState(false)
 

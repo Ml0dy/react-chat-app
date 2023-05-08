@@ -28,7 +28,7 @@ export const changeGroupNameActon = (newName) => {
   }
 }
 
-export const createChatWithSingleUser = (
+export const createChatWithSingleUserAction = (
   nextChatId,
   userId,
   username,

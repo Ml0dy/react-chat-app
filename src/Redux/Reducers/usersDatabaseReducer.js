@@ -20,6 +20,12 @@ export const userDatabaseReducer = (state = initialState, action) => {
           chatList: [chatList[0]],
         },
       ]
+    case "ADD_NEW_CHAT_TO_USER":
+      return state.map((user) => {
+        if (user.id === action.currentId)
+          return { ...user, chatList: [...user.chatList, action.newChat] }
+        return user
+      })
     default:
       return state
   }

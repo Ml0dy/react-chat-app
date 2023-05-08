@@ -19,3 +19,11 @@ export const registerUserAction = (username, password, nextId) => {
     nextId,
   }
 }
+
+export const addNewChatToUserAction = (currentId, newChat) => {
+  return {
+    type: "ADD_NEW_CHAT_TO_USER",
+    currentId,
+    newChat,
+  }
+}

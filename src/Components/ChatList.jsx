@@ -1,9 +1,16 @@
+import { isChatExist } from "../Config/isChatExist"
 import {
   changeGroupNameActon,
   sendMessageAction,
 } from "../Redux/Actions/chatsDatabaseAction"
-import { createChatWithSingleUser } from "../Redux/Actions/chatsDatabaseAction"
+import { createChatWithSingleUserAction } from "../Redux/Actions/chatsDatabaseAction"
 import { currentChatAction } from "../Redux/Actions/currentChatAction"
+import {
+  loggedUserAction,
+  updateLoggedUserAction,
+} from "../Redux/Actions/loggedUserAction"
+import { addNewChatToUserAction } from "../Redux/Actions/usersDatabaseAction"
+import ActiveChatList from "./ActiveChatList"
 import ChatView from "./ChatView"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone"
@@ -51,18 +58,6 @@ const ChatList = () => {
     container.current?.scrollTo(0, scrollHeight)
   }
 
-  const getSecondUser = (chat) => {
-    if (chat.isGroupChat) return
-    else if (chat.users[0].id !== id) return chat.users[0].username
-    return chat.users[1].username
-  }
-
-  const handlePickChat = (chat) => {
-    setCurrentChat(chat.id)
-    if (chat.isGroupChat) setCurrentChatName(chat.chatName)
-    else setCurrentChatName(getSecondUser(chat))
-  }
-
   const handleSendMessage = () => {
     if (messageValue === "") return false
 
@@ -81,15 +76,29 @@ const ChatList = () => {
   }
 
   const handleCreateNewChat = (userId, secondUsername) => {
-    const newChatsId = chatDatabase.length
-    dispatch(
-      createChatWithSingleUser(newChatsId, userId, secondUsername, id, username)
-    )
-    setCurrentChat(newChatsId)
+    if (isChatExist(id, userId, chatDatabase)) {
+      const newChatsId = chatDatabase.length
+      dispatch(
+        createChatWithSingleUserAction(
+          newChatsId,
+          userId,
+          secondUsername,
+          id,
+          username
+        )
+      )
+      setCurrentChat(newChatsId)
+      console.log(reducerCurrentChat.chat)
+      setTimeout(() => {
+        dispatch(addNewChatToUserAction(id, reducerCurrentChat.chat.chat))
+        dispatch(addNewChatToUserAction(userId, reducerCurrentChat.chat.chat))
+      }, 10)
+    }
   }
 
   useEffect(() => {
     dispatch(currentChatAction(chatDatabase[currentChat]))
+
   }, [currentChat, currentChatName])
 
   useEffect(() => {
@@ -156,7 +165,12 @@ const ChatList = () => {
             behavior: "smooth",
           }}
         >
-          <List
+          <ActiveChatList
+            chatList={chatList}
+            setCurrentChat={setCurrentChat}
+            setCurrentChatName={setCurrentChatName}
+          />
+          {/* <List
             sx={{
               width: "100%",
               alignItems: "center",
@@ -195,7 +209,7 @@ const ChatList = () => {
                 </ListItem>
               )
             })}
-          </List>
+          </List> */}
 
           <Divider />
 
@@ -209,6 +223,7 @@ const ChatList = () => {
             }}
           >
             {usersList.map((user) => {
+              if (!isChatExist(id, user.id, chatDatabase)) return
               if (user.id !== id)
                 return (
                   <ListItem>
