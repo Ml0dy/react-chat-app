@@ -1,11 +1,10 @@
-import React from "react"
-import { Avatar, Container, Grid, Paper, Toolbar } from "@mui/material"
-import { deepOrange } from "@mui/material/colors"
-import Typography from "@mui/material/Typography"
-import Box from "@mui/material/Box"
-import { useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
+import { Avatar, Container, Grid, Paper, Toolbar } from "@mui/material"
+import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
+import { deepOrange } from "@mui/material/colors"
+import React from "react"
+import { useSelector } from "react-redux"
 
 const UserInfo = () => {
   const loggedUser = useSelector((state) => state.loggedUserReducer.user)

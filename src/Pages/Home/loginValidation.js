@@ -4,9 +4,10 @@ export const loginValidation = (
   USER_DATABASE
 ) => {
   const [existUserDataBase] = USER_DATABASE.filter((user) => {
-    if (user.username === usernameInput) {
-      return user
+    if (user.username !== usernameInput) {
+      return false
     }
+    return user
   })
   if (existUserDataBase === undefined) {
     return false

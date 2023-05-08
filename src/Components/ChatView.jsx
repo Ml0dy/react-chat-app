@@ -41,7 +41,12 @@ const ChatView = ({ chatMessages }) => {
                     borderRadius: 6,
                   }}
                 >
-                  <Typography variant="body1" padding={2} textAlign={"right"}>
+                  <Typography
+                    variant="body1"
+                    sx={{ inlineSize: "300px", overflowWrap: "break-word" }}
+                    padding={2}
+                    textAlign={"right"}
+                  >
                     {text}
                   </Typography>
                 </Box>
@@ -79,7 +84,12 @@ const ChatView = ({ chatMessages }) => {
                   boxShadow: 2,
                 }}
               >
-                <Typography variant="body1" padding={2} textAlign={"left"}>
+                <Typography
+                  variant="body1"
+                  sx={{ inlineSize: "300px", overflowWrap: "break-word" }}
+                  padding={2}
+                  textAlign="left"
+                >
                   {text}
                 </Typography>
               </Box>

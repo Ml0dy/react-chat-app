@@ -1,18 +1,14 @@
-import React from "react"
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import { Avatar } from "@mui/material"
-import { deepOrange } from "@mui/material/colors"
 import Box from "@mui/material/Box"
-import Toolbar from "@mui/material/Toolbar"
-import UserInfo from "./UserInfo"
-import { styled, createTheme, ThemeProvider } from "@mui/material/styles"
-import CssBaseline from "@mui/material/CssBaseline"
-import MuiDrawer from "@mui/material/Drawer"
-import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
+import Toolbar from "@mui/material/Toolbar"
+import Typography from "@mui/material/Typography"
+import { deepOrange } from "@mui/material/colors"
+import React from "react"
 import { useSelector } from "react-redux"
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 
 const AdminPanel = ({ userList, chatList }) => {
   let adminNumber = 0

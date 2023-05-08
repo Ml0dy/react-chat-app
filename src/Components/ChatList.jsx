@@ -42,7 +42,7 @@ const ChatList = () => {
 
   const [currentChat, setCurrentChat] = useState(0)
   const [messageValue, setMessageValue] = useState("")
-  const [currentChatName, setCurrentChatName] = useState("Grupa NOVOakademii")
+  const [currentChatName, setCurrentChatName] = useState("NOVOacademy Team")
   const [open, setOpen] = useState(false)
 
   const { chatList, id, isAdmin, username } = loggedUser
@@ -206,8 +206,8 @@ const ChatList = () => {
             }}
           >
             {usersList.map((user) => {
-              if (!isChatExist(id, user.id, chatDatabase)) return
-              if (user.id !== id)
+              if (isChatExist(id, user.id, chatDatabase)) {
+                if (user.id === id) return false
                 return (
                   <ListItem key={user.id}>
                     <ListItemButton
@@ -229,6 +229,7 @@ const ChatList = () => {
                     </ListItemButton>
                   </ListItem>
                 )
+              } else return false
             })}
           </List>
         </Box>

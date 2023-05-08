@@ -1,26 +1,22 @@
 import Novologo from "../../Assets/Images/NovoAcademy_logo.png"
-import { userDataBase } from "../../Config/dataBase"
 import { addUserToGroupChatAction } from "../../Redux/Actions/chatsDatabaseAction"
-import { loggedUserAction } from "../../Redux/Actions/loggedUserAction"
 import { registerUserAction } from "../../Redux/Actions/usersDatabaseAction"
-import { loginValidation } from "../Home/loginValidation"
 import "./RegisterView.css"
 import { registerValidation } from "./registerValidation"
+import { Alert } from "@mui/material"
 import Button from "@mui/material/Button"
 import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
-import { deepOrange } from "@mui/material/colors"
-import { hover } from "@testing-library/user-event/dist/hover"
-import React, { useEffect } from "react"
+import React from "react"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Link, Navigate, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const RegisterView = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
-  const [submitted, setSubmitted] = useState(false)
+  const [isRegisterDone, setisRegisterDone] = useState(false)
 
   const userDataBase = useSelector((state) => state.userDatabaseReducer)
   const dispatch = useDispatch()
@@ -28,20 +24,17 @@ const RegisterView = () => {
 
   const handleUsername = (e) => {
     setUsername(e.target.value)
-    setSubmitted(false)
   }
 
   const handlePassword = (e) => {
     setPassword(e.target.value)
-    setSubmitted(false)
   }
 
   const handleConfirmPassword = (e) => {
     setConfirmPassword(e.target.value)
-    setSubmitted(false)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = () => {
     const registration = registerValidation(username)
 
     if (username === "" || password === "" || confirmPassword === "") {
@@ -60,15 +53,15 @@ const RegisterView = () => {
     }
 
     const nextID = userDataBase.length
-
+    setisRegisterDone(true)
     dispatch(registerUserAction(username, password, nextID))
     dispatch(addUserToGroupChatAction(nextID, username))
-    setSubmitted(true)
-    alert("Registration done! You will be directed to log in")
     setUsername("")
     setPassword("")
     setConfirmPassword("")
-    navigate("/")
+    setTimeout(() => {
+      navigate("/")
+    }, 4000)
   }
 
   return (
@@ -116,6 +109,13 @@ const RegisterView = () => {
         <Button variant="contained" onClick={handleSubmit}>
           REGISTER
         </Button>
+        {isRegisterDone ? (
+          <Alert severity="info">
+            It worked! You will be redirected to the login page
+          </Alert>
+        ) : (
+          ""
+        )}
         <p>
           Already signed up? <Link to={"/"}>LOG IN</Link>
         </p>

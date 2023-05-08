@@ -1,14 +1,7 @@
 import { deleteUserAction } from "../Redux/Actions/usersDatabaseAction"
 import "./ChatList.css"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@mui/material"
+import { Box, Button, Dialog, DialogContent, DialogTitle } from "@mui/material"
 import DialogActions from "@mui/material/DialogActions"
 import Paper from "@mui/material/Paper"
 import Table from "@mui/material/Table"
@@ -17,7 +10,7 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell"
 import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
-import { deepOrange, red } from "@mui/material/colors"
+import { deepOrange } from "@mui/material/colors"
 import { styled } from "@mui/material/styles"
 import * as React from "react"
 import { useState } from "react"
@@ -38,7 +31,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
@@ -61,10 +53,6 @@ const UsersAdmin = () => {
   const handleClickOpen = (id) => {
     setUserToDeleteId(id)
     setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
   }
 
   const deleteUser = (id, isAdmin) => {
@@ -122,7 +110,7 @@ const UsersAdmin = () => {
                   />
                   <Dialog
                     open={open}
-                    onClose={handleClose}
+                    onClose={() => setOpen(false)}
                     sx={{
                       paddingTop: 0,
                     }}
@@ -136,7 +124,7 @@ const UsersAdmin = () => {
                     >
                       <Dialog
                         open={open}
-                        onClose={handleClose}
+                        onClose={() => setOpen(false)}
                         aria-labelledby="alert-dialog-title"
                       >
                         <DialogTitle id="alert-dialog-title">
@@ -144,7 +132,7 @@ const UsersAdmin = () => {
                         </DialogTitle>
                         <DialogContent></DialogContent>
                         <DialogActions>
-                          <Button onClick={handleClose}>Cancel</Button>
+                          <Button onClick={() => setOpen(false)}>Cancel</Button>
                           <Button onClick={() => deleteUser(userToDeleteId)}>
                             Delete user
                           </Button>

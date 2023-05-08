@@ -1,5 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
 .app {
   background-image: url("./Assets/Images/background4.jpg");
+  font-family: "Montserrat", sans-serif;
   background-size: cover;
   height: 100vh;
   display: flex;

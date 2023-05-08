@@ -1,4 +1,3 @@
-import { deleteUserAction } from "../Redux/Actions/usersDatabaseAction"
 import "./ChatList.css"
 import { Box } from "@mui/material"
 import Paper from "@mui/material/Paper"

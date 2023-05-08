@@ -4,28 +4,17 @@ import ChatList from "../Components/ChatList"
 import UserInfo from "../Components/UserInfo"
 import Users from "../Components/Users"
 import UsersAdmin from "../Components/UsersAdmin"
+import { adminMenu, usersMenu } from "../Config/GlobalVariables"
 import { userDataBase } from "../Config/dataBase"
 import { chatList } from "../Config/dataBase"
-import {
-  logoutUserAction,
-  pageRenderingHandler,
-} from "../Redux/Actions/loggedUserAction"
+import { logoutUserAction } from "../Redux/Actions/loggedUserAction"
 import { AccountCircle } from "@mui/icons-material"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings"
 import PlaylistAddCheckCircleIcon from "@mui/icons-material/PlaylistAddCheckCircle"
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew"
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle"
-import {
-  Avatar,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  IconButton,
-} from "@mui/material"
+import { Avatar, Dialog, DialogContent, IconButton } from "@mui/material"
 import AppBar from "@mui/material/AppBar"
 import Box from "@mui/material/Box"
 import Divider from "@mui/material/Divider"
@@ -37,7 +26,7 @@ import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
-import { deepOrange, red } from "@mui/material/colors"
+import { deepOrange } from "@mui/material/colors"
 import React, { useEffect } from "react"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -91,9 +80,7 @@ const ApplicationModal = () => {
     dispatch(logoutUserAction())
   }
 
-  const userMenu = isAdmin
-    ? ["Admin panel", "Chat List", "User List"]
-    : ["User Profile", "Chat List", "Users"]
+  const userMenu = isAdmin ? adminMenu : usersMenu
 
   useEffect(() => {
     getRerenderActivity(id)
