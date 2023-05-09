@@ -53,3 +53,18 @@ export const createChatWithSingleUserAction = (
     dateOfMessage,
   }
 }
+
+export const createGroupChatAction = (
+  nextChatId,
+  chatName,
+  usersInChat,
+  dateOfMessage
+) => {
+  return {
+    type: "CREATE_GROUP_CHAT",
+    nextChatId,
+    chatName,
+    usersInChat,
+    dateOfMessage,
+  }
+}
