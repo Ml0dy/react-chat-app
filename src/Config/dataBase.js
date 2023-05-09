@@ -6,8 +6,8 @@ export const chatList = [
     users: [
       { id: 0, username: "Admin1" },
       { id: 1, username: "Admin2" },
-      { id: 2, username: "User1" },
-      { id: 3, username: "User2" },
+      { id: 2, username: "Agnieszka" },
+      { id: 3, username: "Jakub" },
     ],
     messages: [
       {
@@ -39,7 +39,7 @@ export const userDataBase = [
   },
   {
     id: 2,
-    username: "User1",
+    username: "Agnieszka",
     password: "user",
     isAdmin: false,
     isLogged: false,
@@ -47,8 +47,8 @@ export const userDataBase = [
   },
   {
     id: 3,
-    username: "User2",
-    password: "user2",
+    username: "Jakub",
+    password: "user",
     isAdmin: false,
     isLogged: false,
     chatList: [chatList[0]],

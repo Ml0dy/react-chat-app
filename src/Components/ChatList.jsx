@@ -9,7 +9,9 @@ import { currentChatAction } from "../Redux/Actions/currentChatAction"
 import { addNewChatToUserAction } from "../Redux/Actions/usersDatabaseAction"
 import ActiveChatList from "./ActiveChatList"
 import ChatView from "./ChatView"
+import GroupChatList from "./GroupChatList"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline"
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone"
 import SendIcon from "@mui/icons-material/Send"
 import {
@@ -44,6 +46,8 @@ const ChatList = () => {
   const [messageValue, setMessageValue] = useState("")
   const [currentChatName, setCurrentChatName] = useState("NOVOacademy Team")
   const [open, setOpen] = useState(false)
+  const [openModal, setOpenModal] = useState(false)
+
   const { chatList, id, isAdmin, username } = loggedUser
   const dispatch = useDispatch()
   const container = useRef(null)
@@ -51,6 +55,10 @@ const ChatList = () => {
   const handleScroll = () => {
     const { scrollHeight } = container.current
     container.current?.scrollTo(0, scrollHeight)
+  }
+
+  const handleOpenModal = () => {
+    setOpenModal(true)
   }
 
   const today = new Date()
@@ -158,7 +166,8 @@ const ChatList = () => {
             backgroundColor: "#212766",
             width: "100%",
             display: "flex",
-            flexDirection: "column",
+            flexDirection: "row",
+            justifyContent: "center",
             alignItems: "center",
             scrollbarWidth: "none",
             boxShadow: 2,
@@ -173,6 +182,16 @@ const ChatList = () => {
           >
             Chat List
           </Typography>
+          <IconButton aria-label="delete" onClick={handleOpenModal}>
+            <AddCircleOutlineIcon sx={{ color: "white" }} />
+          </IconButton>
+          <Dialog open={openModal} onClose={() => setOpenModal(false)}>
+            <GroupChatList
+              userList={usersList}
+              currentUserId={id}
+              setOpenModal={setOpenModal}
+            />
+          </Dialog>
         </Box>
         <Box
           sx={{
