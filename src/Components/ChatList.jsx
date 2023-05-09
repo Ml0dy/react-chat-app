@@ -44,9 +44,7 @@ const ChatList = () => {
   const [messageValue, setMessageValue] = useState("")
   const [currentChatName, setCurrentChatName] = useState("NOVOacademy Team")
   const [open, setOpen] = useState(false)
-
   const { chatList, id, isAdmin, username } = loggedUser
-
   const dispatch = useDispatch()
   const container = useRef(null)
 
@@ -170,7 +168,7 @@ const ChatList = () => {
             variant="h5"
             alignContent="center"
             mt={2}
-            mb={2}
+            mb={3}
             color="white"
           >
             Chat List
@@ -184,7 +182,6 @@ const ChatList = () => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            boxShadow: 2,
             scrollbarWidth: "none",
             behavior: "smooth",
           }}
