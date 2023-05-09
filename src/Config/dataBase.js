@@ -27,7 +27,7 @@ export const userDataBase = [
     password: "admin",
     isAdmin: true,
     isLogged: false,
-    chatList: [...chatList],
+    chatList: [chatList[0]],
   },
   {
     id: 1,
@@ -35,7 +35,7 @@ export const userDataBase = [
     password: "admin",
     isAdmin: true,
     isLogged: false,
-    chatList: [...chatList],
+    chatList: [chatList[0]],
   },
   {
     id: 2,
