@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router"
 
 const HomeView = () => {
-  const [loginValue, setLoginValue] = useState("Admin1")
-  const [passwordValue, setPasswordValue] = useState("admin")
+  const [loginValue, setLoginValue] = useState("")
+  const [passwordValue, setPasswordValue] = useState("")
 
   const userDatabase = useSelector((state) => state.userDatabaseReducer)
 
