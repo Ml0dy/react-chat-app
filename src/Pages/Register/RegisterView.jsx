@@ -17,6 +17,9 @@ const RegisterView = () => {
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [isRegisterDone, setisRegisterDone] = useState(false)
+  const [isUsernameTaken, setIsUsernameTaken] = useState(false)
+  const [isEverythingFilled, setIsEverythingFilled] = useState(false)
+  const [isPasswordConfirmed, setIsPasswordConfirmed] = useState(false)
 
   const userDataBase = useSelector((state) => state.userDatabaseReducer)
   const dispatch = useDispatch()
@@ -35,21 +38,33 @@ const RegisterView = () => {
   }
 
   const handleSubmit = () => {
-    const registration = registerValidation(username)
+    const registration = registerValidation(username, userDataBase)
 
     if (username === "" || password === "" || confirmPassword === "") {
-      return alert("Registration error")
+      setIsEverythingFilled(true)
+      setTimeout(() => {
+        setIsEverythingFilled(false)
+      }, 3000)
+      return
     }
 
     if (registration) {
       setUsername("")
       setPassword("")
       setConfirmPassword("")
-      return alert("Username already taken")
+      setIsUsernameTaken(true)
+      setTimeout(() => {
+        setIsUsernameTaken(false)
+      }, 3000)
+      return
     }
 
     if (password !== confirmPassword) {
-      return alert("Password and confirm password are not the same")
+      setIsPasswordConfirmed(true)
+      setTimeout(() => {
+        setIsPasswordConfirmed(false)
+      }, 3000)
+      return
     }
 
     const nextID = userDataBase.length
@@ -61,7 +76,7 @@ const RegisterView = () => {
     setConfirmPassword("")
     setTimeout(() => {
       navigate("/")
-    }, 4000)
+    }, 3000)
   }
 
   return (
@@ -109,13 +124,39 @@ const RegisterView = () => {
         <Button variant="contained" onClick={handleSubmit}>
           REGISTER
         </Button>
+
         {isRegisterDone ? (
-          <Alert severity="info">
+          <Alert sx={{ width: "250px" }} severity="success">
             It worked! You will be redirected to the login page
           </Alert>
         ) : (
           ""
         )}
+
+        {isUsernameTaken ? (
+          <Alert sx={{ width: "250px" }} severity="error">
+            Username already taken. Choose different one.
+          </Alert>
+        ) : (
+          ""
+        )}
+
+        {isEverythingFilled ? (
+          <Alert sx={{ width: "250px" }} severity="error">
+            You need to fill all fields.
+          </Alert>
+        ) : (
+          ""
+        )}
+
+        {isPasswordConfirmed ? (
+          <Alert sx={{ width: "250px" }} severity="error">
+            Password and confirmed password are not the same.
+          </Alert>
+        ) : (
+          ""
+        )}
+
         <p>
           Already signed up? <Link to={"/"}>LOG IN</Link>
         </p>

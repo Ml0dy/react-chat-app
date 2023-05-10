@@ -49,7 +49,6 @@ const ChatList = () => {
   const [openModal, setOpenModal] = useState(false)
 
   const { chatList, id, isAdmin, username } = loggedUser
-
   const dispatch = useDispatch()
   const container = useRef(null)
 
@@ -178,7 +177,7 @@ const ChatList = () => {
             variant="h5"
             alignContent="center"
             mt={2}
-            mb={2}
+            mb={3}
             color="white"
           >
             Chat List

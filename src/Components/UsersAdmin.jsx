@@ -1,7 +1,14 @@
 import { deleteUserAction } from "../Redux/Actions/usersDatabaseAction"
 import "./ChatList.css"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
-import { Box, Button, Dialog, DialogContent, DialogTitle } from "@mui/material"
+import {
+  Alert,
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material"
 import DialogActions from "@mui/material/DialogActions"
 import Paper from "@mui/material/Paper"
 import Table from "@mui/material/Table"
@@ -42,6 +49,8 @@ const UsersAdmin = () => {
   const userList = useSelector((state) => state.userDatabaseReducer)
 
   const [userToDeleteId, setUserToDeleteId] = useState(-1)
+  const [isAdminToDelete, setIsAdminToDelete] = useState(false)
+  const [listElementAdmin, setListElementAdmin] = useState(false)
 
   const navigate = useNavigate()
   if (loggedUser === {}) {
@@ -50,14 +59,19 @@ const UsersAdmin = () => {
 
   const [open, setOpen] = useState(false)
 
-  const handleClickOpen = (id) => {
+  const handleClickOpen = (id, isAdmin) => {
     setUserToDeleteId(id)
     setOpen(true)
+    setListElementAdmin(isAdmin)
   }
 
   const deleteUser = (id, isAdmin) => {
-    if (loggedUser.id === id || isAdmin === true) {
-      alert("Can't delete this user")
+    console.log(isAdmin)
+    if (loggedUser.id === id || listElementAdmin) {
+      setIsAdminToDelete(true)
+      setTimeout(() => {
+        setIsAdminToDelete(false)
+      }, 3000)
     } else {
       dispatch(deleteUserAction(id))
       setOpen(false)
@@ -102,7 +116,7 @@ const UsersAdmin = () => {
                 </StyledTableCell>
                 <StyledTableCell component="th" scope="row" align="center">
                   <DeleteForeverIcon
-                    onClick={() => handleClickOpen(id)}
+                    onClick={() => handleClickOpen(id, isAdmin)}
                     sx={{
                       color: deepOrange[500],
                       cursor: "pointer",
@@ -111,33 +125,39 @@ const UsersAdmin = () => {
                   <Dialog
                     open={open}
                     onClose={() => setOpen(false)}
+                    aria-labelledby="alert-dialog-title"
                     sx={{
                       paddingTop: 0,
                     }}
                   >
-                    <DialogContent
-                      sx={{
-                        bgcolor: deepOrange[500],
-                        alignItems: "center",
-                        justifyItems: "center",
-                      }}
-                    >
-                      <Dialog
-                        open={open}
-                        onClose={() => setOpen(false)}
-                        aria-labelledby="alert-dialog-title"
-                      >
-                        <DialogTitle id="alert-dialog-title">
-                          {"Are you sure to delete this user?"}
-                        </DialogTitle>
-                        <DialogContent></DialogContent>
-                        <DialogActions>
-                          <Button onClick={() => setOpen(false)}>Cancel</Button>
-                          <Button onClick={() => deleteUser(userToDeleteId)}>
-                            Delete user
-                          </Button>
-                        </DialogActions>
-                      </Dialog>
+                    <DialogContent alignItems="center" justifyItems="center">
+                      <DialogTitle id="alert-dialog-title">
+                        {"Are you sure to delete this user?"}
+                      </DialogTitle>
+
+                      {isAdminToDelete ? (
+                        <Alert
+                          sx={{
+                            width: "250px",
+                          }}
+                          severity="error"
+                        >
+                          You cannot delete admin.
+                        </Alert>
+                      ) : (
+                        ""
+                      )}
+
+                      <DialogActions>
+                        <Button onClick={() => setOpen(false)}>Cancel</Button>
+                        <Button
+                          onClick={() =>
+                            deleteUser(userToDeleteId, listElementAdmin)
+                          }
+                        >
+                          Delete user
+                        </Button>
+                      </DialogActions>
                     </DialogContent>
                   </Dialog>
                 </StyledTableCell>
