@@ -28,11 +28,18 @@ export const addUserToGroupChatAction = (id, username) => {
   }
 }
 
-export const changeGroupNameActon = (newName, chatId) => {
+export const changeGroupNameActon = (
+  newName,
+  chatId,
+  nextMessageId,
+  dateOfMessage
+) => {
   return {
     type: "CHANGE_GROUP_NAME",
     newName,
     chatId,
+    nextMessageId,
+    dateOfMessage,
   }
 }
 

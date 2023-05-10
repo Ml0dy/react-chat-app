@@ -14,7 +14,15 @@ const ChatView = ({ chatMessages }) => {
           chatMessages.users.forEach((user) => {
             if (user.id === user_message.id) secondSender = user.username
           })
-          if (user_message.id === id) {
+          if (user_message.id === -1) {
+            return (
+              <Box width="100%" display={"flex"} alignContent={"center"}>
+                <Typography variant="caption" fontStyle={"oblique"}>
+                  Admin changed group name: {text}
+                </Typography>
+              </Box>
+            )
+          } else if (user_message.id === id) {
             return (
               <Box
                 key={index}

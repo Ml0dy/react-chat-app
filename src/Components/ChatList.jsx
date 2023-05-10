@@ -337,7 +337,9 @@ const ChatList = () => {
                         dispatch(
                           changeGroupNameActon(
                             currentChatName,
-                            chatDatabase[currentChat].id
+                            chatDatabase[currentChat].id,
+                            reducerCurrentChat.messages.length,
+                            currentTime()
                           )
                         )
                         setOpen(false)

@@ -42,6 +42,15 @@ export const chatsDatabaseReducer = (state = initialState, action) => {
           return {
             ...chat,
             chatName: action.newName,
+            messages: [
+              ...chat.messages,
+              {
+                id: action.nextMessageId,
+                text: action.newName,
+                user_message: { id: -1 },
+                message_date: action.dateOfMessage,
+              },
+            ],
           }
         return chat
       })
