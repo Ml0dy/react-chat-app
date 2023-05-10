@@ -1,3 +1,4 @@
+import { Alert } from "@mui/material"
 import Novologo from "../../Assets/Images/NovoAcademy_logo.png"
 import { loggedUserAction } from "../../Redux/Actions/loggedUserAction"
 import "./HomeView.css"
@@ -12,6 +13,8 @@ import { useNavigate } from "react-router"
 const HomeView = () => {
   const [loginValue, setLoginValue] = useState("")
   const [passwordValue, setPasswordValue] = useState("")
+  const [isValidationDone, setIsValidationDone] = useState(false)
+  const [isFieldsFilled, setIsFieldsFilled] = useState(false)
 
   const userDatabase = useSelector((state) => state.userDatabaseReducer)
 
@@ -24,12 +27,19 @@ const HomeView = () => {
     const validation = loginValidation(loginValue, passwordValue, userDatabase)
 
     if (loginValue === "" || passwordValue === "") {
-      return alert("You must fill all fields (login and password) ")
+      setIsFieldsFilled(true)
+      setTimeout(() => {
+        setIsFieldsFilled(false)
+      }, 3000)
+      return
     }
     if (!validation) {
-      setLoginValue("")
-      setPasswordValue("")
-      return alert("validation error")
+      setIsValidationDone(true)
+      setTimeout(() => {
+        setIsValidationDone(false)
+      }, 3000)
+
+      return
     }
     dispatch(loggedUserAction(validation))
     setLoginValue("")
@@ -53,6 +63,7 @@ const HomeView = () => {
         flex
         flexDirection={"column"}
         width="300px"
+        height={"auto"}
         alignItems={"center"}
         justifyContent={"center"}
         paddingTop={2}
@@ -96,6 +107,22 @@ const HomeView = () => {
             REGISTER
           </Button>
         </Stack>
+
+        {isValidationDone ? (
+          <Alert sx={{ width: "250px" }} severity="error">
+            Wrong password or username.
+          </Alert>
+        ) : (
+          ""
+        )}
+
+        {isFieldsFilled ? (
+          <Alert sx={{ width: "250px" }} severity="error">
+            You need to fill all the fields.
+          </Alert>
+        ) : (
+          ""
+        )}
       </Stack>
     </Stack>
   )
