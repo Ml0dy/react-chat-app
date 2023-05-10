@@ -16,7 +16,14 @@ const ChatView = ({ chatMessages }) => {
           })
           if (user_message.id === -1) {
             return (
-              <Box width="100%" display={"flex"} alignContent={"center"}>
+              <Box
+                width="100%"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                mt={2}
+                mb={2}
+              >
                 <Typography variant="caption" fontStyle={"oblique"}>
                   Admin changed group name: {text}
                 </Typography>
