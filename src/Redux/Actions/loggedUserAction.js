@@ -10,10 +10,3 @@ export const logoutUserAction = () => {
     type: "LOGOUT",
   }
 }
-
-export const updateLoggedUserAction = (payload) => {
-  return {
-    type: "UPDATE_USER",
-    payload,
-  }
-}

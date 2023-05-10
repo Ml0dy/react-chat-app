@@ -1,5 +1,7 @@
 import { monthNames } from "../Config/GlobalVariables"
 import { createGroupChatAction } from "../Redux/Actions/chatsDatabaseAction"
+import { currentChatAction } from "../Redux/Actions/currentChatAction"
+import { addNewChatToUserAction } from "../Redux/Actions/usersDatabaseAction"
 import {
   Autocomplete,
   Button,
@@ -9,14 +11,23 @@ import {
   Stack,
   TextField,
 } from "@mui/material"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-const GroupChatList = ({ userList, currentUserId, setOpenModal }) => {
+const GroupChatList = ({
+  userList,
+  currentUserId,
+  setOpenModal,
+  setCurrentChat,
+  currentChat,
+}) => {
   const chatDatabase = useSelector((state) => state.chatsDatabaseReducer)
-  const [usersInNewGroup, setUsersInNewGroup] = useState([])
+  const reducerCurrentChat = useSelector(
+    (state) => state.currentChatReducer.chat
+  )
+  const [usersInNewGroup, setUsersInNewGroup] = useState()
   const [newChatName, setNewChatName] = useState("")
-
+  const newChatId = chatDatabase.length
   const dispatch = useDispatch()
 
   const today = new Date()
@@ -43,9 +54,7 @@ const GroupChatList = ({ userList, currentUserId, setOpenModal }) => {
 
   const handleCreateGroupChat = () => {
     if (newChatName === "") return false
-
-    const newChatId = chatDatabase.length
-    console.log(usersInNewGroup)
+    console.log(chatDatabase)
     dispatch(
       createGroupChatAction(
         newChatId,
@@ -54,8 +63,21 @@ const GroupChatList = ({ userList, currentUserId, setOpenModal }) => {
         currentTime()
       )
     )
+    setCurrentChat(newChatId)
+    dispatch(currentChatAction(chatDatabase[currentChat]))
+
     setOpenModal(false)
   }
+
+  useEffect(() => {
+    if (usersInNewGroup) {
+      usersInNewGroup.forEach((singleUser) => {
+        dispatch(
+          addNewChatToUserAction(singleUser.id, chatDatabase[currentChat])
+        )
+      })
+    }
+  }, [chatDatabase])
 
   return (
     <div>
@@ -76,9 +98,9 @@ const GroupChatList = ({ userList, currentUserId, setOpenModal }) => {
             options={userList}
             getOptionLabel={(user) => user.username}
             defaultValue={[userList[currentUserId]]}
-            onChange={(e, data) =>
-              setUsersInNewGroup([...usersInNewGroup, e.target.value])
-            }
+            onChange={(e, data) => {
+              setUsersInNewGroup(data)
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}

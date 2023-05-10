@@ -33,7 +33,7 @@ const ActiveChatList = ({ chatList, setCurrentChatName, setCurrentChat }) => {
   }
 
   useEffect(() => {
-    dispatch(loggedUserAction(usersList[id]))
+    if (usersList[id]) dispatch(loggedUserAction(usersList[id]))
   }, [usersList])
 
   return (
@@ -48,12 +48,12 @@ const ActiveChatList = ({ chatList, setCurrentChatName, setCurrentChat }) => {
         backgroundColor: "#D4D4D4",
       }}
     >
-      {chatList.map((chat) => {
+      {chatList.map((chat, index) => {
         let secondUsername = ""
         if (chat.users[0].id === id) secondUsername = chat.users[1].username
         else secondUsername = chat.users[0].username
         return (
-          <ListItem key={chat.id} disablePadding>
+          <ListItem key={index} disablePadding>
             <ListItemButton onClick={() => handlePickChat(chat)}>
               <ListItemIcon>
                 <Avatar
@@ -67,7 +67,9 @@ const ActiveChatList = ({ chatList, setCurrentChatName, setCurrentChat }) => {
               </ListItemIcon>
               <ListItemText
                 primary={
-                  chat.isGroupChat ? chatDatabase[0].chatName : secondUsername
+                  chat.isGroupChat
+                    ? chatDatabase[chat.id].chatName
+                    : secondUsername
                 }
               />
             </ListItemButton>

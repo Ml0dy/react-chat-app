@@ -38,13 +38,16 @@ import { useDispatch, useSelector } from "react-redux"
 
 const ChatList = () => {
   const loggedUser = useSelector((state) => state.loggedUserReducer.user)
-  const reducerCurrentChat = useSelector((state) => state.currentChatReducer)
+  const reducerCurrentChat = useSelector(
+    (state) => state.currentChatReducer.chat
+  )
   const chatDatabase = useSelector((state) => state.chatsDatabaseReducer)
   const usersList = useSelector((state) => state.userDatabaseReducer)
 
   const [currentChat, setCurrentChat] = useState(0)
   const [messageValue, setMessageValue] = useState("")
-  const [currentChatName, setCurrentChatName] = useState("NOVOacademy Team")
+  const [currentChatName, setCurrentChatName] = useState("")
+  const [secondUserId, setSecondUserId] = useState(-1)
   const [open, setOpen] = useState(false)
   const [openModal, setOpenModal] = useState(false)
 
@@ -55,10 +58,6 @@ const ChatList = () => {
   const handleScroll = () => {
     const { scrollHeight } = container.current
     container.current?.scrollTo(0, scrollHeight)
-  }
-
-  const handleOpenModal = () => {
-    setOpenModal(true)
   }
 
   const today = new Date()
@@ -86,12 +85,12 @@ const ChatList = () => {
   const handleSendMessage = () => {
     if (messageValue === "") return false
 
-    const [newMessageId] = reducerCurrentChat.chat.messages.slice(-1)
+    const [newMessageId] = reducerCurrentChat.messages.slice(-1)
     const currentMessageId = (newMessageId.id_message += 1)
 
     dispatch(
       sendMessageAction(
-        reducerCurrentChat.chat.id,
+        reducerCurrentChat.id,
         currentMessageId,
         id,
         messageValue,
@@ -101,7 +100,7 @@ const ChatList = () => {
     setMessageValue("")
   }
 
-  const handleCreateNewChat = (userId, secondUsername) => {
+  const handleCreateSingleChat = (userId, secondUsername) => {
     if (isChatExist(id, userId, chatDatabase)) {
       const newChatsId = chatDatabase.length
       dispatch(
@@ -115,17 +114,21 @@ const ChatList = () => {
         )
       )
       setCurrentChat(newChatsId)
-      setTimeout(() => {
-        dispatch(addNewChatToUserAction(id, reducerCurrentChat.chat.chat))
-        dispatch(addNewChatToUserAction(userId, reducerCurrentChat.chat.chat))
-      }, 10)
+      setSecondUserId(userId)
       setCurrentChatName(secondUsername)
     }
   }
 
   useEffect(() => {
     dispatch(currentChatAction(chatDatabase[currentChat]))
-  }, [currentChat, currentChatName])
+  }, [currentChat])
+
+  useEffect(() => {
+    if (secondUserId !== -1) {
+      dispatch(addNewChatToUserAction(id, chatDatabase[currentChat]))
+      dispatch(addNewChatToUserAction(secondUserId, chatDatabase[currentChat]))
+    }
+  }, [secondUserId])
 
   useEffect(() => {
     handleScroll()
@@ -182,7 +185,7 @@ const ChatList = () => {
           >
             Chat List
           </Typography>
-          <IconButton aria-label="delete" onClick={handleOpenModal}>
+          <IconButton aria-label="delete" onClick={() => setOpenModal(true)}>
             <AddCircleOutlineIcon sx={{ color: "white" }} />
           </IconButton>
           <Dialog open={openModal} onClose={() => setOpenModal(false)}>
@@ -190,6 +193,8 @@ const ChatList = () => {
               userList={usersList}
               currentUserId={id}
               setOpenModal={setOpenModal}
+              setCurrentChat={setCurrentChat}
+              currentChat={currentChat}
             />
           </Dialog>
         </Box>
@@ -228,7 +233,7 @@ const ChatList = () => {
                   <ListItem key={user.id}>
                     <ListItemButton
                       onClick={() =>
-                        handleCreateNewChat(user.id, user.username)
+                        handleCreateSingleChat(user.id, user.username)
                       }
                     >
                       <ListItemIcon>
@@ -303,10 +308,10 @@ const ChatList = () => {
             color="white"
             display="flex"
           >
-            {reducerCurrentChat.chat.isGroupChat
-              ? chatDatabase[0].chatName
+            {reducerCurrentChat.isGroupChat
+              ? chatDatabase[currentChat].chatName
               : currentChatName}
-            {reducerCurrentChat.chat.isGroupChat && isAdmin ? (
+            {reducerCurrentChat.isGroupChat && isAdmin ? (
               <div>
                 <IconButton
                   onClick={() => setOpen(true)}
@@ -315,7 +320,7 @@ const ChatList = () => {
                   <EditTwoToneIcon fontSize="small" sx={{ color: "white" }} />
                 </IconButton>
                 <Dialog open={open} onClose={() => setOpen(false)}>
-                  <DialogTitle>Subscribe</DialogTitle>
+                  <DialogTitle>Change group name</DialogTitle>
                   <DialogContent>
                     <TextField
                       autoFocus
@@ -329,7 +334,12 @@ const ChatList = () => {
                   <DialogActions>
                     <Button
                       onClick={() => {
-                        dispatch(changeGroupNameActon(currentChatName))
+                        dispatch(
+                          changeGroupNameActon(
+                            currentChatName,
+                            chatDatabase[currentChat].id
+                          )
+                        )
                         setOpen(false)
                       }}
                     >
@@ -362,7 +372,10 @@ const ChatList = () => {
           }}
         >
           <Typography variant="h8" alignContent="center" mt={2}>
-            <ChatView chatMessages={chatDatabase[currentChat]} />
+            <ChatView
+              chatMessages={chatDatabase[currentChat]}
+              setCurrentChat={setCurrentChat}
+            />
           </Typography>
         </Box>
         <Box

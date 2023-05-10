@@ -66,7 +66,7 @@ const ApplicationModal = () => {
       <AdminPanel userList={userDataBase} chatList={chatList} />
     )
   } else if (location.pathname === "/userprofile") {
-    currentComponent = <UserInfo username="User" isAdmin={false} />
+    currentComponent = <UserInfo />
   } else if (location.pathname === "/users") {
     currentComponent = <Users />
   } else if (location.pathname === "/chatlist") {
