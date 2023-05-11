@@ -10,11 +10,11 @@ const ChatView = ({ chatMessages }) => {
   return (
     <div>
       {chatMessages.messages.map(
-        ({ user_message, text, message_date }, index) => {
+        ({ user_message, text, message_date, id_message }, index) => {
           chatMessages.users.forEach((user) => {
             if (user.id === user_message.id) secondSender = user.username
           })
-          if (user_message.id === -1) {
+          if (user_message.id < 0) {
             return (
               <Box
                 width="100%"
@@ -25,7 +25,12 @@ const ChatView = ({ chatMessages }) => {
                 mb={2}
               >
                 <Typography variant="caption" fontStyle={"oblique"}>
-                  Admin changed group name: {text}
+                  {id_message === 0
+                    ? `New group ${chatMessages.chatName} created`
+                    : ""}
+                  {user_message.id === -2
+                    ? `Admin changed group name to: ${text}`
+                    : ""}
                 </Typography>
               </Box>
             )
@@ -50,7 +55,6 @@ const ChatView = ({ chatMessages }) => {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-end",
-                    width: "auto",
                     maxWidth: "40%",
                     marginLeft: "60%",
                     borderRadius: 6,
