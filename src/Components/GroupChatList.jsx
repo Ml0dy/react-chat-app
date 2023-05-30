@@ -22,9 +22,6 @@ const GroupChatList = ({
   currentChat,
 }) => {
   const chatDatabase = useSelector((state) => state.chatsDatabaseReducer)
-  const reducerCurrentChat = useSelector(
-    (state) => state.currentChatReducer.chat
-  )
   const [usersInNewGroup, setUsersInNewGroup] = useState()
   const [newChatName, setNewChatName] = useState("")
   const newChatId = chatDatabase.length
@@ -52,9 +49,9 @@ const GroupChatList = ({
     return hours() + ":" + minutes() + ", " + day() + " of " + monthNames[month]
   }
 
-  const handleCreateGroupChat = () => {
+  const handleCreateGroupChat = (e) => {
+    e.preventDefault()
     if (newChatName === "") return false
-    console.log(chatDatabase)
     dispatch(
       createGroupChatAction(
         newChatId,
@@ -65,7 +62,6 @@ const GroupChatList = ({
     )
     setCurrentChat(newChatId)
     dispatch(currentChatAction(chatDatabase[currentChat]))
-
     setOpenModal(false)
   }
 

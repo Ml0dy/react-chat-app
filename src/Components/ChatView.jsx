@@ -3,7 +3,7 @@ import React from "react"
 import { useSelector } from "react-redux"
 
 const ChatView = ({ chatMessages }) => {
-  const loggedUser = useSelector((state) => state.loggedUserReducer.user)
+  const loggedUser = useSelector((state) => state.loggedUserReducer)
 
   const { id } = loggedUser
   let secondSender = ""
@@ -17,27 +17,32 @@ const ChatView = ({ chatMessages }) => {
           if (user_message.id < 0) {
             return (
               <Box
+                key={id_message}
                 width="100%"
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
+                flexDirection="column"
                 mt={2}
                 mb={2}
               >
                 <Typography variant="caption" fontStyle={"oblique"}>
                   {id_message === 0
-                    ? `New group ${chatMessages.chatName} created`
+                    ? `New group ${chatMessages.chatName} created,`
                     : ""}
                   {user_message.id === -2
-                    ? `Admin changed group name to: ${text}`
+                    ? `Admin changed group name to: ${text},`
                     : ""}
+                </Typography>
+                <Typography variant="caption" fontStyle={"oblique"}>
+                  {message_date}
                 </Typography>
               </Box>
             )
           } else if (user_message.id === id) {
             return (
               <Box
-                key={index}
+                key={id_message}
                 sx={{
                   display: "flex",
                   alignItems: "flex-end",
@@ -77,7 +82,7 @@ const ChatView = ({ chatMessages }) => {
           }
           return (
             <Box
-              key={index}
+              key={id_message}
               sx={{
                 display: "flex",
                 alignItems: "flex-start",

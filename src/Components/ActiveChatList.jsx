@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 const ActiveChatList = ({ chatList, setCurrentChatName, setCurrentChat }) => {
   const chatDatabase = useSelector((state) => state.chatsDatabaseReducer)
-  const loggedUser = useSelector((state) => state.loggedUserReducer.user)
+  const loggedUser = useSelector((state) => state.loggedUserReducer)
   const usersList = useSelector((state) => state.userDatabaseReducer)
 
   const dispatch = useDispatch()
@@ -48,12 +48,12 @@ const ActiveChatList = ({ chatList, setCurrentChatName, setCurrentChat }) => {
         backgroundColor: "#D4D4D4",
       }}
     >
-      {chatList.map((chat, index) => {
+      {chatList.map((chat) => {
         let secondUsername = ""
         if (chat.users[0].id === id) secondUsername = chat.users[1].username
         else secondUsername = chat.users[0].username
         return (
-          <ListItem key={index} disablePadding>
+          <ListItem key={chat.id} disablePadding>
             <ListItemButton onClick={() => handlePickChat(chat)}>
               <ListItemIcon>
                 <Avatar

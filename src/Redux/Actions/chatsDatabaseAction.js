@@ -20,15 +20,16 @@ export const sendMessageAction = (
     dateOfMessage,
   }
 }
+
 export const addUserToGroupChatAction = (id, username) => {
   return {
     type: "ADD_NEW_TO_GROUP",
-    id: id,
-    username: username,
+    id,
+    username,
   }
 }
 
-export const changeGroupNameActon = (
+export const changeGroupNameAction = (
   newName,
   chatId,
   nextMessageId,

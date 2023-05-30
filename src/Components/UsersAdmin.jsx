@@ -45,7 +45,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const UsersAdmin = () => {
   const dispatch = useDispatch()
-  const loggedUser = useSelector((state) => state.loggedUserReducer.user)
+  const loggedUser = useSelector((state) => state.loggedUserReducer)
   const userList = useSelector((state) => state.userDatabaseReducer)
 
   const [userToDeleteId, setUserToDeleteId] = useState(-1)
@@ -65,8 +65,7 @@ const UsersAdmin = () => {
     setListElementAdmin(isAdmin)
   }
 
-  const deleteUser = (id, isAdmin) => {
-    console.log(isAdmin)
+  const deleteUser = (id) => {
     if (loggedUser.id === id || listElementAdmin) {
       setIsAdminToDelete(true)
       setTimeout(() => {
@@ -150,11 +149,7 @@ const UsersAdmin = () => {
 
                       <DialogActions>
                         <Button onClick={() => setOpen(false)}>Cancel</Button>
-                        <Button
-                          onClick={() =>
-                            deleteUser(userToDeleteId, listElementAdmin)
-                          }
-                        >
+                        <Button onClick={() => deleteUser(userToDeleteId)}>
                           Delete user
                         </Button>
                       </DialogActions>

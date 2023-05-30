@@ -7,7 +7,7 @@ export const usersDatabaseAction = () => {
 export const deleteUserAction = (id) => {
   return {
     type: "DELETE_USER",
-    payload: id,
+    id,
   }
 }
 

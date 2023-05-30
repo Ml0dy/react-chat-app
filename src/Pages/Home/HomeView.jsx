@@ -1,8 +1,8 @@
-import { Alert } from "@mui/material"
 import Novologo from "../../Assets/Images/NovoAcademy_logo.png"
 import { loggedUserAction } from "../../Redux/Actions/loggedUserAction"
 import "./HomeView.css"
 import { loginValidation } from "./loginValidation"
+import { Alert } from "@mui/material"
 import Button from "@mui/material/Button"
 import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
@@ -41,9 +41,11 @@ const HomeView = () => {
 
       return
     }
+
     dispatch(loggedUserAction(validation))
     setLoginValue("")
     setPasswordValue("")
+
     if (validation.isAdmin) navigate("/adminpanel")
     else navigate("/userprofile")
   }

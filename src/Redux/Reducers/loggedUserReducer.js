@@ -31,12 +31,12 @@ const initialUser = {
   ],
 }
 
-const loggedUserReducer = (state = { user: initialUser }, action) => {
+const loggedUserReducer = (state = initialUser, action) => {
   switch (action.type) {
     case "GET_USER":
-      return (state.user = action.payload)
+      return action.user
     case "LOGOUT":
-      return (state.user = {})
+      return {}
     default:
       return state
   }

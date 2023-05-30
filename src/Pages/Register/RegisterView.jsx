@@ -7,8 +7,7 @@ import { Alert } from "@mui/material"
 import Button from "@mui/material/Button"
 import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
-import React from "react"
-import { useState } from "react"
+import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 
@@ -25,21 +24,16 @@ const RegisterView = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const handleUsername = (e) => {
-    setUsername(e.target.value)
-  }
+  const nextID = userDataBase.length
 
-  const handlePassword = (e) => {
-    setPassword(e.target.value)
-  }
-
-  const handleConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value)
+  const cleanStateValues = () => {
+    setUsername("")
+    setPassword("")
+    setConfirmPassword("")
   }
 
   const handleSubmit = () => {
     const registration = registerValidation(username, userDataBase)
-
     if (username === "" || password === "" || confirmPassword === "") {
       setIsEverythingFilled(true)
       setTimeout(() => {
@@ -49,9 +43,7 @@ const RegisterView = () => {
     }
 
     if (registration) {
-      setUsername("")
-      setPassword("")
-      setConfirmPassword("")
+      cleanStateValues()
       setIsUsernameTaken(true)
       setTimeout(() => {
         setIsUsernameTaken(false)
@@ -67,13 +59,10 @@ const RegisterView = () => {
       return
     }
 
-    const nextID = userDataBase.length
     setisRegisterDone(true)
     dispatch(registerUserAction(username, password, nextID))
     dispatch(addUserToGroupChatAction(nextID, username))
-    setUsername("")
-    setPassword("")
-    setConfirmPassword("")
+    cleanStateValues()
     setTimeout(() => {
       navigate("/")
     }, 3000)
@@ -100,7 +89,7 @@ const RegisterView = () => {
           variant="outlined"
           margin="normal"
           value={username}
-          onChange={handleUsername}
+          onChange={(e) => setUsername(e.target.value)}
           onKeyUp={(e) => (e.key === "Enter" ? handleSubmit() : "")}
         />
         <TextField
@@ -109,7 +98,7 @@ const RegisterView = () => {
           variant="outlined"
           type="password"
           value={password}
-          onChange={handlePassword}
+          onChange={(e) => setPassword(e.target.value)}
           onKeyUp={(e) => (e.key === "Enter" ? handleSubmit() : "")}
         />
         <TextField
@@ -118,7 +107,7 @@ const RegisterView = () => {
           variant="outlined"
           type="password"
           value={confirmPassword}
-          onChange={handleConfirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           onKeyUp={(e) => (e.key === "Enter" ? handleSubmit() : "")}
         />
         <Button variant="contained" onClick={handleSubmit}>

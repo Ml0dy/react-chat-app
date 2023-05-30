@@ -1,54 +1,41 @@
 import Novologo from "../Assets/Images/logo_pl.png"
 import AdminPanel from "../Components/AdminPanel"
-import ChatList from "../Components/ChatList"
+import ChatContainer from "../Components/ChatContainer"
+import NavigationMenu from "../Components/NavigationMenu"
 import UserInfo from "../Components/UserInfo"
 import Users from "../Components/Users"
 import UsersAdmin from "../Components/UsersAdmin"
 import { adminMenu, usersMenu } from "../Config/GlobalVariables"
-import { userDataBase } from "../Config/dataBase"
-import { chatList } from "../Config/dataBase"
+import { userDataBase, chatList } from "../Config/dataBase"
 import { logoutUserAction } from "../Redux/Actions/loggedUserAction"
-import { AccountCircle } from "@mui/icons-material"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings"
-import PlaylistAddCheckCircleIcon from "@mui/icons-material/PlaylistAddCheckCircle"
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew"
-import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle"
-import { Avatar, Dialog, DialogContent, IconButton } from "@mui/material"
-import AppBar from "@mui/material/AppBar"
-import Box from "@mui/material/Box"
-import Divider from "@mui/material/Divider"
-import Drawer from "@mui/material/Drawer"
-import List from "@mui/material/List"
-import ListItem from "@mui/material/ListItem"
-import ListItemButton from "@mui/material/ListItemButton"
-import ListItemIcon from "@mui/material/ListItemIcon"
-import ListItemText from "@mui/material/ListItemText"
-import Stack from "@mui/material/Stack"
-import Typography from "@mui/material/Typography"
+import {
+  Avatar,
+  Dialog,
+  DialogContent,
+  IconButton,
+  AppBar,
+  Box,
+  Divider,
+  Drawer,
+  Stack,
+  Typography,
+} from "@mui/material"
 import { deepOrange } from "@mui/material/colors"
-import React, { useEffect } from "react"
-import { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router"
-import { Link, useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 const drawerWidth = 240
 
 const ApplicationModal = () => {
-  const loggedUser = useSelector((state) => state.loggedUserReducer.user)
+  const loggedUser = useSelector((state) => state.loggedUserReducer)
 
   const { id, username, isAdmin } = loggedUser
 
   const [open, setOpen] = useState(false)
-
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
 
   const location = useLocation()
   const dispatch = useDispatch()
@@ -61,19 +48,15 @@ const ApplicationModal = () => {
   }
 
   let currentComponent = <></>
-  if (location.pathname === "/adminpanel") {
+  if (location.pathname === "/adminpanel")
     currentComponent = (
       <AdminPanel userList={userDataBase} chatList={chatList} />
     )
-  } else if (location.pathname === "/userprofile") {
-    currentComponent = <UserInfo />
-  } else if (location.pathname === "/users") {
-    currentComponent = <Users />
-  } else if (location.pathname === "/chatlist") {
-    currentComponent = <ChatList />
-  } else if (location.pathname === "/userlist") {
-    currentComponent = <UsersAdmin />
-  }
+  else if (location.pathname === "/userprofile") currentComponent = <UserInfo />
+  else if (location.pathname === "/users") currentComponent = <Users />
+  else if (location.pathname === "/chatlist")
+    currentComponent = <ChatContainer />
+  else if (location.pathname === "/userlist") currentComponent = <UsersAdmin />
 
   const handleLogout = () => {
     navigate("/")
@@ -104,14 +87,14 @@ const ApplicationModal = () => {
           alignItems={"center"}
         >
           <Avatar
-            onClick={handleClickOpen}
+            onClick={() => setOpen(true)}
             sx={{ bgcolor: deepOrange[500], boxShadow: 2, cursor: "pointer" }}
           >
             <AccountCircleIcon />
           </Avatar>
           <Dialog
             open={open}
-            onClose={handleClose}
+            onClose={() => setOpen(false)}
             sx={{
               paddingTop: 0,
             }}
@@ -154,58 +137,7 @@ const ApplicationModal = () => {
       >
         <img src={Novologo} alt="novologo" width="100%" />
         <Divider />
-        <List>
-          {userMenu.map((text, index) => (
-            <Link
-              to={`/${text.replace(" ", "").toLowerCase()}`}
-              key={index}
-              style={{
-                textDecoration: "none",
-                color: "#000",
-                fontWeight: "bold",
-              }}
-            >
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {text === "Admin panel" ? (
-                      <AdminPanelSettingsIcon sx={{ color: deepOrange[500] }} />
-                    ) : (
-                      " "
-                    )}
-                    {text === "User Profile" ? (
-                      <AccountCircle sx={{ color: deepOrange[500] }} />
-                    ) : (
-                      " "
-                    )}
-                    {text === "Chat List" ? (
-                      <PlaylistAddCheckCircleIcon
-                        sx={{ color: deepOrange[500] }}
-                      />
-                    ) : (
-                      " "
-                    )}
-                    {text === "User List" ? (
-                      <SupervisedUserCircleIcon
-                        sx={{ color: deepOrange[500] }}
-                      />
-                    ) : (
-                      " "
-                    )}
-                    {text === "Users" ? (
-                      <SupervisedUserCircleIcon
-                        sx={{ color: deepOrange[500] }}
-                      />
-                    ) : (
-                      " "
-                    )}
-                  </ListItemIcon>
-                  <ListItemText primary={text.toUpperCase()} />
-                </ListItemButton>
-              </ListItem>
-            </Link>
-          ))}
-        </List>
+        <NavigationMenu userMenu={userMenu} />
         <Divider />
       </Drawer>
       <Box>{currentComponent}</Box>

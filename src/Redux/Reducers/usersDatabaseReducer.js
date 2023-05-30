@@ -7,7 +7,7 @@ export const userDatabaseReducer = (state = initialState, action) => {
     case "GET_USERDATABASE":
       return state
     case "DELETE_USER":
-      return state.filter((user) => (user.id !== action.payload ? user : false))
+      return state.filter((user) => (user.id !== action.id ? user : false))
     case "REGISTER_USER":
       return [
         ...state,

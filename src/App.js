@@ -22,7 +22,7 @@ export const themes = createTheme({
   },
 })
 
-function App() {
+const App = () => {
   return (
     <ThemeProvider theme={themes}>
       <div className="app">

@@ -7,7 +7,7 @@ import React from "react"
 import { useSelector } from "react-redux"
 
 const UserInfo = () => {
-  const loggedUser = useSelector((state) => state.loggedUserReducer.user)
+  const loggedUser = useSelector((state) => state.loggedUserReducer)
 
   const { username, isAdmin } = loggedUser
 

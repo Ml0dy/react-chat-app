@@ -33,7 +33,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }))
 
 const Users = () => {
-  const loggedUser = useSelector((state) => state.loggedUserReducer.user)
+  const loggedUser = useSelector((state) => state.loggedUserReducer)
   const userList = useSelector((state) => state.userDatabaseReducer)
 
   const navigate = useNavigate()
