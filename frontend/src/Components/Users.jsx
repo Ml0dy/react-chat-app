@@ -8,9 +8,14 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import { styled } from "@mui/material/styles"
+import axios from "axios"
 import * as React from "react"
+import { useState } from "react"
+import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+
+const URL = "http://localhost:8080/users"
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,12 +39,27 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const Users = () => {
   const loggedUser = useSelector((state) => state.loggedUserReducer)
-  const userList = useSelector((state) => state.userDatabaseReducer)
+  const [userListFromDatabase, setUserListFromDatabase] = useState([])
 
   const navigate = useNavigate()
   if (loggedUser === {}) {
     navigate("/")
   }
+
+  const getAllUsers = () => {
+    axios
+      .get(URL)
+      .then(({ data }) => {
+        setUserListFromDatabase(data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  useEffect(() => {
+    getAllUsers()
+  }, [])
 
   return (
     <Box
@@ -64,7 +84,7 @@ const Users = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {userList.map(({ username, id }) => (
+            {userListFromDatabase.map(({ username, id }) => (
               <StyledTableRow key={id}>
                 <StyledTableCell component="th" scope="row" align="center">
                   {username}

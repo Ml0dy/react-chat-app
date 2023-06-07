@@ -1,4 +1,3 @@
-import { deleteUserAction } from "../Redux/Actions/usersDatabaseAction"
 import "./ChatList.css"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
 import {
@@ -19,8 +18,8 @@ import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import { deepOrange } from "@mui/material/colors"
 import { styled } from "@mui/material/styles"
-import * as React from "react"
-import { useState } from "react"
+import axios from "axios"
+import React, { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
@@ -43,19 +42,51 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }))
 
+const URL = "http://localhost:8080/users"
+
 const UsersAdmin = () => {
   const dispatch = useDispatch()
   const loggedUser = useSelector((state) => state.loggedUserReducer)
-  const userList = useSelector((state) => state.userDatabaseReducer)
 
   const [userToDeleteId, setUserToDeleteId] = useState(-1)
   const [isAdminToDelete, setIsAdminToDelete] = useState(false)
   const [listElementAdmin, setListElementAdmin] = useState(false)
+  const [userListFromDatabase, setUserListFromDatabase] = useState([])
 
   const navigate = useNavigate()
   if (loggedUser === {}) {
     navigate("/")
   }
+
+  const getAllUsers = () => {
+    axios
+      .get(URL)
+      .then(({ data }) => {
+        setUserListFromDatabase(data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  const deleteUserFromDatabase = (id) => {
+    axios
+      .delete(`${URL}/${id}`)
+      .then(() => {
+        setOpen(false)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  useEffect(() => {
+    getAllUsers()
+  }, [])
+
+  useEffect(() => {
+    getAllUsers()
+  }, [userListFromDatabase])
 
   const [open, setOpen] = useState(false)
 
@@ -63,18 +94,6 @@ const UsersAdmin = () => {
     setUserToDeleteId(id)
     setOpen(true)
     setListElementAdmin(isAdmin)
-  }
-
-  const deleteUser = (id) => {
-    if (loggedUser.id === id || listElementAdmin) {
-      setIsAdminToDelete(true)
-      setTimeout(() => {
-        setIsAdminToDelete(false)
-      }, 3000)
-    } else {
-      dispatch(deleteUserAction(id))
-      setOpen(false)
-    }
   }
 
   return (
@@ -102,7 +121,7 @@ const UsersAdmin = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {userList.map(({ username, id, isAdmin }) => (
+            {userListFromDatabase.map(({ username, id, isadmin }) => (
               <StyledTableRow key={id}>
                 <StyledTableCell component="th" scope="row" align="center">
                   {username}
@@ -111,11 +130,11 @@ const UsersAdmin = () => {
                   {id}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {isAdmin ? "Admin" : "-"}
+                  {isadmin ? "Admin" : "-"}
                 </StyledTableCell>
                 <StyledTableCell component="th" scope="row" align="center">
                   <DeleteForeverIcon
-                    onClick={() => handleClickOpen(id, isAdmin)}
+                    onClick={() => handleClickOpen(id, isadmin)}
                     sx={{
                       color: deepOrange[500],
                       cursor: "pointer",
@@ -129,7 +148,7 @@ const UsersAdmin = () => {
                       paddingTop: 0,
                     }}
                   >
-                    <DialogContent alignItems="center" justifyItems="center">
+                    <DialogContent alignItems="center" justifyitems="center">
                       <DialogTitle id="alert-dialog-title">
                         {"Are you sure to delete this user?"}
                       </DialogTitle>
@@ -149,7 +168,9 @@ const UsersAdmin = () => {
 
                       <DialogActions>
                         <Button onClick={() => setOpen(false)}>Cancel</Button>
-                        <Button onClick={() => deleteUser(userToDeleteId)}>
+                        <Button
+                          onClick={() => deleteUserFromDatabase(userToDeleteId)}
+                        >
                           Delete user
                         </Button>
                       </DialogActions>
