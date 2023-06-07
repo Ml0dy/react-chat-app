@@ -16,7 +16,7 @@ const AdminPanel = ({ userList, chatList }) => {
     if (user.isAdmin) adminNumber++
   })
 
-  const { username, isAdmin } = useSelector((state) => state.loggedUserReducer)
+  const { username, isadmin } = useSelector((state) => state.loggedUserReducer)
 
   return (
     <div>
@@ -66,7 +66,7 @@ const AdminPanel = ({ userList, chatList }) => {
                 </Typography>
 
                 <Typography variant="h6" alignContent="center">
-                  Role: {isAdmin ? "Admin" : "User"}
+                  Role: {isadmin ? "Admin" : "User"}
                 </Typography>
               </Paper>
             </Grid>

@@ -6,25 +6,42 @@ import { Alert } from "@mui/material"
 import Button from "@mui/material/Button"
 import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
-import React, { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import axios from "axios"
+import React, { useState, useEffect } from "react"
+import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router"
+
+const URL = "http://localhost:8080/users"
 
 const HomeView = () => {
   const [loginValue, setLoginValue] = useState("")
   const [passwordValue, setPasswordValue] = useState("")
   const [isValidationDone, setIsValidationDone] = useState(false)
   const [isFieldsFilled, setIsFieldsFilled] = useState(false)
-
-  const userDatabase = useSelector((state) => state.userDatabaseReducer)
+  const [userListFromDatabase, setUserListFromDatabase] = useState([])
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const goToRegister = () => navigate("/registration")
 
+  const getAllUsers = () => {
+    axios
+      .get(URL)
+      .then(({ data }) => {
+        setUserListFromDatabase(data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   const handleLoginValidation = () => {
-    const validation = loginValidation(loginValue, passwordValue, userDatabase)
+    const validation = loginValidation(
+      loginValue,
+      passwordValue,
+      userListFromDatabase
+    )
 
     if (loginValue === "" || passwordValue === "") {
       setIsFieldsFilled(true)
@@ -46,9 +63,13 @@ const HomeView = () => {
     setLoginValue("")
     setPasswordValue("")
 
-    if (validation.isAdmin) navigate("/adminpanel")
+    if (validation.isadmin) navigate("/adminpanel")
     else navigate("/userprofile")
   }
+
+  useEffect(() => {
+    getAllUsers()
+  }, [])
 
   return (
     <Stack

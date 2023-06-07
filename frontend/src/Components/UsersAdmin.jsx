@@ -45,7 +45,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const URL = "http://localhost:8080/users"
 
 const UsersAdmin = () => {
-  const dispatch = useDispatch()
   const loggedUser = useSelector((state) => state.loggedUserReducer)
 
   const [userToDeleteId, setUserToDeleteId] = useState(-1)
@@ -70,14 +69,22 @@ const UsersAdmin = () => {
   }
 
   const deleteUserFromDatabase = (id) => {
-    axios
-      .delete(`${URL}/${id}`)
-      .then(() => {
-        setOpen(false)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    if (loggedUser.id === id || listElementAdmin) {
+      setIsAdminToDelete(true)
+      setTimeout(() => {
+        setIsAdminToDelete(false)
+      }, 3000)
+    } else {
+      setOpen(false)
+      axios
+        .delete(`${URL}/${id}`)
+        .then(() => {
+          setOpen(false)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
   }
 
   useEffect(() => {
@@ -148,7 +155,7 @@ const UsersAdmin = () => {
                       paddingTop: 0,
                     }}
                   >
-                    <DialogContent alignItems="center" justifyitems="center">
+                    <DialogContent alignitems="center" justifyitems="center">
                       <DialogTitle id="alert-dialog-title">
                         {"Are you sure to delete this user?"}
                       </DialogTitle>

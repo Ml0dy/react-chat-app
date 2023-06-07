@@ -33,7 +33,7 @@ const drawerWidth = 240
 const ApplicationModal = () => {
   const loggedUser = useSelector((state) => state.loggedUserReducer)
 
-  const { id, username, isAdmin } = loggedUser
+  const { id, username, isadmin } = loggedUser
 
   const [open, setOpen] = useState(false)
 
@@ -63,7 +63,7 @@ const ApplicationModal = () => {
     dispatch(logoutUserAction())
   }
 
-  const userMenu = isAdmin ? adminMenu : usersMenu
+  const userMenu = isadmin ? adminMenu : usersMenu
 
   useEffect(() => {
     getRerenderActivity(id)

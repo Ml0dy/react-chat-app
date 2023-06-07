@@ -1,15 +1,18 @@
 import Novologo from "../../Assets/Images/NovoAcademy_logo.png"
 import { addUserToGroupChatAction } from "../../Redux/Actions/chatsDatabaseAction"
-import { registerUserAction } from "../../Redux/Actions/usersDatabaseAction"
 import "./RegisterView.css"
 import { registerValidation } from "./registerValidation"
 import { Alert } from "@mui/material"
 import Button from "@mui/material/Button"
 import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
+import axios from "axios"
 import React, { useState } from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
+
+const URL = "http://localhost:8080/users"
 
 const RegisterView = () => {
   const [username, setUsername] = useState("")
@@ -19,6 +22,7 @@ const RegisterView = () => {
   const [isUsernameTaken, setIsUsernameTaken] = useState(false)
   const [isEverythingFilled, setIsEverythingFilled] = useState(false)
   const [isPasswordConfirmed, setIsPasswordConfirmed] = useState(false)
+  const [userListFromDatabase, setUserListFromDatabase] = useState([])
 
   const userDataBase = useSelector((state) => state.userDatabaseReducer)
   const dispatch = useDispatch()
@@ -60,13 +64,43 @@ const RegisterView = () => {
     }
 
     setisRegisterDone(true)
-    dispatch(registerUserAction(username, password, nextID))
+    addNewUserToDatabase()
     dispatch(addUserToGroupChatAction(nextID, username))
     cleanStateValues()
     setTimeout(() => {
       navigate("/")
     }, 3000)
   }
+  const getAllUsers = () => {
+    axios
+      .get(URL)
+      .then(({ data }) => {
+        setUserListFromDatabase(data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  const addNewUserToDatabase = () => {
+    axios
+      .post(URL, {
+        username: username,
+        password: password,
+      })
+      .then(() => {})
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  useEffect(() => {
+    getAllUsers()
+  }, [])
+
+  useEffect(() => {
+    getAllUsers()
+  }, [userListFromDatabase])
 
   return (
     <Stack flex width="300px" alignItems={"center"} gap={7}>

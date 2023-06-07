@@ -9,7 +9,7 @@ import { useSelector } from "react-redux"
 const UserInfo = () => {
   const loggedUser = useSelector((state) => state.loggedUserReducer)
 
-  const { username, isAdmin } = loggedUser
+  const { username, isadmin } = loggedUser
 
   return (
     <>
@@ -62,7 +62,7 @@ const UserInfo = () => {
                 </Typography>
 
                 <Typography variant="h6" alignContent="center">
-                  Role: {isAdmin ? "Admin" : "User"}
+                  Role: {isadmin ? "Admin" : "User"}
                 </Typography>
               </Paper>
             </Grid>
