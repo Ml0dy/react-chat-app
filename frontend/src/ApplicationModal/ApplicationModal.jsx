@@ -23,16 +23,18 @@ import {
   Typography,
 } from "@mui/material"
 import { deepOrange } from "@mui/material/colors"
+import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router"
 import { useLocation } from "react-router-dom"
 
 const drawerWidth = 240
+const URL = "http://localhost:8080/users"
 
 const ApplicationModal = () => {
   const loggedUser = useSelector((state) => state.loggedUserReducer)
-
+  const [userListFromDatabase, setUserListFromDatabase] = useState([])
   const { id, username, isadmin } = loggedUser
 
   const [open, setOpen] = useState(false)
@@ -40,6 +42,20 @@ const ApplicationModal = () => {
   const location = useLocation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const getAllUsers = () => {
+    axios
+      .get(URL)
+      .then(({ data }) => {
+        setUserListFromDatabase(data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  useEffect(() => {
+    getAllUsers()
+  }, [])
 
   const getRerenderActivity = (currentUserId) => {
     if (currentUserId === -1) {
@@ -50,7 +66,7 @@ const ApplicationModal = () => {
   let currentComponent = <></>
   if (location.pathname === "/adminpanel")
     currentComponent = (
-      <AdminPanel userList={userDataBase} chatList={chatList} />
+      <AdminPanel userList={userListFromDatabase} chatList={chatList} />
     )
   else if (location.pathname === "/userprofile") currentComponent = <UserInfo />
   else if (location.pathname === "/users") currentComponent = <Users />

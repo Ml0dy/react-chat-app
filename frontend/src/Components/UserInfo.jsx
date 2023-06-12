@@ -3,7 +3,8 @@ import { Avatar, Container, Grid, Paper, Toolbar } from "@mui/material"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import { deepOrange } from "@mui/material/colors"
-import React from "react"
+import axios from "axios"
+import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
 
 const UserInfo = () => {

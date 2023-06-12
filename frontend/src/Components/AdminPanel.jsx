@@ -13,7 +13,7 @@ import { useSelector } from "react-redux"
 const AdminPanel = ({ userList, chatList }) => {
   let adminNumber = 0
   userList.forEach((user) => {
-    if (user.isAdmin) adminNumber++
+    if (user.isadmin) adminNumber++
   })
 
   const { username, isadmin } = useSelector((state) => state.loggedUserReducer)
