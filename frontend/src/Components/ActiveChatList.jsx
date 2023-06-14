@@ -9,7 +9,7 @@ import {
   ListItemText,
 } from "@mui/material"
 import { deepOrange } from "@mui/material/colors"
-import axios from "axios"
+import axios, { all } from "axios"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -69,7 +69,16 @@ const ActiveChatList = ({ setCurrentChatName, setCurrentChat }) => {
   }, [])
 
   useEffect(() => {
-    setUserChatList(allChatsFromDatabase)
+    const userChats = []
+
+    for (let i = 0; i < chats.length; i++) {
+      for (let j = 0; j < allChatsFromDatabase.length; j++) {
+        if (chats[i] === allChatsFromDatabase[j].id)
+          userChats.push(allChatsFromDatabase[j])
+      }
+    }
+    setUserChatList(userChats)
+    console.log(userChatList)
   }, [allChatsFromDatabase])
 
   return (
