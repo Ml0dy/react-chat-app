@@ -6,12 +6,11 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
+@ToString
 @Entity(name = "chat_list")
 @AllArgsConstructor
 @RequiredArgsConstructor

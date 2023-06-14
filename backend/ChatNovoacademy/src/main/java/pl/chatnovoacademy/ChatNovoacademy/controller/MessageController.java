@@ -25,8 +25,8 @@ public class MessageController {
         return ResponseEntity.ok(objectMapper.writeValueAsString(allChatMessages));
     }
 
-    @PostMapping("chat/{id}/message")
-    public ResponseEntity addMessageToChat(@PathVariable("id") Long id, @RequestBody Message message){
+    @PostMapping("chat/message")
+    public ResponseEntity addMessageToChat( @RequestBody Message message){
         Message newMessage = messageRepository.save(message);
 
         return ResponseEntity.ok(newMessage);
