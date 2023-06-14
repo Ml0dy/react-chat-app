@@ -15,7 +15,7 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 const GroupChatList = ({
-  userList,
+  userListFromDatabase,
   currentUserId,
   setOpenModal,
   setCurrentChat,
@@ -91,9 +91,9 @@ const GroupChatList = ({
           <Autocomplete
             multiple
             id="tags-standard"
-            options={userList}
+            options={userListFromDatabase}
             getOptionLabel={(user) => user.username}
-            defaultValue={[userList[currentUserId]]}
+            defaultValue={[userListFromDatabase[currentUserId]]}
             onChange={(e, data) => {
               setUsersInNewGroup(data)
             }}

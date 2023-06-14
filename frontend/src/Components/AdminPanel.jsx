@@ -10,9 +10,9 @@ import { deepOrange } from "@mui/material/colors"
 import React from "react"
 import { useSelector } from "react-redux"
 
-const AdminPanel = ({ userList, chatList }) => {
+const AdminPanel = ({ userListFromDatabase, chatList }) => {
   let adminNumber = 0
-  userList.forEach((user) => {
+  userListFromDatabase.forEach((user) => {
     if (user.isadmin) adminNumber++
   })
 
@@ -84,7 +84,7 @@ const AdminPanel = ({ userList, chatList }) => {
                   Users:
                 </Typography>
                 <Typography variant="h6" alignContent="center">
-                  {userList.length}
+                  {userListFromDatabase.length}
                 </Typography>{" "}
               </Paper>
             </Grid>
@@ -118,7 +118,7 @@ const AdminPanel = ({ userList, chatList }) => {
                   Users:
                 </Typography>
                 <Typography variant="h6" alignContent="center">
-                  {userList.length}
+                  {userListFromDatabase.length}
                 </Typography>
               </Paper>
             </Grid>

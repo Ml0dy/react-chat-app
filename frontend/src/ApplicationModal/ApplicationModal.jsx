@@ -66,7 +66,10 @@ const ApplicationModal = () => {
   let currentComponent = <></>
   if (location.pathname === "/adminpanel")
     currentComponent = (
-      <AdminPanel userList={userListFromDatabase} chatList={chatList} />
+      <AdminPanel
+        userListFromDatabase={userListFromDatabase}
+        chatList={chatList}
+      />
     )
   else if (location.pathname === "/userprofile") currentComponent = <UserInfo />
   else if (location.pathname === "/users") currentComponent = <Users />

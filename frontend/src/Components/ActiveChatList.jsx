@@ -9,16 +9,22 @@ import {
   ListItemText,
 } from "@mui/material"
 import { deepOrange } from "@mui/material/colors"
-import React, { useEffect } from "react"
+import axios from "axios"
+import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-const ActiveChatList = ({ chatList, setCurrentChatName, setCurrentChat }) => {
-  const chatDatabase = useSelector((state) => state.chatsDatabaseReducer)
+const URL = "http://localhost:8080/users"
+const CHATS_URL = "http://localhost:8080/chats"
+
+const ActiveChatList = ({ setCurrentChatName, setCurrentChat }) => {
   const loggedUser = useSelector((state) => state.loggedUserReducer)
-  const usersList = useSelector((state) => state.userDatabaseReducer)
+
+  const [userListFromDatabase, setUserListFromDatabase] = useState([])
+  const [allChatsFromDatabase, setAllChatsFromDatabase] = useState([])
+  const [userChatList, setUserChatList] = useState(null)
 
   const dispatch = useDispatch()
-  const { id } = loggedUser
+  const { id, chats } = loggedUser
 
   const getSecondUser = (chat) => {
     if (chat.isGroupChat) return
@@ -32,9 +38,39 @@ const ActiveChatList = ({ chatList, setCurrentChatName, setCurrentChat }) => {
     else setCurrentChatName(getSecondUser(chat))
   }
 
+  const getAllChats = async () => {
+    await axios
+      .get(CHATS_URL)
+      .then(({ data }) => {
+        setAllChatsFromDatabase(data)
+      })
+      .catch((error) => console.log(error))
+  }
+
+  const getAllUsers = () => {
+    axios
+      .get(URL)
+      .then(({ data }) => {
+        setUserListFromDatabase(data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   useEffect(() => {
-    if (usersList[id]) dispatch(loggedUserAction(usersList[id]))
-  }, [usersList])
+    if (userListFromDatabase[id])
+      dispatch(loggedUserAction(userListFromDatabase[id]))
+  }, [userListFromDatabase])
+
+  useEffect(() => {
+    getAllUsers()
+    getAllChats()
+  }, [])
+
+  useEffect(() => {
+    setUserChatList(allChatsFromDatabase)
+  }, [allChatsFromDatabase])
 
   return (
     <List
@@ -48,34 +84,27 @@ const ActiveChatList = ({ chatList, setCurrentChatName, setCurrentChat }) => {
         backgroundColor: "#D4D4D4",
       }}
     >
-      {chatList.map((chat) => {
-        let secondUsername = ""
-        if (chat.users[0].id === id) secondUsername = chat.users[1].username
-        else secondUsername = chat.users[0].username
-        return (
-          <ListItem key={chat.id} disablePadding>
-            <ListItemButton onClick={() => handlePickChat(chat)}>
-              <ListItemIcon>
-                <Avatar
-                  sx={{
-                    bgcolor: deepOrange[500],
-                    boxShadow: 2,
-                  }}
-                >
-                  <AccountCircleIcon />
-                </Avatar>
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  chat.isGroupChat
-                    ? chatDatabase[chat.id].chatName
-                    : secondUsername
-                }
-              />
-            </ListItemButton>
-          </ListItem>
-        )
-      })}
+      {userChatList === null
+        ? false
+        : userChatList.map((chat) => {
+            return (
+              <ListItem key={chat.id} disablePadding>
+                <ListItemButton onClick={() => handlePickChat(chat)}>
+                  <ListItemIcon>
+                    <Avatar
+                      sx={{
+                        bgcolor: deepOrange[500],
+                        boxShadow: 2,
+                      }}
+                    >
+                      <AccountCircleIcon />
+                    </Avatar>
+                  </ListItemIcon>
+                  <ListItemText primary={chat.chat_name} />
+                </ListItemButton>
+              </ListItem>
+            )
+          })}
     </List>
   )
 }

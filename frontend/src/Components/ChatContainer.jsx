@@ -10,20 +10,23 @@ import ChatView from "./ChatView"
 import ChatsNavigationList from "./ChatsNavigationList"
 import MessageSender from "./MessageSender"
 import { Typography, Box, Divider } from "@mui/material"
+import axios from "axios"
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-const ChatContainer = () => {
-  const usersList = useSelector((state) => state.userDatabaseReducer)
+const USER_URL = "http://localhost:8080/users"
 
+const ChatContainer = () => {
   const loggedUser = useSelector((state) => state.loggedUserReducer)
   const chatDatabase = useSelector((state) => state.chatsDatabaseReducer)
 
+  const [userListFromDatabase, setUserListFromDatabase] = useState([])
   const [currentChat, setCurrentChat] = useState(0)
   const [currentChatName, setCurrentChatName] = useState("")
   const [secondUserId, setSecondUserId] = useState(-1)
 
-  const { id, username, chatList } = loggedUser
+  const { id, username, chats } = loggedUser
+
   const dispatch = useDispatch()
   const container = useRef(null)
 
@@ -49,6 +52,21 @@ const ChatContainer = () => {
       setCurrentChatName(secondUsername)
     }
   }
+
+  const getAllUsers = () => {
+    axios
+      .get(USER_URL)
+      .then(({ data }) => {
+        setUserListFromDatabase(data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  useEffect(() => {
+    getAllUsers()
+  }, [])
 
   useEffect(() => {
     dispatch(currentChatAction(chatDatabase[currentChat]))
@@ -112,14 +130,13 @@ const ChatContainer = () => {
           }}
         >
           <ActiveChatList
-            chatList={chatList}
             setCurrentChat={setCurrentChat}
             setCurrentChatName={setCurrentChatName}
           />
           <Divider />
           <ChatsNavigationList
             handleCreateSingleChat={handleCreateSingleChat}
-            usersList={usersList}
+            userListFromDatabase={userListFromDatabase}
           />
         </Box>
       </Box>

@@ -7,9 +7,8 @@ import Button from "@mui/material/Button"
 import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
 import axios from "axios"
-import React, { useState } from "react"
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import React, { useState, useEffect } from "react"
+import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 
 const URL = "http://localhost:8080/users"
@@ -24,11 +23,10 @@ const RegisterView = () => {
   const [isPasswordConfirmed, setIsPasswordConfirmed] = useState(false)
   const [userListFromDatabase, setUserListFromDatabase] = useState([])
 
-  const userDataBase = useSelector((state) => state.userDatabaseReducer)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const nextID = userDataBase.length
+  const nextID = userListFromDatabase.length
 
   const cleanStateValues = () => {
     setUsername("")
@@ -37,7 +35,7 @@ const RegisterView = () => {
   }
 
   const handleSubmit = () => {
-    const registration = registerValidation(username, userDataBase)
+    const registration = registerValidation(username, userListFromDatabase)
     if (username === "" || password === "" || confirmPassword === "") {
       setIsEverythingFilled(true)
       setTimeout(() => {
@@ -71,6 +69,7 @@ const RegisterView = () => {
       navigate("/")
     }, 3000)
   }
+
   const getAllUsers = () => {
     axios
       .get(URL)

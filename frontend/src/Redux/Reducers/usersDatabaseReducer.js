@@ -1,6 +1,18 @@
-import { userDataBase, chatList } from "../../Config/dataBase"
+import { chatList } from "../../Config/dataBase"
+import axios from "axios"
 
-const initialState = userDataBase
+const URL = "http://localhost:8080/users"
+
+const getAllUsers = () => {
+  return axios
+    .get(URL)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
+const initialState = getAllUsers()
 
 export const userDatabaseReducer = (state = initialState, action) => {
   switch (action.type) {

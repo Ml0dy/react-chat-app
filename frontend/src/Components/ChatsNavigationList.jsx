@@ -12,7 +12,10 @@ import { deepOrange } from "@mui/material/colors"
 import React from "react"
 import { useSelector } from "react-redux"
 
-const ChatsNavigationList = ({ usersList, handleCreateSingleChat }) => {
+const ChatsNavigationList = ({
+  userListFromDatabase,
+  handleCreateSingleChat,
+}) => {
   const { id } = useSelector((state) => state.loggedUserReducer)
   const chatDatabase = useSelector((state) => state.chatsDatabaseReducer)
 
@@ -26,7 +29,7 @@ const ChatsNavigationList = ({ usersList, handleCreateSingleChat }) => {
         flexDirection: "column",
       }}
     >
-      {usersList.map((user) => {
+      {userListFromDatabase.map((user) => {
         if (isChatExist(id, user.id, chatDatabase)) {
           if (user.id === id) return false
           return (

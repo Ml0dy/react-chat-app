@@ -1,15 +1,33 @@
 import GroupChatList from "./GroupChatList"
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline"
 import { Box, Dialog, IconButton, Typography } from "@mui/material"
-import React, { useState } from "react"
+import axios from "axios"
+import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 
+const URL = "http://localhost:8080/users"
+
 const ChatListContainer = () => {
-  const usersList = useSelector((state) => state.userDatabaseReducer)
   const { id } = useSelector((state) => state.loggedUserReducer)
 
   const [openModal, setOpenModal] = useState(false)
   const [currentChat, setCurrentChat] = useState(0)
+  const [userListFromDatabase, setUserListFromDatabase] = useState([])
+
+  const getAllUsers = () => {
+    axios
+      .get(URL)
+      .then(({ data }) => {
+        setUserListFromDatabase(data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  useEffect(() => {
+    getAllUsers()
+  }, [])
 
   return (
     <Box
@@ -38,7 +56,7 @@ const ChatListContainer = () => {
       </IconButton>
       <Dialog open={openModal} onClose={() => setOpenModal(false)}>
         <GroupChatList
-          userList={usersList}
+          userListFromDatabase={userListFromDatabase}
           currentUserId={id}
           setOpenModal={setOpenModal}
           setCurrentChat={setCurrentChat}
