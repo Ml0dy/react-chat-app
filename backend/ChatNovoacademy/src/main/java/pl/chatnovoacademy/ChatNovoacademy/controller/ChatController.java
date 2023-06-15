@@ -28,6 +28,11 @@ public class ChatController {
         List<Chat> chats = chatRepository.findAll();
         return ResponseEntity.ok(objectMapper.writeValueAsString(chats));
     }
+    @GetMapping("/{id}")
+    public ResponseEntity getSingleChat(@PathVariable Long id){
+        Optional<Chat> singleChat = chatRepository.findById(id);
+        return ResponseEntity.ok(singleChat);
+    }
 
     @PostMapping("/{id}")
     public ResponseEntity addNewChat(@PathVariable Long id, @RequestBody Chat chat) {
