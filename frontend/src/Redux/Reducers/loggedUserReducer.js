@@ -35,6 +35,8 @@ const loggedUserReducer = (state = initialUser, action) => {
   switch (action.type) {
     case "GET_USER":
       return action.user
+    case "UPDATE_USER_CHATS":
+      return { ...state, chats: [...action.updatedChats] }
     case "LOGOUT":
       return {}
     default:

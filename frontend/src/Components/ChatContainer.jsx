@@ -1,8 +1,5 @@
-import { currentTime } from "../Config/GlobalVariables"
 import { isChatExist } from "../Config/isChatExist"
-import { createChatWithSingleUserAction } from "../Redux/Actions/chatsDatabaseAction"
-import { currentChatAction } from "../Redux/Actions/currentChatAction"
-import { addNewChatToUserAction } from "../Redux/Actions/usersDatabaseAction"
+import { updateUserChats } from "../Redux/Actions/loggedUserAction"
 import ActiveChatList from "./ActiveChatList"
 import ChatHeader from "./ChatHeader"
 import ChatListContainer from "./ChatListContainer"
@@ -15,18 +12,20 @@ import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 const USER_URL = "http://localhost:8080/users"
+const CHATS_URL = "http://localhost:8080/chats"
+const MESSAGES_URL = "http://localhost:8080/chat"
 
 const ChatContainer = () => {
   const loggedUser = useSelector((state) => state.loggedUserReducer)
-  const chatDatabase = useSelector((state) => state.chatsDatabaseReducer)
 
   const [userListFromDatabase, setUserListFromDatabase] = useState([])
-  const [currentChat, setCurrentChat] = useState(0)
+  const [allChatsFromDatabase, setAllChatsFromDatabase] = useState([])
+  const [currentChat, setCurrentChat] = useState(null)
+  const [currentChatMessages, setCurrentChatMessages] = useState(null)
   const [currentChatName, setCurrentChatName] = useState("")
   const [secondUserId, setSecondUserId] = useState(-1)
 
-  const { id, username, chats } = loggedUser
-
+  const { id, username } = loggedUser
   const dispatch = useDispatch()
   const container = useRef(null)
 
@@ -34,23 +33,31 @@ const ChatContainer = () => {
     const { scrollHeight } = container.current
     container.current?.scrollTo(0, scrollHeight)
   }
-  const handleCreateSingleChat = (userId, secondUsername) => {
-    if (isChatExist(id, userId, chatDatabase)) {
-      const newChatsId = chatDatabase.length
-      dispatch(
-        createChatWithSingleUserAction(
-          newChatsId,
-          userId,
-          secondUsername,
-          id,
-          username,
-          currentTime()
-        )
-      )
-      setCurrentChat(newChatsId)
+  const handleCreateSingleChat = async (userId, secondUsername) => {
+    if (isChatExist(id, userId, allChatsFromDatabase)) {
+      const response = await axios
+        .post(`${CHATS_URL}/${id}`, {
+          chat_name: `Chat between ${username} and ${secondUsername}`,
+          is_group_chat: false,
+          users: [userId],
+        })
+        .catch((error) => console.log(error))
+
+      setCurrentChat(response.data)
+      setAllChatsFromDatabase(getAllChats())
+      getCurrentUserChats(id)
       setSecondUserId(userId)
       setCurrentChatName(secondUsername)
     }
+  }
+
+  const getCurrentUserChats = async (currentUserId) => {
+    const response = await axios
+      .get(`${USER_URL}/${currentUserId}`)
+      .catch((error) => console.log(error))
+    console.log(response.data)
+    await dispatch(updateUserChats(response.data))
+    return response.data
   }
 
   const getAllUsers = () => {
@@ -64,24 +71,41 @@ const ChatContainer = () => {
       })
   }
 
+  const getAllChats = async () => {
+    const response = await axios
+      .get(CHATS_URL)
+      .catch((error) => console.log(error))
+
+    setAllChatsFromDatabase(response.data)
+    return response.data
+  }
+
+  const getSingleChat = async (chatId) => {
+    const response = await axios
+      .get(`${CHATS_URL}/${chatId}`)
+      .catch((error) => console.log(error))
+
+    console.log(response.data)
+    setCurrentChat(response.data)
+  }
+
+  const getChatMessages = (chatId) => {
+    axios
+      .get(`${MESSAGES_URL}/${chatId}/messages`)
+      .then(({ data }) => setCurrentChatMessages(data))
+      .catch((error) => console.log(error))
+  }
+
   useEffect(() => {
     getAllUsers()
+    getAllChats()
+    getSingleChat(0)
+    getChatMessages(0)
   }, [])
 
   useEffect(() => {
-    dispatch(currentChatAction(chatDatabase[currentChat]))
-  }, [currentChat])
-
-  useEffect(() => {
-    if (secondUserId !== -1) {
-      dispatch(addNewChatToUserAction(id, chatDatabase[currentChat]))
-      dispatch(addNewChatToUserAction(secondUserId, chatDatabase[currentChat]))
-    }
-  }, [secondUserId])
-
-  useEffect(() => {
     handleScroll()
-  }, [chatDatabase[currentChat]])
+  }, [currentChat])
 
   return (
     <Box
@@ -130,8 +154,10 @@ const ChatContainer = () => {
           }}
         >
           <ActiveChatList
+            currentChat={currentChat}
             setCurrentChat={setCurrentChat}
             setCurrentChatName={setCurrentChatName}
+            setCurrentChatMessages={setCurrentChatMessages}
           />
           <Divider />
           <ChatsNavigationList
@@ -181,12 +207,12 @@ const ChatContainer = () => {
         >
           <Typography variant="h8" alignContent="center" mt={2}>
             <ChatView
-              chatMessages={chatDatabase[currentChat]}
+              chatMessages={currentChatMessages}
               setCurrentChat={setCurrentChat}
             />
           </Typography>
         </Box>
-        <MessageSender />
+        <MessageSender currentChat={currentChat} />
       </Box>
     </Box>
   )

@@ -16,99 +16,93 @@ import {
 } from "@mui/material"
 import { deepOrange } from "@mui/material/colors"
 import React, { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 
 const ChatHeader = ({ currentChatName, setCurrentChatName, currentChat }) => {
-  const reducerCurrentChat = useSelector((state) => state.currentChatReducer)
   const chatDatabase = useSelector((state) => state.chatsDatabaseReducer)
-  const { isAdmin } = useSelector((state) => state.loggedUserReducer)
+  const { isadmin } = useSelector((state) => state.loggedUserReducer)
 
   const [open, setOpen] = useState(false)
 
-  const dispatch = useDispatch()
-
-  return (
-    <Box
-      sx={{
-        backgroundColor: "#212766",
-        height: "12%",
-        width: "100%",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "end",
-        alignItems: "center",
-        gap: 1,
-        boxShadow: 3,
-      }}
-    >
-      <Avatar
+  if (currentChat === null) return false
+  else
+    return (
+      <Box
         sx={{
-          bgcolor: deepOrange[500],
-          boxShadow: 2,
-          width: "40px",
-          height: "40px",
+          backgroundColor: "#212766",
+          height: "12%",
+          width: "100%",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "end",
+          alignItems: "center",
+          gap: 1,
+          boxShadow: 3,
         }}
       >
-        <AccountCircleIcon
+        <Avatar
           sx={{
-            height: "35px",
-            width: "35px",
+            bgcolor: deepOrange[500],
+            boxShadow: 2,
+            width: "40px",
+            height: "40px",
           }}
-        />
-      </Avatar>
-      <Typography
-        variant="h5"
-        alignContent="center"
-        mr={3}
-        color="white"
-        display="flex"
-      >
-        {reducerCurrentChat.isGroupChat
-          ? chatDatabase[currentChat].chatName
-          : currentChatName}
-        {reducerCurrentChat.isGroupChat && isAdmin ? (
-          <div>
-            <IconButton onClick={() => setOpen(true)} aria-label="add an alarm">
-              <EditTwoToneIcon fontSize="small" sx={{ color: "white" }} />
-            </IconButton>
-            <Dialog open={open} onClose={() => setOpen(false)}>
-              <DialogTitle>Change group name</DialogTitle>
-              <DialogContent>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  placeholder="Change group chat name"
-                  type="text"
-                  value={currentChatName}
-                  onChange={(e) => setCurrentChatName(e.target.value)}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  onClick={() => {
-                    dispatch(
-                      changeGroupNameAction(
-                        currentChatName,
-                        chatDatabase[currentChat].id,
-                        reducerCurrentChat.messages.length,
-                        currentTime()
-                      )
-                    )
-                    setOpen(false)
-                  }}
-                >
-                  Change
-                </Button>
-                <Button onClick={() => setOpen(false)}>Cancel</Button>
-              </DialogActions>
-            </Dialog>
-          </div>
-        ) : (
-          false
-        )}
-      </Typography>
-    </Box>
-  )
+        >
+          <AccountCircleIcon
+            sx={{
+              height: "35px",
+              width: "35px",
+            }}
+          />
+        </Avatar>
+        <Typography
+          variant="h5"
+          alignContent="center"
+          mr={3}
+          color="white"
+          display="flex"
+        >
+          {currentChat.is_group_chat
+            ? chatDatabase[currentChat.id].chat_name
+            : currentChatName}
+          {currentChat.is_group_chat && isadmin ? (
+            <div>
+              <IconButton
+                onClick={() => setOpen(true)}
+                aria-label="add an alarm"
+              >
+                <EditTwoToneIcon fontSize="small" sx={{ color: "white" }} />
+              </IconButton>
+              <Dialog open={open} onClose={() => setOpen(false)}>
+                <DialogTitle>Change group name</DialogTitle>
+                <DialogContent>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    placeholder="Change group chat name"
+                    type="text"
+                    value={currentChatName}
+                    onChange={(e) => setCurrentChatName(e.target.value)}
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    onClick={() => {
+                      setOpen(false)
+                    }}
+                  >
+                    Change
+                  </Button>
+                  <Button onClick={() => setOpen(false)}>Cancel</Button>
+                </DialogActions>
+              </Dialog>
+            </div>
+          ) : (
+            false
+          )}
+        </Typography>
+      </Box>
+    )
 }
 
 export default ChatHeader

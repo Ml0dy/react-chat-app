@@ -9,14 +9,19 @@ import {
   ListItemText,
 } from "@mui/material"
 import { deepOrange } from "@mui/material/colors"
-import axios, { all } from "axios"
+import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 const URL = "http://localhost:8080/users"
 const CHATS_URL = "http://localhost:8080/chats"
+const MESSAGES_URL = "http://localhost:8080/chat"
 
-const ActiveChatList = ({ setCurrentChatName, setCurrentChat }) => {
+const ActiveChatList = ({
+  setCurrentChatName,
+  setCurrentChat,
+  setCurrentChatMessages,
+}) => {
   const loggedUser = useSelector((state) => state.loggedUserReducer)
 
   const [userListFromDatabase, setUserListFromDatabase] = useState([])
@@ -27,19 +32,34 @@ const ActiveChatList = ({ setCurrentChatName, setCurrentChat }) => {
   const { id, chats } = loggedUser
 
   const getSecondUser = (chat) => {
-    if (chat.isGroupChat) return
+    if (chat.is_group_chat) return
     else if (chat.users[0].id !== id) return chat.users[0].username
     return chat.users[1].username
   }
 
+  const getSingleChat = (chatId) => {
+    axios
+      .get(`${CHATS_URL}/${chatId}`)
+      .then(({ data }) => setCurrentChat(data))
+      .catch((error) => console.log(error))
+  }
+
+  const getChatMessages = (chatId) => {
+    axios
+      .get(`${MESSAGES_URL}/${chatId}/messages`)
+      .then(({ data }) => setCurrentChatMessages(data))
+      .catch((error) => console.log(error))
+  }
+
   const handlePickChat = (chat) => {
-    setCurrentChat(chat.id)
-    if (chat.isGroupChat) setCurrentChatName(chat.chatName)
+    getSingleChat(chat.id)
+    getChatMessages(chat.id)
+    if (chat.is_group_chat) setCurrentChatName(chat.chat_name)
     else setCurrentChatName(getSecondUser(chat))
   }
 
-  const getAllChats = async () => {
-    await axios
+  const getAllChats = () => {
+    axios
       .get(CHATS_URL)
       .then(({ data }) => {
         setAllChatsFromDatabase(data)
@@ -71,14 +91,13 @@ const ActiveChatList = ({ setCurrentChatName, setCurrentChat }) => {
   useEffect(() => {
     const userChats = []
 
-    for (let i = 0; i < chats.length; i++) {
-      for (let j = 0; j < allChatsFromDatabase.length; j++) {
-        if (chats[i] === allChatsFromDatabase[j].id)
-          userChats.push(allChatsFromDatabase[j])
+    for (const chat in chats) {
+      for (const element of allChatsFromDatabase) {
+        if (chats[chat] === element.id) userChats.push(element)
       }
     }
+
     setUserChatList(userChats)
-    console.log(userChatList)
   }, [allChatsFromDatabase])
 
   return (
@@ -93,27 +112,29 @@ const ActiveChatList = ({ setCurrentChatName, setCurrentChat }) => {
         backgroundColor: "#D4D4D4",
       }}
     >
-      {userChatList === null
-        ? false
-        : userChatList.map((chat) => {
-            return (
-              <ListItem key={chat.id} disablePadding>
-                <ListItemButton onClick={() => handlePickChat(chat)}>
-                  <ListItemIcon>
-                    <Avatar
-                      sx={{
-                        bgcolor: deepOrange[500],
-                        boxShadow: 2,
-                      }}
-                    >
-                      <AccountCircleIcon />
-                    </Avatar>
-                  </ListItemIcon>
-                  <ListItemText primary={chat.chat_name} />
-                </ListItemButton>
-              </ListItem>
-            )
-          })}
+      {userChatList === null ? (
+        <ListItemText primary="No chats found, click on a person or create a new group chat" />
+      ) : (
+        userChatList.map((chat) => {
+          return (
+            <ListItem key={chat.id} disablePadding>
+              <ListItemButton onClick={() => handlePickChat(chat)}>
+                <ListItemIcon>
+                  <Avatar
+                    sx={{
+                      bgcolor: deepOrange[500],
+                      boxShadow: 2,
+                    }}
+                  >
+                    <AccountCircleIcon />
+                  </Avatar>
+                </ListItemIcon>
+                <ListItemText primary={chat.chat_name} />
+              </ListItemButton>
+            </ListItem>
+          )
+        })
+      )}
     </List>
   )
 }

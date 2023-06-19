@@ -5,6 +5,13 @@ export const loggedUserAction = (currentUser) => {
   }
 }
 
+export const updateUserChats = (updatedChats) => {
+  return {
+    type: "UPDATE_USER_CHATS",
+    updatedChats,
+  }
+}
+
 export const logoutUserAction = () => {
   return {
     type: "LOGOUT",

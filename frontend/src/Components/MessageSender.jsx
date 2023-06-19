@@ -1,32 +1,24 @@
-import { currentTime } from "../Config/GlobalVariables"
-import { sendMessageAction } from "../Redux/Actions/chatsDatabaseAction"
 import SendIcon from "@mui/icons-material/Send"
 import { Box, Button, TextField } from "@mui/material"
+import axios from "axios"
 import React, { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 
-const MessageSender = () => {
-  const reducerCurrentChat = useSelector((state) => state.currentChatReducer)
+const MESSAGES_URL = "http://localhost:8080/chat"
+
+const MessageSender = ({ currentChat }) => {
   const { id } = useSelector((state) => state.loggedUserReducer)
   const [messageValue, setMessageValue] = useState("")
 
-  const dispatch = useDispatch()
-
   const handleSendMessage = () => {
     if (messageValue === "") return false
-
-    const newMessageId = reducerCurrentChat.messages.slice(-1)
-    const currentMessageId = (newMessageId.id_message += 1)
-
-    dispatch(
-      sendMessageAction(
-        reducerCurrentChat.id,
-        currentMessageId,
-        id,
-        messageValue,
-        currentTime()
-      )
-    )
+    axios
+      .post(`${MESSAGES_URL}/message`, {
+        message_text: messageValue,
+        sender_id: id,
+        chat_id: currentChat.id,
+      })
+      .catch((error) => console.log(error))
     setMessageValue("")
   }
 

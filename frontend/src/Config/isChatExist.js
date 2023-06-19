@@ -1,11 +1,9 @@
 export const isChatExist = (userId, seconduserId, chatList) => {
-  for (let i = 1; i < chatList.length; i++) {
-    if (!chatList[i].isGroupChat)
+  for (const element of chatList) {
+    if (!element.is_group_chat)
       if (
-        (chatList[i].users[0].id === userId ||
-          chatList[i].users[1].id === userId) &&
-        (chatList[i].users[0].id === seconduserId ||
-          chatList[i].users[1].id === seconduserId)
+        (element.users[0] === userId || element.users[1] === userId) &&
+        (element.users[0] === seconduserId || element.users[1] === seconduserId)
       )
         return false
   }

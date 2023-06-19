@@ -14,8 +14,8 @@ import { useNavigate } from "react-router"
 const URL = "http://localhost:8080/users"
 
 const HomeView = () => {
-  const [loginValue, setLoginValue] = useState("")
-  const [passwordValue, setPasswordValue] = useState("")
+  const [loginValue, setLoginValue] = useState("Jakub")
+  const [passwordValue, setPasswordValue] = useState("user")
   const [isValidationDone, setIsValidationDone] = useState(false)
   const [isFieldsFilled, setIsFieldsFilled] = useState(false)
   const [userListFromDatabase, setUserListFromDatabase] = useState([])
