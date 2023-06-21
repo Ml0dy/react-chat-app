@@ -23,7 +23,6 @@ const ChatContainer = () => {
   const [currentChat, setCurrentChat] = useState(null)
   const [currentChatMessages, setCurrentChatMessages] = useState(null)
   const [currentChatName, setCurrentChatName] = useState("")
-  const [secondUserId, setSecondUserId] = useState(-1)
 
   const { id, username } = loggedUser
   const dispatch = useDispatch()
@@ -45,8 +44,8 @@ const ChatContainer = () => {
 
       setCurrentChat(response.data)
       setAllChatsFromDatabase(getAllChats())
+      getChatMessages(response.data.id)
       getCurrentUserChats(id)
-      setSecondUserId(userId)
       setCurrentChatName(secondUsername)
     }
   }
@@ -55,7 +54,6 @@ const ChatContainer = () => {
     const response = await axios
       .get(`${USER_URL}/${currentUserId}`)
       .catch((error) => console.log(error))
-    console.log(response.data)
     await dispatch(updateUserChats(response.data))
     return response.data
   }
@@ -85,7 +83,6 @@ const ChatContainer = () => {
       .get(`${CHATS_URL}/${chatId}`)
       .catch((error) => console.log(error))
 
-    console.log(response.data)
     setCurrentChat(response.data)
   }
 
@@ -105,7 +102,11 @@ const ChatContainer = () => {
 
   useEffect(() => {
     handleScroll()
-  }, [currentChat])
+  }, [currentChatMessages])
+
+  useEffect(() => {
+    getAllChats()
+  }, [userListFromDatabase])
 
   return (
     <Box
@@ -138,8 +139,9 @@ const ChatContainer = () => {
         }}
       >
         <ChatListContainer
-          handleCreateSingleChat={handleCreateSingleChat}
-          setCurrentChatName={setCurrentChatName}
+          currentChat={currentChat}
+          setCurrentChat={setCurrentChat}
+          setCurrentChatMessages={setCurrentChatMessages}
         />
         <Box
           sx={{
@@ -208,11 +210,14 @@ const ChatContainer = () => {
           <Typography variant="h8" alignContent="center" mt={2}>
             <ChatView
               chatMessages={currentChatMessages}
-              setCurrentChat={setCurrentChat}
+              currenChat={currentChat}
             />
           </Typography>
         </Box>
-        <MessageSender currentChat={currentChat} />
+        <MessageSender
+          currentChat={currentChat}
+          setCurrentChatMessages={setCurrentChatMessages}
+        />
       </Box>
     </Box>
   )

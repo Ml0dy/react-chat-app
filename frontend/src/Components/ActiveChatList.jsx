@@ -1,4 +1,3 @@
-import { loggedUserAction } from "../Redux/Actions/loggedUserAction"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import {
   Avatar,
@@ -11,7 +10,7 @@ import {
 import { deepOrange } from "@mui/material/colors"
 import axios from "axios"
 import React, { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 
 const URL = "http://localhost:8080/users"
 const CHATS_URL = "http://localhost:8080/chats"
@@ -20,6 +19,7 @@ const MESSAGES_URL = "http://localhost:8080/chat"
 const ActiveChatList = ({
   setCurrentChatName,
   setCurrentChat,
+  currentChat,
   setCurrentChatMessages,
 }) => {
   const loggedUser = useSelector((state) => state.loggedUserReducer)
@@ -28,17 +28,10 @@ const ActiveChatList = ({
   const [allChatsFromDatabase, setAllChatsFromDatabase] = useState([])
   const [userChatList, setUserChatList] = useState(null)
 
-  const dispatch = useDispatch()
-  const { id, chats } = loggedUser
+  const { chats } = loggedUser
 
-  const getSecondUser = (chat) => {
-    if (chat.is_group_chat) return
-    else if (chat.users[0].id !== id) return chat.users[0].username
-    return chat.users[1].username
-  }
-
-  const getSingleChat = (chatId) => {
-    axios
+  const getSingleChat = async (chatId) => {
+    await axios
       .get(`${CHATS_URL}/${chatId}`)
       .then(({ data }) => setCurrentChat(data))
       .catch((error) => console.log(error))
@@ -54,12 +47,12 @@ const ActiveChatList = ({
   const handlePickChat = (chat) => {
     getSingleChat(chat.id)
     getChatMessages(chat.id)
-    if (chat.is_group_chat) setCurrentChatName(chat.chat_name)
-    else setCurrentChatName(getSecondUser(chat))
+    if (chat._group_chat) setCurrentChatName(chat.chat_name)
+    else return
   }
 
-  const getAllChats = () => {
-    axios
+  const getAllChats = async () => {
+    await axios
       .get(CHATS_URL)
       .then(({ data }) => {
         setAllChatsFromDatabase(data)
@@ -79,14 +72,13 @@ const ActiveChatList = ({
   }
 
   useEffect(() => {
-    if (userListFromDatabase[id])
-      dispatch(loggedUserAction(userListFromDatabase[id]))
-  }, [userListFromDatabase])
-
-  useEffect(() => {
     getAllUsers()
     getAllChats()
   }, [])
+
+  useEffect(() => {
+    getAllChats()
+  }, [currentChat])
 
   useEffect(() => {
     const userChats = []
@@ -98,7 +90,7 @@ const ActiveChatList = ({
     }
 
     setUserChatList(userChats)
-  }, [allChatsFromDatabase])
+  }, [allChatsFromDatabase, chats])
 
   return (
     <List

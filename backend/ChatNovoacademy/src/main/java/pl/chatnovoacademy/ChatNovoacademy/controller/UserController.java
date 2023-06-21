@@ -38,7 +38,7 @@ public class UserController {
         return ResponseEntity.ok(objectMapper.writeValueAsString(allUserChats));
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity addUser(@RequestBody User user) {
         Optional<User> userFromDatabase = userRepository.findByUsername(user.getUsername());
         if (userFromDatabase.isPresent()) return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
@@ -49,7 +49,7 @@ public class UserController {
         return ResponseEntity.ok(addedUser);
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") Long id){
         userRepository.deleteById(id);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);

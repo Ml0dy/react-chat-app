@@ -1,40 +1,35 @@
 import { Box, Typography } from "@mui/material"
-import React from "react"
+import axios from "axios"
+import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 
-const ChatView = ({ chatMessages }) => {
-  const loggedUser = useSelector((state) => state.loggedUserReducer)
+const USER_URL = "http://localhost:8080/users"
 
-  let secondSender = ""
-  console.log(chatMessages)
-  if (chatMessages === null) return false
+const ChatView = ({ chatMessages, currentChat }) => {
+  const loggedUser = useSelector((state) => state.loggedUserReducer)
+  const [userList, setUserList] = useState(null)
+
+  useEffect(() => {
+    axios
+      .get(USER_URL)
+      .then(({ data }) => setUserList(data))
+      .catch((error) => console.log(error))
+  }, [])
+
+  const getSenderName = (sender_id) => {
+    const senderName = userList.filter((user) =>
+      user.id === sender_id ? user : null
+    )
+    return senderName[0].username
+  }
+
+  useEffect(() => {}, [currentChat, chatMessages])
+
+  if (chatMessages === null || chatMessages === undefined) return false
   return (
     <>
       {chatMessages.map(({ sender_id, message_text, message_date, id }) => {
-        if (sender_id < 0) {
-          return (
-            <Box
-              key={id}
-              width="100%"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              flexDirection="column"
-              mt={2}
-              mb={2}
-            >
-              <Typography variant="caption" fontStyle={"oblique"}>
-                {id === 0 ? `New group ${chatMessages.chat_name} created,` : ""}
-                {id === -2
-                  ? `Admin changed group name to: ${message_text},`
-                  : ""}
-              </Typography>
-              <Typography variant="caption" fontStyle={"oblique"}>
-                {message_date}
-              </Typography>
-            </Box>
-          )
-        } else if (sender_id === loggedUser.id) {
+        if (sender_id === loggedUser.id) {
           return (
             <Box
               key={id}
@@ -112,10 +107,11 @@ const ChatView = ({ chatMessages }) => {
                 {message_text}
               </Typography>
             </Box>
-
             <Typography variant="caption" fontStyle={"oblique"}>
-              {secondSender === "" ? "Message from developers" : secondSender},
-              {` ${message_date}`}
+              {userList === null
+                ? "Message from developers"
+                : getSenderName(sender_id)}
+              ,{` ${message_date}`}
             </Typography>
           </Box>
         )

@@ -1,7 +1,4 @@
-import { monthNames } from "../Config/GlobalVariables"
-import { createGroupChatAction } from "../Redux/Actions/chatsDatabaseAction"
-import { currentChatAction } from "../Redux/Actions/currentChatAction"
-import { addNewChatToUserAction } from "../Redux/Actions/usersDatabaseAction"
+import { updateUserChats } from "../Redux/Actions/loggedUserAction"
 import {
   Autocomplete,
   Button,
@@ -11,69 +8,60 @@ import {
   Stack,
   TextField,
 } from "@mui/material"
-import React, { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import axios from "axios"
+import React, { useState } from "react"
+import { useDispatch } from "react-redux"
+
+const USER_URL = "http://localhost:8080/users"
+const CHATS_URL = "http://localhost:8080/chats"
+const MESSAGES_URL = "http://localhost:8080/chat"
 
 const GroupChatList = ({
   userListFromDatabase,
   currentUserId,
   setOpenModal,
   setCurrentChat,
-  currentChat,
+  setCurrentChatMessages,
 }) => {
-  const chatDatabase = useSelector((state) => state.chatsDatabaseReducer)
   const [usersInNewGroup, setUsersInNewGroup] = useState()
   const [newChatName, setNewChatName] = useState("")
-  const newChatId = chatDatabase.length
+  const [newChatId, setNewChatId] = useState(null)
+
   const dispatch = useDispatch()
 
-  const today = new Date()
-
-  const currentTime = () => {
-    const hours = () => {
-      if (today.getHours() > 9) return today.getHours()
-      return "0" + today.getHours()
-    }
-
-    const minutes = () => {
-      if (today.getMinutes() > 9) return today.getMinutes()
-      return "0" + today.getMinutes()
-    }
-
-    const month = today.getMonth()
-
-    const day = () => {
-      if (today.getDate() <= 9) return "0" + today.getDate()
-      return today.getDate()
-    }
-    return hours() + ":" + minutes() + ", " + day() + " of " + monthNames[month]
-  }
-
-  const handleCreateGroupChat = (e) => {
+  const handleCreateGroupChat = async (e) => {
     e.preventDefault()
     if (newChatName === "") return false
-    dispatch(
-      createGroupChatAction(
-        newChatId,
-        newChatName,
-        usersInNewGroup,
-        currentTime()
-      )
-    )
-    setCurrentChat(newChatId)
-    dispatch(currentChatAction(chatDatabase[currentChat]))
+
+    createNewChat(currentUserId)
     setOpenModal(false)
+    const response = axios
+      .get(`${MESSAGES_URL}/${newChatId}`)
+      .catch((error) => console.log(error))
+    setCurrentChatMessages(response.data)
   }
 
-  useEffect(() => {
-    if (usersInNewGroup) {
-      usersInNewGroup.forEach((singleUser) => {
-        dispatch(
-          addNewChatToUserAction(singleUser.id, chatDatabase[currentChat])
-        )
+  const createNewChat = async (creatorId) => {
+    const response = await axios
+      .post(`${CHATS_URL}/${creatorId}`, {
+        chat_name: newChatName,
+        _group_chat: true,
+        users: usersInNewGroup.map((user) => user.id),
       })
-    }
-  }, [chatDatabase])
+      .catch((error) => console.log(error))
+
+    await setCurrentChat(response.data)
+    await setNewChatId(response.data.id)
+    getCurrentUserChats(currentUserId)
+  }
+
+  const getCurrentUserChats = async (currentUserId) => {
+    const response = await axios
+      .get(`${USER_URL}/${currentUserId}`)
+      .catch((error) => console.log(error))
+    await dispatch(updateUserChats(response.data))
+    return response.data
+  }
 
   return (
     <div>
@@ -91,9 +79,10 @@ const GroupChatList = ({
           <Autocomplete
             multiple
             id="tags-standard"
-            options={userListFromDatabase}
+            options={userListFromDatabase.filter(
+              (user) => user.id !== currentUserId
+            )}
             getOptionLabel={(user) => user.username}
-            defaultValue={[userListFromDatabase[currentUserId]]}
             onChange={(e, data) => {
               setUsersInNewGroup(data)
             }}

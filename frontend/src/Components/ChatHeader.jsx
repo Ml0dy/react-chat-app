@@ -1,5 +1,3 @@
-import { currentTime } from "../Config/GlobalVariables"
-import { changeGroupNameAction } from "../Redux/Actions/chatsDatabaseAction"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone"
 import {
@@ -15,14 +13,25 @@ import {
   Typography,
 } from "@mui/material"
 import { deepOrange } from "@mui/material/colors"
-import React, { useState } from "react"
+import axios from "axios"
+import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 
-const ChatHeader = ({ currentChatName, setCurrentChatName, currentChat }) => {
-  const chatDatabase = useSelector((state) => state.chatsDatabaseReducer)
-  const { isadmin } = useSelector((state) => state.loggedUserReducer)
+const CHATS_URL = "http://localhost:8080/chats"
 
+const ChatHeader = ({ currentChatName, setCurrentChatName, currentChat }) => {
+  const { isadmin } = useSelector((state) => state.loggedUserReducer)
   const [open, setOpen] = useState(false)
+
+  const updateChatName = (chatId) => {
+    axios
+      .put(`${CHATS_URL}/${chatId}`, { chat_name: currentChatName })
+      .catch((error) => console.log(error))
+
+    setOpen(false)
+  }
+
+  useEffect(() => {}, [currentChatName])
 
   if (currentChat === null) return false
   else
@@ -62,10 +71,8 @@ const ChatHeader = ({ currentChatName, setCurrentChatName, currentChat }) => {
           color="white"
           display="flex"
         >
-          {currentChat.is_group_chat
-            ? chatDatabase[currentChat.id].chat_name
-            : currentChatName}
-          {currentChat.is_group_chat && isadmin ? (
+          {currentChat.chat_name}
+          {currentChat._group_chat && isadmin ? (
             <div>
               <IconButton
                 onClick={() => setOpen(true)}
@@ -86,11 +93,7 @@ const ChatHeader = ({ currentChatName, setCurrentChatName, currentChat }) => {
                   />
                 </DialogContent>
                 <DialogActions>
-                  <Button
-                    onClick={() => {
-                      setOpen(false)
-                    }}
-                  >
+                  <Button onClick={() => updateChatName(currentChat.id)}>
                     Change
                   </Button>
                   <Button onClick={() => setOpen(false)}>Cancel</Button>

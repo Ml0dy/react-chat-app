@@ -5,18 +5,22 @@ import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 
-const URL = "http://localhost:8080/users"
+const USER_URL = "http://localhost:8080/users"
 
-const ChatListContainer = () => {
+const ChatListContainer = ({
+  currentChat,
+  setCurrentChat,
+  setCurrentChatMessages,
+}) => {
   const { id } = useSelector((state) => state.loggedUserReducer)
 
   const [openModal, setOpenModal] = useState(false)
-  const [currentChat, setCurrentChat] = useState(0)
+
   const [userListFromDatabase, setUserListFromDatabase] = useState([])
 
   const getAllUsers = () => {
     axios
-      .get(URL)
+      .get(USER_URL)
       .then(({ data }) => {
         setUserListFromDatabase(data)
       })
@@ -61,6 +65,7 @@ const ChatListContainer = () => {
           setOpenModal={setOpenModal}
           setCurrentChat={setCurrentChat}
           currentChat={currentChat}
+          setCurrentChatMessages={setCurrentChatMessages}
         />
       </Dialog>
     </Box>

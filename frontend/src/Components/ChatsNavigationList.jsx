@@ -33,7 +33,7 @@ const ChatsNavigationList = ({
 
   useEffect(() => {
     getAllChats()
-  }, [])
+  }, [allChatsFromDatabase])
 
   return (
     <List

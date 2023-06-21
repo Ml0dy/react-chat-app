@@ -6,20 +6,30 @@ import { useSelector } from "react-redux"
 
 const MESSAGES_URL = "http://localhost:8080/chat"
 
-const MessageSender = ({ currentChat }) => {
+const MessageSender = ({ currentChat, setCurrentChatMessages }) => {
   const { id } = useSelector((state) => state.loggedUserReducer)
   const [messageValue, setMessageValue] = useState("")
+  const [isSend, setIsSend] = useState(false)
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (messageValue === "") return false
-    axios
+    await axios
       .post(`${MESSAGES_URL}/message`, {
         message_text: messageValue,
         sender_id: id,
         chat_id: currentChat.id,
       })
+      .then(() => setIsSend(!isSend))
       .catch((error) => console.log(error))
     setMessageValue("")
+    await getChatMessages(currentChat.id)
+  }
+
+  const getChatMessages = (chatId) => {
+    axios
+      .get(`${MESSAGES_URL}/${chatId}/messages`)
+      .then(({ data }) => setCurrentChatMessages(data))
+      .catch((error) => console.log(error))
   }
 
   return (
