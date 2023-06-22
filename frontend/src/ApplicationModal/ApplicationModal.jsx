@@ -29,31 +29,37 @@ import { useNavigate } from "react-router"
 import { useLocation } from "react-router-dom"
 
 const drawerWidth = 240
-const URL = "http://localhost:8080/users"
+const USERS_URL = "http://localhost:8080/users"
+const CHATS_URL = "http://localhost:8080/chats"
 
 const ApplicationModal = () => {
   const loggedUser = useSelector((state) => state.loggedUserReducer)
   const [userListFromDatabase, setUserListFromDatabase] = useState([])
   const { id, username, isadmin } = loggedUser
-
   const [open, setOpen] = useState(false)
+  const [chatList, setChatList] = useState(null)
 
   const location = useLocation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const getAllChats = () => {
+    axios
+      .get(CHATS_URL)
+      .then(({ data }) => setChatList(data))
+      .catch((error) => console.log(error))
+  }
+
   const getAllUsers = () => {
     axios
-      .get(URL)
-      .then(({ data }) => {
-        setUserListFromDatabase(data)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+      .get(USERS_URL)
+      .then(({ data }) => setUserListFromDatabase(data))
+      .catch((error) => console.log(error))
   }
 
   useEffect(() => {
     getAllUsers()
+    getAllChats()
   }, [])
 
   const getRerenderActivity = (currentUserId) => {

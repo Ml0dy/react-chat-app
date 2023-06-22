@@ -92,10 +92,10 @@ const AdminPanel = ({ userListFromDatabase, chatList }) => {
             <Grid item xs={12}>
               <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
                 <Typography variant="h6" alignContent="center">
-                  Rooms:
+                  Chats:
                 </Typography>
                 <Typography variant="h6" alignContent="center">
-                  {chatList.length}
+                  {chatList === null ? false : chatList.length}
                 </Typography>
               </Paper>
             </Grid>

@@ -3,7 +3,9 @@ package pl.chatnovoacademy.ChatNovoacademy.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Getter
 @Setter
@@ -16,8 +18,7 @@ public class Message {
     private Long id;
     @NonNull
     private String message_text;
-    @NonNull
-    private LocalDateTime message_date;
+    private LocalDate message_date;
     @NonNull
     private Long sender_id;
     @NonNull
@@ -28,6 +29,6 @@ public class Message {
 
     @PrePersist
     void prePersist() {
-        message_date = LocalDateTime.now();
+        message_date = LocalDate.now(ZoneId.of("Europe/Paris"));
     }
 }

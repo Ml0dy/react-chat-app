@@ -1,5 +1,4 @@
 import Novologo from "../../Assets/Images/NovoAcademy_logo.png"
-import { addUserToGroupChatAction } from "../../Redux/Actions/chatsDatabaseAction"
 import "./RegisterView.css"
 import { registerValidation } from "./registerValidation"
 import { Alert } from "@mui/material"
@@ -8,7 +7,6 @@ import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
 import axios from "axios"
 import React, { useState, useEffect } from "react"
-import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 
 const URL = "http://localhost:8080/users"
@@ -23,10 +21,7 @@ const RegisterView = () => {
   const [isPasswordConfirmed, setIsPasswordConfirmed] = useState(false)
   const [userListFromDatabase, setUserListFromDatabase] = useState([])
 
-  const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  const nextID = userListFromDatabase.length
 
   const cleanStateValues = () => {
     setUsername("")
@@ -63,7 +58,6 @@ const RegisterView = () => {
 
     setisRegisterDone(true)
     addNewUserToDatabase()
-    dispatch(addUserToGroupChatAction(nextID, username))
     cleanStateValues()
     setTimeout(() => {
       navigate("/")
